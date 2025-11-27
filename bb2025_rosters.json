@@ -1,0 +1,1483 @@
+{
+  "amazon": {
+    "name": "Amazon",
+    "positions": [
+      {
+        "name": "Eagle Warrior",
+        "cost": 50,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Jaguar Warrior",
+        "cost": 110,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Piranha Warrior",
+        "cost": 90,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Python Warrior",
+        "cost": 80,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "black-orc": {
+    "name": "Black Orc",
+    "positions": [
+      {
+        "name": "Black Orc",
+        "cost": 90,
+        "max": 6,
+        "type": "player"
+      },
+      {
+        "name": "Goblin Bruiser",
+        "cost": 45,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Trained Troll",
+        "cost": 115,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "bretonnian": {
+    "name": "Bretonnian",
+    "positions": [
+      {
+        "name": "Bretonnian Knight Catcher",
+        "cost": 85,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Bretonnian Knight Thrower",
+        "cost": 80,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Bretonnian Squire",
+        "cost": 50,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Grail Knight",
+        "cost": 95,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "chaos-chosen": {
+    "name": "Chaos Chosen",
+    "positions": [
+      {
+        "name": "Beastman Lineman",
+        "cost": 55,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Chaos Chosen",
+        "cost": 100,
+        "max": 4,
+        "type": "player"
+      },
+      {
+        "name": "Minotaur",
+        "cost": 150,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Ogre",
+        "cost": 140,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Troll",
+        "cost": 115,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 50,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "chaos-dwarf": {
+    "name": "Chaos Dwarf",
+    "positions": [
+      {
+        "name": "Bull Centaur",
+        "cost": 130,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Chaos Dwarf Blocker",
+        "cost": 70,
+        "max": 4,
+        "type": "player"
+      },
+      {
+        "name": "Flamesmith",
+        "cost": 80,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Hobgoblin Lineman",
+        "cost": 40,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Sneaky Stabba",
+        "cost": 60,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Minotaur",
+        "cost": 150,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 70,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "chaos-renegade": {
+    "name": "Chaos Renegade",
+    "positions": [
+      {
+        "name": "Renegade Dark Elf",
+        "cost": 65,
+        "max": 1,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Renegade Goblin",
+        "cost": 40,
+        "max": 1,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Renegade Human",
+        "cost": 50,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Renegade Human Thrower",
+        "cost": 75,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Renegade Orc",
+        "cost": 50,
+        "max": 1,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Renegade Skaven",
+        "cost": 50,
+        "max": 1,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Minotaur",
+        "cost": 150,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Ogre",
+        "cost": 140,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Rat Ogre",
+        "cost": 150,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Troll",
+        "cost": 115,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 70,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "dark-elf": {
+    "name": "Dark Elf",
+    "positions": [
+      {
+        "name": "Dark Elf Assassin",
+        "cost": 90,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Dark Elf Blitzer",
+        "cost": 105,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Dark Elf Lineman",
+        "cost": 65,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Dark Elf Runner",
+        "cost": 80,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Witch Elf",
+        "cost": 110,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 50,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "dwarf": {
+    "name": "Dwarf",
+    "positions": [
+      {
+        "name": "Dwarf Blitzer",
+        "cost": 100,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Dwarf Lineman",
+        "cost": 70,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Dwarf Runner",
+        "cost": 80,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Troll Slayer",
+        "cost": 95,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Deathroller",
+        "cost": 170,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "elven-union": {
+    "name": "Elven Union",
+    "positions": [
+      {
+        "name": "Elf Blitzer",
+        "cost": 115,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Elf Catcher",
+        "cost": 100,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Elf Lineman",
+        "cost": 65,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Elf Thrower",
+        "cost": 75,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 50,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "gnome": {
+    "name": "Gnome",
+    "positions": [
+      {
+        "name": "Gnome Beastmaster",
+        "cost": 55,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Gnome Illusionist",
+        "cost": 50,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Gnome Lineman",
+        "cost": 40,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Woodland Fox",
+        "cost": 50,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Altern Forest Treeman",
+        "cost": 120,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 50,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "goblin": {
+    "name": "Goblin",
+    "positions": [
+      {
+        "name": "'Ooligan",
+        "cost": 60,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Bomma",
+        "cost": 45,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Doom Diver",
+        "cost": 65,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Fanatic",
+        "cost": 70,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Goblin Lineman",
+        "cost": 40,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Loony",
+        "cost": 40,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Pogoer",
+        "cost": 75,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Trained Troll",
+        "cost": 115,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "halfling": {
+    "name": "Halfling",
+    "positions": [
+      {
+        "name": "Halfling Catcher",
+        "cost": 55,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Halfling Hefty",
+        "cost": 50,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Halfling Hopeful",
+        "cost": 30,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Altern Forest Treeman",
+        "cost": 120,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "high-elf": {
+    "name": "High Elf",
+    "positions": [
+      {
+        "name": "High Elf Blitzer",
+        "cost": 100,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "High Elf Catcher",
+        "cost": 90,
+        "max": 4,
+        "type": "player"
+      },
+      {
+        "name": "High Elf Lineman",
+        "cost": 65,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "High Elf Thrower",
+        "cost": 100,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 50,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "human": {
+    "name": "Human",
+    "positions": [
+      {
+        "name": "Halfling Hopeful",
+        "cost": 30,
+        "max": 3,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Human Blitzer",
+        "cost": 85,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Human Catcher",
+        "cost": 75,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Human Lineman",
+        "cost": 50,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Human Thrower",
+        "cost": 75,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Ogre",
+        "cost": 140,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 50,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "imperial-nobility": {
+    "name": "Imperial Nobility",
+    "positions": [
+      {
+        "name": "Bodyguard",
+        "cost": 85,
+        "max": 4,
+        "type": "player"
+      },
+      {
+        "name": "Imperial Retainer",
+        "cost": 45,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Imperial Thrower",
+        "cost": 75,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Noble Blitzer",
+        "cost": 90,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Ogre",
+        "cost": 140,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "khorne": {
+    "name": "Khorne",
+    "positions": [
+      {
+        "name": "Bloodborn Marauder",
+        "cost": 50,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Bloodseeker",
+        "cost": 105,
+        "max": 4,
+        "type": "player"
+      },
+      {
+        "name": "Khorngor",
+        "cost": 70,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Bloodspawn",
+        "cost": 160,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "lizardmen": {
+    "name": "Lizardmen",
+    "positions": [
+      {
+        "name": "Chameleon Skink",
+        "cost": 70,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Saurus Blocker",
+        "cost": 90,
+        "max": 6,
+        "type": "player"
+      },
+      {
+        "name": "Skink Lineman",
+        "cost": 60,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Kroxigor",
+        "cost": 140,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 70,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "necromantic-horror": {
+    "name": "Necromantic Horror",
+    "positions": [
+      {
+        "name": "Flesh Golem",
+        "cost": 110,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Ghoul Runner",
+        "cost": 75,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Werewolf",
+        "cost": 120,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Wraith",
+        "cost": 85,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Zombie Lineman",
+        "cost": 40,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Reroll",
+        "cost": 70,
+        "max": 8,
+        "type": "extra"
+      }
+    ]
+  },
+  "norse": {
+    "name": "Norse",
+    "positions": [
+      {
+        "name": "Beer Boar",
+        "cost": 20,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Norse Berserker",
+        "cost": 90,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Norse Raider",
+        "cost": 50,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Ulfwerener",
+        "cost": 105,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Valkyrie",
+        "cost": 95,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Yhetee",
+        "cost": 140,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "nurgle": {
+    "name": "Nurgle",
+    "positions": [
+      {
+        "name": "Bloater",
+        "cost": 110,
+        "max": 4,
+        "type": "player"
+      },
+      {
+        "name": "Pestigor",
+        "cost": 70,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Rotter Lineman",
+        "cost": 40,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Rotspawn",
+        "cost": 140,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      }
+    ]
+  },
+  "ogre": {
+    "name": "Ogre",
+    "positions": [
+      {
+        "name": "Gnoblar Lineman",
+        "cost": 15,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Ogre Blocker",
+        "cost": 140,
+        "max": 5,
+        "type": "player"
+      },
+      {
+        "name": "Ogre Runt Punter",
+        "cost": 145,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 70,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "old-world-alliance": {
+    "name": "Old World Alliance",
+    "positions": [
+      {
+        "name": "Dwarf Blitzer",
+        "cost": 100,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Dwarf Lineman",
+        "cost": 70,
+        "max": 3,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Dwarf Runner",
+        "cost": 80,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Halfling Hopeful",
+        "cost": 30,
+        "max": 3,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Human Blitzer",
+        "cost": 85,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Human Catcher",
+        "cost": 75,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Human Lineman",
+        "cost": 50,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Human Thrower",
+        "cost": 75,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Troll Slayer",
+        "cost": 95,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Altern Forest Treeman",
+        "cost": 120,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Ogre",
+        "cost": 140,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 70,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "orc": {
+    "name": "Orc",
+    "positions": [
+      {
+        "name": "Big Un Blocker",
+        "cost": 95,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Goblin Lineman",
+        "cost": 40,
+        "max": 4,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Orc Blitzer",
+        "cost": 85,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Orc Lineman",
+        "cost": 50,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Orc Thrower",
+        "cost": 75,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Troll",
+        "cost": 115,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "shambling-undead": {
+    "name": "Shambling Undead",
+    "positions": [
+      {
+        "name": "Ghoul Runner",
+        "cost": 75,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Mummy",
+        "cost": 125,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Skeleton Lineman",
+        "cost": 40,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Wight Blitzer",
+        "cost": 95,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Zombie Lineman",
+        "cost": 40,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Reroll",
+        "cost": 70,
+        "max": 8,
+        "type": "extra"
+      }
+    ]
+  },
+  "skaven": {
+    "name": "Skaven",
+    "positions": [
+      {
+        "name": "Gutter Runner",
+        "cost": 85,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Skaven Blitzer",
+        "cost": 90,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Skaven Clanrat",
+        "cost": 50,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Skaven Thrower",
+        "cost": 80,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Rat Ogre",
+        "cost": 150,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 50,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "snotling": {
+    "name": "Snotling",
+    "positions": [
+      {
+        "name": "Fun Hoppa",
+        "cost": 20,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Fungus Flinga",
+        "cost": 30,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Pump Wagon",
+        "cost": 100,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Snotling Lineman",
+        "cost": 15,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Stilty Runna",
+        "cost": 20,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Trained Troll",
+        "cost": 115,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 70,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "tomb-kings": {
+    "name": "Tomb Kings",
+    "positions": [
+      {
+        "name": "Skeleton Lineman",
+        "cost": 40,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Tomb Guardian",
+        "cost": 115,
+        "max": 4,
+        "type": "player"
+      },
+      {
+        "name": "Tomb Kings Blitzer",
+        "cost": 85,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Tomb Kings Thrower",
+        "cost": 65,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      }
+    ]
+  },
+  "underworld-denizens": {
+    "name": "Underworld Denizens",
+    "positions": [
+      {
+        "name": "Goblin Lineman",
+        "cost": 40,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Gutter Runner",
+        "cost": 85,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Skaven Blitzer",
+        "cost": 90,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Skaven Clanrat",
+        "cost": 50,
+        "max": 3,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Skaven Thrower",
+        "cost": 80,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Snotling Lineman",
+        "cost": 15,
+        "max": 6,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Rat Ogre",
+        "cost": 150,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Troll",
+        "cost": 115,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 70,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "vampire": {
+    "name": "Vampire",
+    "positions": [
+      {
+        "name": "Thrall Lineman",
+        "cost": 40,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Vampire Blitzer",
+        "cost": 110,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Vampire Runner",
+        "cost": 100,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Vampire Thrower",
+        "cost": 110,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Vargheist",
+        "cost": 150,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 60,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  },
+  "wood-elf": {
+    "name": "Wood Elf",
+    "positions": [
+      {
+        "name": "Wardancer",
+        "cost": 130,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Wood Elf Catcher",
+        "cost": 90,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Wood Elf Lineman",
+        "cost": 65,
+        "max": 16,
+        "type": "player",
+        "role": "lineman"
+      },
+      {
+        "name": "Wood Elf Thrower",
+        "cost": 85,
+        "max": 2,
+        "type": "player"
+      },
+      {
+        "name": "Loren Forest Treeman",
+        "cost": 120,
+        "max": 1,
+        "type": "player"
+      },
+      {
+        "name": "Reroll",
+        "cost": 50,
+        "max": 8,
+        "type": "extra"
+      },
+      {
+        "name": "Apothecary",
+        "cost": 50,
+        "max": 1,
+        "type": "extra"
+      }
+    ]
+  }
+}

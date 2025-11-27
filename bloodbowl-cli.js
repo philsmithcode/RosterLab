@@ -7,6 +7,8 @@
  *
  * TV is in thousands (1000 == 1,000,000 gp). Adjust rosters below as needed.
  */
+const fs = require('fs');
+const path = require('path');
 
 const args = parseArgs(process.argv.slice(2));
 
@@ -15,7 +17,7 @@ if (args.help || !args.team || !args.tv) {
   process.exit(0);
 }
 
-const rosters = getRosters();
+const rosters = loadRosters();
 const team = rosters[args.team.toLowerCase()];
 
 if (!team) {
@@ -248,59 +250,22 @@ function parseRequirements(str) {
   return parsed.length ? parsed : null;
 }
 
-function getRosters() {
-  return {
-    humans: {
-      name: 'Humans',
-      positions: [
-        { name: 'Ogre', cost: 140, max: 1, type: 'player' },
-        { name: 'Blitzer', cost: 85, max: 2, type: 'player' },
-        { name: 'Catcher', cost: 75, max: 2, type: 'player' },
-        { name: 'Thrower', cost: 75, max: 2, type: 'player' },
-        { name: 'Halfling', cost: 30, max:4, type: 'player'},
-        { name: 'Lineman', cost: 50, max: 16, type: 'player', role: 'lineman' },
-        { name: 'Reroll', cost: 50, max: 8, type: 'extra' },
-        { name: 'Apothecary', cost: 50, max: 1, type: 'extra' },
-        { name: 'Assistant Coach', cost: 10, max: 6, type: 'extra' },
-        { name: 'Cheerleader', cost: 10, max: 12, type: 'extra' },
-        { name: 'Dedicated Fans', cost: 10, max: 6, type: 'extra' },
-        { name: 'Bribe', cost: 100, max: 3, type: 'extra' },
-      ],
-    },
-    orcs: {
-      name: 'Orcs',
-      positions: [
-        { name: 'Troll', cost: 115, max: 1, type: 'player' },
-        { name: 'Big Un Blocker', cost: 95, max: 2, type: 'player' },
-        { name: 'Blitzer', cost: 85, max: 2, type: 'player' },
-        { name: 'Thrower', cost: 75, max: 2, type: 'player' },
-        { name: 'Lineman', cost: 50, max: 16, type: 'player', role: 'lineman' },
-        { name: 'Goblin', cost: 40, max: 4, type: 'player' },
-        { name: 'Reroll', cost: 60, max: 8, type: 'extra' },
-        { name: 'Apothecary', cost: 50, max: 1, type: 'extra' },
-        { name: 'Assistant Coach', cost: 10, max: 6, type: 'extra' },
-        { name: 'Cheerleader', cost: 10, max: 12, type: 'extra' },
-        { name: 'Dedicated Fans', cost: 10, max: 6, type: 'extra' },
-        { name: 'Bribe', cost: 100, max: 3, type: 'extra' },
-      ],
-    },
-    dwarfs: {
-      name: 'Dwarfs',
-      positions: [
-        { name: 'Deathroller', cost: 170, max: 1, type: 'player' },
-        { name: 'Troll Slayer', cost: 95, max: 2, type: 'player' },
-        { name: 'Runner', cost: 80, max: 2, type: 'player' },
-        { name: 'Blitzer', cost: 100, max: 2, type: 'player' },
-        { name: 'Blocker', cost: 70, max: 16, type: 'player', role: 'lineman' },
-        { name: 'Reroll', cost: 60, max: 8, type: 'extra' },
-        { name: 'Apothecary', cost: 50, max: 1, type: 'extra' },
-        { name: 'Assistant Coach', cost: 10, max: 6, type: 'extra' },
-        { name: 'Cheerleader', cost: 10, max: 12, type: 'extra' },
-        { name: 'Dedicated Fans', cost: 10, max: 6, type: 'extra' },
-        { name: 'Bribe', cost: 50, max: 3, type: 'extra' },
-      ],
-    },
+function loadRosters() {
+  const dataPath = path.join(__dirname, 'bb2025_rosters.json');
+  const raw = fs.readFileSync(dataPath, 'utf8');
+  return addAliases(JSON.parse(raw));
+}
+
+function addAliases(map) {
+  const aliases = {
+    humans: 'human',
+    orcs: 'orc',
+    dwarfs: 'dwarf',
   };
+  Object.entries(aliases).forEach(([alias, key]) => {
+    if (map[key]) map[alias] = map[key];
+  });
+  return map;
 }
 
 function printHelp() {

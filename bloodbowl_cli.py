@@ -11,8 +11,10 @@ TV is in thousands (1000 == 1,000,000 gp). Adjust rosters in get_rosters().
 from __future__ import annotations
 
 import argparse
+import json
+from pathlib import Path
 from dataclasses import dataclass
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 
 @dataclass
@@ -20,6 +22,8 @@ class Position:
     name: str
     cost: int  # in thousands
     max: int
+    type: str = "player"
+    role: Optional[str] = None
 
 
 @dataclass
@@ -30,31 +34,30 @@ class Combo:
 
 
 def get_rosters() -> Dict[str, Dict]:
-    """Built-in sample rosters. Extend this to add more teams."""
-    return {
-        "humans": {
-            "name": "Humans",
-            "positions": [
-                Position("Ogre", 140, 1),
-                Position("Blitzer", 85, 2),
-                Position("Catcher", 75, 2),
-                Position("Thrower", 75, 2),
-                Position("Lineman", 50, 16),
-                Position("Halfling", 30, 4)
-            ],
-        },
-        "orcs": {
-            "name": "Orcs",
-            "positions": [
-                Position("Troll", 115, 1),
-                Position("Black Orc", 90, 4),
-                Position("Blitzer", 90, 4),
-                Position("Thrower", 65, 2),
-                Position("Lineman", 50, 16),
-                Position("Goblin", 40, 4),
-            ],
-        },
+    """Load BB2025 rosters scraped from bbtc.pl."""
+    data_path = Path(__file__).with_name("bb2025_rosters.json")
+    with data_path.open("r", encoding="utf8") as f:
+        raw = json.load(f)
+
+    rosters: Dict[str, Dict] = {}
+    for key, team in raw.items():
+        rosters[key] = {
+            "name": team["name"],
+            "positions": [Position(**pos) for pos in team["positions"]],
+        }
+    apply_aliases(rosters)
+    return rosters
+
+
+def apply_aliases(rosters: Dict[str, Dict]) -> None:
+    aliases = {
+        "humans": "human",
+        "orcs": "orc",
+        "dwarfs": "dwarf",
     }
+    for alias, key in aliases.items():
+        if key in rosters:
+            rosters[alias] = rosters[key]
 
 
 def generate_combos(positions: List[Position], tv: int, min_players: int, max_players: int, max_results: int, sort: str) -> List[Combo]:
@@ -73,12 +76,15 @@ def generate_combos(positions: List[Position], tv: int, min_players: int, max_pl
             return
 
         pos = positions[index]
+        is_player = (pos.type or "player") == "player"
         max_by_cost = remaining // pos.cost
-        max_count = min(pos.max, max_by_cost, max_players - total_players)
+        player_room = max_players - total_players if is_player else max_players
+        max_count = min(pos.max, max_by_cost, player_room)
 
         for count in range(max_count + 1):
             path.append((pos.name, count, pos.cost))
-            dfs(index + 1, remaining - count * pos.cost, total_players + count)
+            next_players = total_players + count if is_player else total_players
+            dfs(index + 1, remaining - count * pos.cost, next_players)
             path.pop()
             if len(results) >= collect_cap:
                 return

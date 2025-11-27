@@ -162,16 +162,12 @@
   </div>
 
   <script>
-    const rosters = getRosters();
+    let rosters = {};
     const teamSelect = document.getElementById('team');
-    Object.entries(rosters).forEach(([key, team]) => {
-      const opt = document.createElement('option');
-      opt.value = key;
-      opt.textContent = team.name;
-      teamSelect.appendChild(opt);
-    });
+    const rosterReady = loadRosters();
 
-    document.getElementById('generate').addEventListener('click', () => {
+    document.getElementById('generate').addEventListener('click', async () => {
+      await rosterReady;
       const errorEl = document.getElementById('error');
       errorEl.textContent = '';
       try {
@@ -183,7 +179,48 @@
       }
     });
 
+    async function loadRosters() {
+      const errorEl = document.getElementById('error');
+      try {
+        const res = await fetch('bb2025_rosters.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        rosters = addAliases(await res.json());
+        populateTeamSelect(rosters);
+      } catch (err) {
+        console.error('Failed to load rosters', err);
+        errorEl.textContent = 'Could not load roster data.';
+      }
+    }
+
+    function populateTeamSelect(rosterMap) {
+      teamSelect.innerHTML = '';
+      const seen = new Set();
+      Object.entries(rosterMap)
+        .sort((a, b) => a[1].name.localeCompare(b[1].name))
+        .forEach(([key, team]) => {
+          if (seen.has(team.name)) return;
+          seen.add(team.name);
+          const opt = document.createElement('option');
+          opt.value = key;
+          opt.textContent = team.name;
+          teamSelect.appendChild(opt);
+        });
+    }
+
+    function addAliases(map) {
+      const aliases = {
+        humans: 'human',
+        orcs: 'orc',
+        dwarfs: 'dwarf',
+      };
+      Object.entries(aliases).forEach(([alias, key]) => {
+        if (map[key]) map[alias] = map[key];
+      });
+      return map;
+    }
+
     function collectSettings() {
+      if (!Object.keys(rosters).length) throw new Error('Rosters not loaded yet.');
       const tv = Number(document.getElementById('tv').value);
       const minPlayers = Number(document.getElementById('minPlayers').value);
       const maxPlayers = Number(document.getElementById('maxPlayers').value);
@@ -407,60 +444,6 @@
         });
     }
 
-    function getRosters() {
-      return {
-        humans: {
-          name: 'Humans',
-          positions: [
-            { name: 'Ogre', cost: 140, max: 1, type: 'player' },
-            { name: 'Blitzer', cost: 85, max: 2, type: 'player' },
-            { name: 'Catcher', cost: 75, max: 2, type: 'player' },
-            { name: 'Thrower', cost: 75, max: 2, type: 'player' },
-            { name: 'Halfling', cost: 30, max: 4, type: 'player' },
-            { name: 'Lineman', cost: 50, max: 16, type: 'player', role: 'lineman' },
-            { name: 'Reroll', cost: 50, max: 8, type: 'extra' },
-            { name: 'Apothecary', cost: 50, max: 1, type: 'extra' },
-            { name: 'Assistant Coach', cost: 10, max: 6, type: 'extra' },
-            { name: 'Cheerleader', cost: 10, max: 12, type: 'extra' },
-            { name: 'Dedicated Fans', cost: 10, max: 6, type: 'extra' },
-            { name: 'Bribe', cost: 100, max: 3, type: 'extra' },
-          ],
-        },
-        orcs: {
-          name: 'Orcs',
-          positions: [
-            { name: 'Troll', cost: 115, max: 1, type: 'player' },
-            { name: 'Big Un Blocker', cost: 95, max: 2, type: 'player' },
-            { name: 'Blitzer', cost: 90, max: 4, type: 'player' },
-            { name: 'Thrower', cost: 65, max: 2, type: 'player' },
-            { name: 'Lineman', cost: 50, max: 16, type: 'player', role: 'lineman' },
-            { name: 'Goblin', cost: 40, max: 4, type: 'player' },
-            { name: 'Reroll', cost: 60, max: 8, type: 'extra' },
-            { name: 'Apothecary', cost: 50, max: 1, type: 'extra' },
-            { name: 'Assistant Coach', cost: 10, max: 6, type: 'extra' },
-            { name: 'Cheerleader', cost: 10, max: 12, type: 'extra' },
-            { name: 'Dedicated Fans', cost: 10, max: 6, type: 'extra' },
-            { name: 'Bribe', cost: 100, max: 3, type: 'extra' },
-          ],
-        },
-        dwarfs: {
-          name: 'Dwarfs',
-          positions: [
-            { name: 'Deathroller', cost: 170, max: 1, type: 'player' },
-            { name: 'Troll Slayer', cost: 95, max: 2, type: 'player' },
-            { name: 'Runner', cost: 80, max: 2, type: 'player' },
-            { name: 'Blitzer', cost: 100, max: 2, type: 'player' },
-            { name: 'Blocker', cost: 70, max: 16, type: 'player', role: 'lineman' },
-            { name: 'Reroll', cost: 60, max: 8, type: 'extra' },
-            { name: 'Apothecary', cost: 50, max: 1, type: 'extra' },
-            { name: 'Assistant Coach', cost: 10, max: 6, type: 'extra' },
-            { name: 'Cheerleader', cost: 10, max: 12, type: 'extra' },
-            { name: 'Dedicated Fans', cost: 10, max: 6, type: 'extra' },
-            { name: 'Bribe', cost: 50, max: 3, type: 'extra' },
-          ],
-        },
-      };
-    }
   </script>
 </body>
 </html>
