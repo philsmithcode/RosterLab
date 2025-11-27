@@ -39,6 +39,110 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Anqi Panqi Lustrian Superleague",
+        "cost": 150
+      },
+      {
+        "name": "Boa Kon'ssstriktr Lustrian Superleague",
+        "cost": 180
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Dribl Lustrian Superleague",
+        "cost": 115
+      },
+      {
+        "name": "Drull Lustrian Superleague",
+        "cost": 115
+      },
+      {
+        "name": "Estelle la Veneaux Lustrian Superleague",
+        "cost": 190
+      },
+      {
+        "name": "Glotl Stop Lustrian Superleague",
+        "cost": 260
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Karla von Kill Lustrian Superleague",
+        "cost": 210
+      },
+      {
+        "name": "Morg 'n' Thorg Lustrian Superleague",
+        "cost": 360
+      },
+      {
+        "name": "Zolcath the Zoat Lustrian Superleague",
+        "cost": 220
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "black-orc": {
@@ -74,6 +178,114 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Bomber Dribblesnot Badlands Brawl",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Fungus the Loon Badlands Brawl",
+        "cost": 80
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "H'thark the Unstoppable Badlands Brawl",
+        "cost": 300
+      },
+      {
+        "name": "Morg 'n' Thorg Badlands Brawl",
+        "cost": 360
+      },
+      {
+        "name": "Nobbla Blackwart Badlands Brawl",
+        "cost": 120
+      },
+      {
+        "name": "Rashnak Backstabber Badlands Brawl",
+        "cost": 130
+      },
+      {
+        "name": "Ripper Bolgrot Badlands Brawl",
+        "cost": 250
+      },
+      {
+        "name": "Scrappa Sorehead Badlands Brawl",
+        "cost": 120
+      },
+      {
+        "name": "The Black Gobbo Badlands Brawl",
+        "cost": 210
+      },
+      {
+        "name": "Varag Ghoul-Chewer Badlands Brawl",
+        "cost": 260
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-6",
+        "cost": 50
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 80
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -116,6 +328,126 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Barik Farblast Old World Classic",
+        "cost": 80
+      },
+      {
+        "name": "Cindy Piewhistle Old World Classic",
+        "cost": 100
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Griff Oberwald Old World Classic",
+        "cost": 300
+      },
+      {
+        "name": "Grombrindal Old World Classic",
+        "cost": 170
+      },
+      {
+        "name": "Helmut Wulf Old World Classic",
+        "cost": 140
+      },
+      {
+        "name": "Ivar Eriksson Old World Classic",
+        "cost": 215
+      },
+      {
+        "name": "Josef Bugman Old World Classic",
+        "cost": 180
+      },
+      {
+        "name": "Karla von Kill Old World Classic",
+        "cost": 210
+      },
+      {
+        "name": "Morg 'n' Thorg Old World Classic",
+        "cost": 360
+      },
+      {
+        "name": "Puggy Baconbreath Old World Classic",
+        "cost": 130
+      },
+      {
+        "name": "Skrorg Snowpelt Old World Classic",
+        "cost": 240
+      },
+      {
+        "name": "The Mighty Zug Old World Classic",
+        "cost": 220
+      },
+      {
+        "name": "Thorsson Stoutmead Old World Classic",
+        "cost": 170
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -164,6 +496,118 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Bilerot Vomitflesh Favoured of Nurgle",
+        "cost": 180
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Grashnak Blackhoof Chaos Clash",
+        "cost": 240
+      },
+      {
+        "name": "Guffle Pusmaw Favoured of Nurgle",
+        "cost": 150
+      },
+      {
+        "name": "H'thark the Unstoppable Favoured of Hashut",
+        "cost": 300
+      },
+      {
+        "name": "Lord Borak the Despoiler Chaos Clash",
+        "cost": 270
+      },
+      {
+        "name": "Max Spleenripper Favoured of Khorne",
+        "cost": 130
+      },
+      {
+        "name": "Morg 'n' Thorg Chaos Clash",
+        "cost": 360
+      },
+      {
+        "name": "Scyla Anfingrimm Favoured of Khorne",
+        "cost": 200
+      },
+      {
+        "name": "Withergrasp Doubledrool Favoured of Nurgle",
+        "cost": 170
+      },
+      {
+        "name": "Zzharg Madeye Favoured of Hashut",
+        "cost": 130
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Plague Doctor 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -218,6 +662,126 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Bomber Dribblesnot Badlands Brawl",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Fungus the Loon Badlands Brawl",
+        "cost": 80
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Grashnak Blackhoof Chaos Clash",
+        "cost": 240
+      },
+      {
+        "name": "H'thark the Unstoppable Favoured of Hashut, Badlands Brawl",
+        "cost": 300
+      },
+      {
+        "name": "Lord Borak the Despoiler Chaos Clash",
+        "cost": 270
+      },
+      {
+        "name": "Morg 'n' Thorg Badlands Brawl, Chaos Clash",
+        "cost": 360
+      },
+      {
+        "name": "Nobbla Blackwart Badlands Brawl",
+        "cost": 120
+      },
+      {
+        "name": "Rashnak Backstabber Badlands Brawl",
+        "cost": 130
+      },
+      {
+        "name": "Ripper Bolgrot Badlands Brawl",
+        "cost": 250
+      },
+      {
+        "name": "Scrappa Sorehead Badlands Brawl",
+        "cost": 120
+      },
+      {
+        "name": "The Black Gobbo Badlands Brawl",
+        "cost": 210
+      },
+      {
+        "name": "Varag Ghoul-Chewer Badlands Brawl",
+        "cost": 260
+      },
+      {
+        "name": "Zzharg Madeye Favoured of Hashut",
+        "cost": 130
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -301,6 +865,110 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Bilerot Vomitflesh Favoured of Nurgle",
+        "cost": 180
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Grashnak Blackhoof Chaos Clash",
+        "cost": 240
+      },
+      {
+        "name": "Guffle Pusmaw Favoured of Nurgle",
+        "cost": 150
+      },
+      {
+        "name": "Lord Borak the Despoiler Chaos Clash",
+        "cost": 270
+      },
+      {
+        "name": "Max Spleenripper Favoured of Khorne",
+        "cost": 130
+      },
+      {
+        "name": "Morg 'n' Thorg Chaos Clash",
+        "cost": 360
+      },
+      {
+        "name": "Scyla Anfingrimm Favoured of Khorne",
+        "cost": 200
+      },
+      {
+        "name": "Withergrasp Doubledrool Favoured of Nurgle",
+        "cost": 170
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Plague Doctor 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "dark-elf": {
@@ -348,6 +1016,114 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Eldril Sidewinder Elven Kingdom League",
+        "cost": 220
+      },
+      {
+        "name": "Gloriel Summerbloom Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Jeremiah Kool Elven Kingdom League",
+        "cost": 300
+      },
+      {
+        "name": "Jordell Freshbreeze Elven Kingdom League",
+        "cost": 280
+      },
+      {
+        "name": "Kiroth Krakeneye Elven Kingdom League",
+        "cost": 160
+      },
+      {
+        "name": "Lucien Swift Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Morg 'n' Thorg Elven Kingdom League",
+        "cost": 360
+      },
+      {
+        "name": "Roxanna Darknail Elven Kingdom League",
+        "cost": 270
+      },
+      {
+        "name": "Valen Swift Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Zolcath the Zoat Elven Kingdom League",
+        "cost": 220
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -397,6 +1173,110 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Barik Farblast Worlds Edge Superleague",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Grim Ironjaw Worlds Edge Superleague",
+        "cost": 190
+      },
+      {
+        "name": "Grombrindal Worlds Edge Superleague",
+        "cost": 170
+      },
+      {
+        "name": "Josef Bugman Worlds Edge Superleague",
+        "cost": 180
+      },
+      {
+        "name": "Morg 'n' Thorg Worlds Edge Superleague",
+        "cost": 360
+      },
+      {
+        "name": "Skrorg Snowpelt Worlds Edge Superleague",
+        "cost": 240
+      },
+      {
+        "name": "Skrull Halfheight Worlds Edge Superleague",
+        "cost": 150
+      },
+      {
+        "name": "The Mighty Zug Worlds Edge Superleague",
+        "cost": 220
+      },
+      {
+        "name": "Thorsson Stoutmead Worlds Edge Superleague",
+        "cost": 170
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-6",
+        "cost": 50
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 80
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "elven-union": {
@@ -438,6 +1318,114 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Eldril Sidewinder Elven Kingdom League",
+        "cost": 220
+      },
+      {
+        "name": "Gloriel Summerbloom Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Jeremiah Kool Elven Kingdom League",
+        "cost": 300
+      },
+      {
+        "name": "Jordell Freshbreeze Elven Kingdom League",
+        "cost": 280
+      },
+      {
+        "name": "Kiroth Krakeneye Elven Kingdom League",
+        "cost": 160
+      },
+      {
+        "name": "Lucien Swift Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Morg 'n' Thorg Elven Kingdom League",
+        "cost": 360
+      },
+      {
+        "name": "Roxanna Darknail Elven Kingdom League",
+        "cost": 270
+      },
+      {
+        "name": "Valen Swift Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Zolcath the Zoat Elven Kingdom League",
+        "cost": 220
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -486,6 +1474,118 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Cindy Piewhistle Halfling Thimble Cup",
+        "cost": 100
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Deeproot Strongbranch Woodland League",
+        "cost": 280
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Grombrindal Halfling Thimble Cup",
+        "cost": 170
+      },
+      {
+        "name": "Jordell Freshbreeze Woodland League",
+        "cost": 280
+      },
+      {
+        "name": "Maple Highgrove Woodland League",
+        "cost": 210
+      },
+      {
+        "name": "Morg 'n' Thorg Halfling Thimble Cup, Woodland League",
+        "cost": 360
+      },
+      {
+        "name": "Puggy Baconbreath Halfling Thimble Cup",
+        "cost": 130
+      },
+      {
+        "name": "Rodney Roachbait Woodland League",
+        "cost": 70
+      },
+      {
+        "name": "Rumbelow Sheepskin Halfling Thimble Cup",
+        "cost": 170
+      },
+      {
+        "name": "Swiftvine Glimmershard Woodland League",
+        "cost": 110
+      },
+      {
+        "name": "Willow Rosebark Woodland League",
+        "cost": 160
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -553,6 +1653,130 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Bomber Dribblesnot Badlands Brawl, Underworld Challenge",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Fungus the Loon Badlands Brawl, Underworld Challenge",
+        "cost": 80
+      },
+      {
+        "name": "Glart Smashrip Underworld Challenge",
+        "cost": 175
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "H'thark the Unstoppable Badlands Brawl",
+        "cost": 300
+      },
+      {
+        "name": "Hakflem Skuttlespike Underworld Challenge",
+        "cost": 200
+      },
+      {
+        "name": "Kreek Rustgouger Underworld Challenge",
+        "cost": 180
+      },
+      {
+        "name": "Morg 'n' Thorg Badlands Brawl, Underworld Challenge",
+        "cost": 360
+      },
+      {
+        "name": "Nobbla Blackwart Badlands Brawl, Underworld Challenge",
+        "cost": 120
+      },
+      {
+        "name": "Rashnak Backstabber Badlands Brawl",
+        "cost": 130
+      },
+      {
+        "name": "Ripper Bolgrot Badlands Brawl, Underworld Challenge",
+        "cost": 250
+      },
+      {
+        "name": "Scrappa Sorehead Badlands Brawl, Underworld Challenge",
+        "cost": 120
+      },
+      {
+        "name": "Skitter Stab-Stab Underworld Challenge",
+        "cost": 170
+      },
+      {
+        "name": "The Black Gobbo Badlands Brawl, Underworld Challenge",
+        "cost": 210
+      },
+      {
+        "name": "Varag Ghoul-Chewer Badlands Brawl",
+        "cost": 260
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-6",
+        "cost": 50
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 80
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "halfling": {
@@ -595,6 +1819,118 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Cindy Piewhistle Halfling Thimble Cup",
+        "cost": 100
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Deeproot Strongbranch Woodland League",
+        "cost": 280
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Grombrindal Halfling Thimble Cup",
+        "cost": 170
+      },
+      {
+        "name": "Jordell Freshbreeze Woodland League",
+        "cost": 280
+      },
+      {
+        "name": "Maple Highgrove Woodland League",
+        "cost": 210
+      },
+      {
+        "name": "Morg 'n' Thorg Halfling Thimble Cup, Woodland League",
+        "cost": 360
+      },
+      {
+        "name": "Puggy Baconbreath Halfling Thimble Cup",
+        "cost": 130
+      },
+      {
+        "name": "Rodney Roachbait Woodland League",
+        "cost": 70
+      },
+      {
+        "name": "Rumbelow Sheepskin Halfling Thimble Cup",
+        "cost": 170
+      },
+      {
+        "name": "Swiftvine Glimmershard Woodland League",
+        "cost": 110
+      },
+      {
+        "name": "Willow Rosebark Woodland League",
+        "cost": 160
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "high-elf": {
@@ -636,6 +1972,114 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Eldril Sidewinder Elven Kingdom League",
+        "cost": 220
+      },
+      {
+        "name": "Gloriel Summerbloom Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Jeremiah Kool Elven Kingdom League",
+        "cost": 300
+      },
+      {
+        "name": "Jordell Freshbreeze Elven Kingdom League",
+        "cost": 280
+      },
+      {
+        "name": "Kiroth Krakeneye Elven Kingdom League",
+        "cost": 160
+      },
+      {
+        "name": "Lucien Swift Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Morg 'n' Thorg Elven Kingdom League",
+        "cost": 360
+      },
+      {
+        "name": "Roxanna Darknail Elven Kingdom League",
+        "cost": 270
+      },
+      {
+        "name": "Valen Swift Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Zolcath the Zoat Elven Kingdom League",
+        "cost": 220
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -692,6 +2136,126 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Barik Farblast Old World Classic",
+        "cost": 80
+      },
+      {
+        "name": "Cindy Piewhistle Old World Classic",
+        "cost": 100
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Griff Oberwald Old World Classic",
+        "cost": 300
+      },
+      {
+        "name": "Grombrindal Old World Classic",
+        "cost": 170
+      },
+      {
+        "name": "Helmut Wulf Old World Classic",
+        "cost": 140
+      },
+      {
+        "name": "Ivar Eriksson Old World Classic",
+        "cost": 215
+      },
+      {
+        "name": "Josef Bugman Old World Classic",
+        "cost": 180
+      },
+      {
+        "name": "Karla von Kill Old World Classic",
+        "cost": 210
+      },
+      {
+        "name": "Morg 'n' Thorg Old World Classic",
+        "cost": 360
+      },
+      {
+        "name": "Puggy Baconbreath Old World Classic",
+        "cost": 130
+      },
+      {
+        "name": "Skrorg Snowpelt Old World Classic",
+        "cost": 240
+      },
+      {
+        "name": "The Mighty Zug Old World Classic",
+        "cost": 220
+      },
+      {
+        "name": "Thorsson Stoutmead Old World Classic",
+        "cost": 170
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "imperial-nobility": {
@@ -740,6 +2304,126 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Barik Farblast Old World Classic",
+        "cost": 80
+      },
+      {
+        "name": "Cindy Piewhistle Old World Classic",
+        "cost": 100
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Griff Oberwald Old World Classic",
+        "cost": 300
+      },
+      {
+        "name": "Grombrindal Old World Classic",
+        "cost": 170
+      },
+      {
+        "name": "Helmut Wulf Old World Classic",
+        "cost": 140
+      },
+      {
+        "name": "Ivar Eriksson Old World Classic",
+        "cost": 215
+      },
+      {
+        "name": "Josef Bugman Old World Classic",
+        "cost": 180
+      },
+      {
+        "name": "Karla von Kill Old World Classic",
+        "cost": 210
+      },
+      {
+        "name": "Morg 'n' Thorg Old World Classic",
+        "cost": 360
+      },
+      {
+        "name": "Puggy Baconbreath Old World Classic",
+        "cost": 130
+      },
+      {
+        "name": "Skrorg Snowpelt Old World Classic",
+        "cost": 240
+      },
+      {
+        "name": "The Mighty Zug Old World Classic",
+        "cost": 220
+      },
+      {
+        "name": "Thorsson Stoutmead Old World Classic",
+        "cost": 170
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "khorne": {
@@ -781,6 +2465,94 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Grashnak Blackhoof Chaos Clash",
+        "cost": 240
+      },
+      {
+        "name": "Lord Borak the Despoiler Chaos Clash",
+        "cost": 270
+      },
+      {
+        "name": "Max Spleenripper Favoured of Khorne",
+        "cost": 130
+      },
+      {
+        "name": "Morg 'n' Thorg Chaos Clash",
+        "cost": 360
+      },
+      {
+        "name": "Scyla Anfingrimm Favoured of Khorne",
+        "cost": 200
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -824,6 +2596,110 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Anqi Panqi Lustrian Superleague",
+        "cost": 150
+      },
+      {
+        "name": "Boa Kon'ssstriktr Lustrian Superleague",
+        "cost": 180
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Dribl Lustrian Superleague",
+        "cost": 115
+      },
+      {
+        "name": "Drull Lustrian Superleague",
+        "cost": 115
+      },
+      {
+        "name": "Estelle la Veneaux Lustrian Superleague",
+        "cost": 190
+      },
+      {
+        "name": "Glotl Stop Lustrian Superleague",
+        "cost": 260
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Karla von Kill Lustrian Superleague",
+        "cost": 210
+      },
+      {
+        "name": "Morg 'n' Thorg Lustrian Superleague",
+        "cost": 360
+      },
+      {
+        "name": "Zolcath the Zoat Lustrian Superleague",
+        "cost": 220
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "necromantic-horror": {
@@ -865,6 +2741,98 @@
         "cost": 70,
         "max": 8,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Captain Karina von Riesz Sylvanian Spotlight",
+        "cost": 230
+      },
+      {
+        "name": "Count Luthor von Dragenborg Sylvanian Spotlight",
+        "cost": 300
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Gretchen Wachter Sylvanian Spotlight",
+        "cost": 180
+      },
+      {
+        "name": "Ivan 'the Animal' Deathshroud Sylvanian Spotlight",
+        "cost": 210
+      },
+      {
+        "name": "Skrull Halfheight Sylvanian Spotlight",
+        "cost": 150
+      },
+      {
+        "name": "Wilhelm Chaney Sylvanian Spotlight",
+        "cost": 220
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Mortuary Assistant 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -920,6 +2888,142 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Barik Farblast Old World Classic",
+        "cost": 80
+      },
+      {
+        "name": "Cindy Piewhistle Old World Classic",
+        "cost": 100
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Grashnak Blackhoof Chaos Clash",
+        "cost": 240
+      },
+      {
+        "name": "Griff Oberwald Old World Classic",
+        "cost": 300
+      },
+      {
+        "name": "Grombrindal Old World Classic",
+        "cost": 170
+      },
+      {
+        "name": "Helmut Wulf Old World Classic",
+        "cost": 140
+      },
+      {
+        "name": "Ivar Eriksson Old World Classic",
+        "cost": 215
+      },
+      {
+        "name": "Josef Bugman Old World Classic",
+        "cost": 180
+      },
+      {
+        "name": "Karla von Kill Old World Classic",
+        "cost": 210
+      },
+      {
+        "name": "Lord Borak the Despoiler Chaos Clash",
+        "cost": 270
+      },
+      {
+        "name": "Max Spleenripper Favoured of Khorne",
+        "cost": 130
+      },
+      {
+        "name": "Morg 'n' Thorg Chaos Clash, Old World Classic",
+        "cost": 360
+      },
+      {
+        "name": "Puggy Baconbreath Old World Classic",
+        "cost": 130
+      },
+      {
+        "name": "Scyla Anfingrimm Favoured of Khorne",
+        "cost": 200
+      },
+      {
+        "name": "Skrorg Snowpelt Old World Classic",
+        "cost": 240
+      },
+      {
+        "name": "The Mighty Zug Old World Classic",
+        "cost": 220
+      },
+      {
+        "name": "Thorsson Stoutmead Old World Classic",
+        "cost": 170
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "nurgle": {
@@ -956,6 +3060,98 @@
         "max": 8,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Bilerot Vomitflesh Favoured of Nurgle",
+        "cost": 180
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Grashnak Blackhoof Chaos Clash",
+        "cost": 240
+      },
+      {
+        "name": "Guffle Pusmaw Favoured of Nurgle",
+        "cost": 150
+      },
+      {
+        "name": "Lord Borak the Despoiler Chaos Clash",
+        "cost": 270
+      },
+      {
+        "name": "Morg 'n' Thorg Chaos Clash",
+        "cost": 360
+      },
+      {
+        "name": "Withergrasp Doubledrool Favoured of Nurgle",
+        "cost": 170
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Plague Doctor 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "ogre": {
@@ -991,6 +3187,150 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Barik Farblast Worlds Edge Superleague",
+        "cost": 80
+      },
+      {
+        "name": "Bomber Dribblesnot Badlands Brawl",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Fungus the Loon Badlands Brawl",
+        "cost": 80
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Grim Ironjaw Worlds Edge Superleague",
+        "cost": 190
+      },
+      {
+        "name": "Grombrindal Worlds Edge Superleague",
+        "cost": 170
+      },
+      {
+        "name": "H'thark the Unstoppable Badlands Brawl",
+        "cost": 300
+      },
+      {
+        "name": "Josef Bugman Worlds Edge Superleague",
+        "cost": 180
+      },
+      {
+        "name": "Morg 'n' Thorg Badlands Brawl, Worlds Edge Superleague",
+        "cost": 360
+      },
+      {
+        "name": "Nobbla Blackwart Badlands Brawl",
+        "cost": 120
+      },
+      {
+        "name": "Rashnak Backstabber Badlands Brawl",
+        "cost": 130
+      },
+      {
+        "name": "Ripper Bolgrot Badlands Brawl",
+        "cost": 250
+      },
+      {
+        "name": "Scrappa Sorehead Badlands Brawl",
+        "cost": 120
+      },
+      {
+        "name": "Skrorg Snowpelt Worlds Edge Superleague",
+        "cost": 240
+      },
+      {
+        "name": "Skrull Halfheight Worlds Edge Superleague",
+        "cost": 150
+      },
+      {
+        "name": "The Black Gobbo Badlands Brawl",
+        "cost": 210
+      },
+      {
+        "name": "The Mighty Zug Worlds Edge Superleague",
+        "cost": 220
+      },
+      {
+        "name": "Thorsson Stoutmead Worlds Edge Superleague",
+        "cost": 170
+      },
+      {
+        "name": "Varag Ghoul-Chewer Badlands Brawl",
+        "cost": 260
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Riotous Rookies 0-1",
+        "cost": 150
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -1078,6 +3418,126 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Barik Farblast Old World Classic",
+        "cost": 80
+      },
+      {
+        "name": "Cindy Piewhistle Old World Classic",
+        "cost": 100
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Griff Oberwald Old World Classic",
+        "cost": 300
+      },
+      {
+        "name": "Grombrindal Old World Classic",
+        "cost": 170
+      },
+      {
+        "name": "Helmut Wulf Old World Classic",
+        "cost": 140
+      },
+      {
+        "name": "Ivar Eriksson Old World Classic",
+        "cost": 215
+      },
+      {
+        "name": "Josef Bugman Old World Classic",
+        "cost": 180
+      },
+      {
+        "name": "Karla von Kill Old World Classic",
+        "cost": 210
+      },
+      {
+        "name": "Morg 'n' Thorg Old World Classic",
+        "cost": 360
+      },
+      {
+        "name": "Puggy Baconbreath Old World Classic",
+        "cost": 130
+      },
+      {
+        "name": "Skrorg Snowpelt Old World Classic",
+        "cost": 240
+      },
+      {
+        "name": "The Mighty Zug Old World Classic",
+        "cost": 220
+      },
+      {
+        "name": "Thorsson Stoutmead Old World Classic",
+        "cost": 170
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "orc": {
@@ -1133,6 +3593,114 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Bomber Dribblesnot Badlands Brawl",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Fungus the Loon Badlands Brawl",
+        "cost": 80
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "H'thark the Unstoppable Badlands Brawl",
+        "cost": 300
+      },
+      {
+        "name": "Morg 'n' Thorg Badlands Brawl",
+        "cost": 360
+      },
+      {
+        "name": "Nobbla Blackwart Badlands Brawl",
+        "cost": 120
+      },
+      {
+        "name": "Rashnak Backstabber Badlands Brawl",
+        "cost": 130
+      },
+      {
+        "name": "Ripper Bolgrot Badlands Brawl",
+        "cost": 250
+      },
+      {
+        "name": "Scrappa Sorehead Badlands Brawl",
+        "cost": 120
+      },
+      {
+        "name": "The Black Gobbo Badlands Brawl",
+        "cost": 210
+      },
+      {
+        "name": "Varag Ghoul-Chewer Badlands Brawl",
+        "cost": 260
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "shambling-undead": {
@@ -1175,6 +3743,98 @@
         "cost": 70,
         "max": 8,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Captain Karina von Riesz Sylvanian Spotlight",
+        "cost": 230
+      },
+      {
+        "name": "Count Luthor von Dragenborg Sylvanian Spotlight",
+        "cost": 300
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Gretchen Wachter Sylvanian Spotlight",
+        "cost": 180
+      },
+      {
+        "name": "Ivan 'the Animal' Deathshroud Sylvanian Spotlight",
+        "cost": 210
+      },
+      {
+        "name": "Skrull Halfheight Sylvanian Spotlight",
+        "cost": 150
+      },
+      {
+        "name": "Wilhelm Chaney Sylvanian Spotlight",
+        "cost": 220
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Mortuary Assistant 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -1223,6 +3883,118 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Bomber Dribblesnot Underworld Challenge",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Fungus the Loon Underworld Challenge",
+        "cost": 80
+      },
+      {
+        "name": "Glart Smashrip Underworld Challenge",
+        "cost": 175
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Hakflem Skuttlespike Underworld Challenge",
+        "cost": 200
+      },
+      {
+        "name": "Kreek Rustgouger Underworld Challenge",
+        "cost": 180
+      },
+      {
+        "name": "Morg 'n' Thorg Underworld Challenge",
+        "cost": 360
+      },
+      {
+        "name": "Nobbla Blackwart Underworld Challenge",
+        "cost": 120
+      },
+      {
+        "name": "Ripper Bolgrot Underworld Challenge",
+        "cost": 250
+      },
+      {
+        "name": "Scrappa Sorehead Underworld Challenge",
+        "cost": 120
+      },
+      {
+        "name": "Skitter Stab-Stab Underworld Challenge",
+        "cost": 170
+      },
+      {
+        "name": "The Black Gobbo Underworld Challenge",
+        "cost": 210
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -1278,6 +4050,122 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Bomber Dribblesnot Underworld Challenge",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Fungus the Loon Underworld Challenge",
+        "cost": 80
+      },
+      {
+        "name": "Glart Smashrip Underworld Challenge",
+        "cost": 175
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Hakflem Skuttlespike Underworld Challenge",
+        "cost": 200
+      },
+      {
+        "name": "Kreek Rustgouger Underworld Challenge",
+        "cost": 180
+      },
+      {
+        "name": "Morg 'n' Thorg Underworld Challenge",
+        "cost": 360
+      },
+      {
+        "name": "Nobbla Blackwart Underworld Challenge",
+        "cost": 120
+      },
+      {
+        "name": "Ripper Bolgrot Underworld Challenge",
+        "cost": 250
+      },
+      {
+        "name": "Scrappa Sorehead Underworld Challenge",
+        "cost": 120
+      },
+      {
+        "name": "Skitter Stab-Stab Underworld Challenge",
+        "cost": 170
+      },
+      {
+        "name": "The Black Gobbo Underworld Challenge",
+        "cost": 210
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-6",
+        "cost": 50
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Riotous Rookies 0-1",
+        "cost": 150
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 80
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "tomb-kings": {
@@ -1313,6 +4201,98 @@
         "cost": 60,
         "max": 8,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Captain Karina von Riesz Sylvanian Spotlight",
+        "cost": 230
+      },
+      {
+        "name": "Count Luthor von Dragenborg Sylvanian Spotlight",
+        "cost": 300
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Gretchen Wachter Sylvanian Spotlight",
+        "cost": 180
+      },
+      {
+        "name": "Ivan 'the Animal' Deathshroud Sylvanian Spotlight",
+        "cost": 210
+      },
+      {
+        "name": "Skrull Halfheight Sylvanian Spotlight",
+        "cost": 150
+      },
+      {
+        "name": "Wilhelm Chaney Sylvanian Spotlight",
+        "cost": 220
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Mortuary Assistant 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   },
@@ -1382,6 +4362,118 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Bomber Dribblesnot Underworld Challenge",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Fungus the Loon Underworld Challenge",
+        "cost": 80
+      },
+      {
+        "name": "Glart Smashrip Underworld Challenge",
+        "cost": 175
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Hakflem Skuttlespike Underworld Challenge",
+        "cost": 200
+      },
+      {
+        "name": "Kreek Rustgouger Underworld Challenge",
+        "cost": 180
+      },
+      {
+        "name": "Morg 'n' Thorg Underworld Challenge",
+        "cost": 360
+      },
+      {
+        "name": "Nobbla Blackwart Underworld Challenge",
+        "cost": 120
+      },
+      {
+        "name": "Ripper Bolgrot Underworld Challenge",
+        "cost": 250
+      },
+      {
+        "name": "Scrappa Sorehead Underworld Challenge",
+        "cost": 120
+      },
+      {
+        "name": "Skitter Stab-Stab Underworld Challenge",
+        "cost": 170
+      },
+      {
+        "name": "The Black Gobbo Underworld Challenge",
+        "cost": 210
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-6",
+        "cost": 50
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 80
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "vampire": {
@@ -1430,6 +4522,102 @@
         "max": 1,
         "type": "extra"
       }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Captain Karina von Riesz Sylvanian Spotlight",
+        "cost": 230
+      },
+      {
+        "name": "Count Luthor von Dragenborg Sylvanian Spotlight",
+        "cost": 300
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Gretchen Wachter Sylvanian Spotlight",
+        "cost": 180
+      },
+      {
+        "name": "Ivan 'the Animal' Deathshroud Sylvanian Spotlight",
+        "cost": 210
+      },
+      {
+        "name": "Skrull Halfheight Sylvanian Spotlight",
+        "cost": 150
+      },
+      {
+        "name": "Wilhelm Chaney Sylvanian Spotlight",
+        "cost": 220
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Mortuary Assistant 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
+      }
     ]
   },
   "wood-elf": {
@@ -1477,6 +4665,134 @@
         "cost": 50,
         "max": 1,
         "type": "extra"
+      }
+    ],
+    "starPlayers": [
+      {
+        "name": "Akhorne the Squirrel",
+        "cost": 80
+      },
+      {
+        "name": "Crumbleberry",
+        "cost": 125
+      },
+      {
+        "name": "Deeproot Strongbranch Woodland League",
+        "cost": 280
+      },
+      {
+        "name": "Eldril Sidewinder Elven Kingdom League",
+        "cost": 220
+      },
+      {
+        "name": "Gloriel Summerbloom Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Grak",
+        "cost": 125
+      },
+      {
+        "name": "Jeremiah Kool Elven Kingdom League",
+        "cost": 300
+      },
+      {
+        "name": "Jordell Freshbreeze Elven Kingdom League, Woodland League",
+        "cost": 280
+      },
+      {
+        "name": "Kiroth Krakeneye Elven Kingdom League",
+        "cost": 160
+      },
+      {
+        "name": "Lucien Swift Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Maple Highgrove Woodland League",
+        "cost": 210
+      },
+      {
+        "name": "Morg 'n' Thorg Elven Kingdom League, Woodland League",
+        "cost": 360
+      },
+      {
+        "name": "Rodney Roachbait Woodland League",
+        "cost": 70
+      },
+      {
+        "name": "Roxanna Darknail Elven Kingdom League",
+        "cost": 270
+      },
+      {
+        "name": "Swiftvine Glimmershard Woodland League",
+        "cost": 110
+      },
+      {
+        "name": "Valen Swift Elven Kingdom League",
+        "cost": 150
+      },
+      {
+        "name": "Willow Rosebark Woodland League",
+        "cost": 160
+      },
+      {
+        "name": "Zolcath the Zoat Elven Kingdom League",
+        "cost": 220
+      }
+    ],
+    "inducements": [
+      {
+        "name": "Blitzer's Best Kegs 0-2",
+        "cost": 50
+      },
+      {
+        "name": "Bribes 0-3",
+        "cost": 100
+      },
+      {
+        "name": "Extra Team Training 0-8",
+        "cost": 100
+      },
+      {
+        "name": "Halfling Master Chef 0-1",
+        "cost": 300
+      },
+      {
+        "name": "Part-time Assistant Coaches 0-5",
+        "cost": 20
+      },
+      {
+        "name": "Prayers to Nuffle 0-3",
+        "cost": 10
+      },
+      {
+        "name": "Team Mascot 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Temp Agency Cheerleaders 0-5",
+        "cost": 5
+      },
+      {
+        "name": "Wandering Apothecary 0-2",
+        "cost": 100
+      },
+      {
+        "name": "Weather Mage 0-1",
+        "cost": 25
+      },
+      {
+        "name": "Dodgy League Rep 0-1",
+        "cost": 120
+      },
+      {
+        "name": "Josef Bugman 0-1",
+        "cost": 100
+      },
+      {
+        "name": "Sports-wizard 0-1",
+        "cost": 150
       }
     ]
   }

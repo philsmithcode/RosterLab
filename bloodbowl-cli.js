@@ -36,6 +36,9 @@ const settings = {
   requiredExtras: args.requireExtra ? parseRequirements(args.requireExtra) : [], // e.g. "--requireExtra Bribe:1"
   requireMode: (args.requireMode || 'all').toLowerCase(), // all | any
   requireExtraMode: (args.requireExtraMode || 'all').toLowerCase(), // all | any
+  stars: args.stars ? parseStars(args.stars) : [],
+  requiredStars: args.stars ? parseStars(args.stars) : [],
+  maxStars: 2,
 };
 
 if (Number.isNaN(settings.tv) || settings.tv <= 0) {
@@ -62,8 +65,19 @@ if (!['all', 'any'].includes(settings.requireExtraMode)) {
   console.error('Invalid --requireExtraMode. Use "all" or "any".');
   process.exit(1);
 }
+if (settings.stars.length > settings.maxStars) {
+  console.error(`You can select at most ${settings.maxStars} stars.`);
+  process.exit(1);
+}
+const availableStars = (team.starPlayers || []).map(s => s.name.toLowerCase());
+const missingStars = settings.stars.filter(s => !availableStars.includes(s));
+if (missingStars.length) {
+  console.error(`Unknown star(s): ${missingStars.join(', ')}. Available: ${availableStars.join(', ') || 'none'}`);
+  process.exit(1);
+}
 
-const combos = generateCombos(team.positions, settings);
+const positions = buildPositions(team, settings.stars, settings.maxStars);
+const combos = generateCombos(positions, settings);
 
 if (!combos.length) {
   console.log('No combinations found under the given constraints.');
@@ -77,7 +91,7 @@ function generateCombos(positions, settings) {
   const path = [];
   let bestCost = 0;
 
-  function dfs(index, remainingCost, totalPlayers) {
+  function dfs(index, remainingCost, totalPlayers, starCount) {
     if (totalPlayers >= settings.minPlayers) {
       const spent = settings.tv - remainingCost;
       const summary = path.reduce(
@@ -88,6 +102,11 @@ function generateCombos(positions, settings) {
           if (type === 'extra' && name === 'reroll') acc.rerolls += p.count;
           if (type === 'player') {
             const isLineman = p.role === 'lineman' || name.includes('lineman');
+            const isStar = p.role === 'star';
+            if (isStar) {
+              acc.stars += p.count;
+              acc.starCounts[name] = (acc.starCounts[name] ?? 0) + p.count;
+            }
             if (isLineman) acc.lineman += p.count;
             else acc.positionals += p.count;
           }
@@ -105,7 +124,7 @@ function generateCombos(positions, settings) {
           }
           return acc;
         },
-        { rerolls: 0, positionals: 0, lineman: 0, required: {}, requiredExtras: {} }
+        { rerolls: 0, positionals: 0, lineman: 0, stars: 0, required: {}, requiredExtras: {}, starCounts: {} }
       );
 
       const missingRequired = settings.required && settings.required.some(
@@ -113,6 +132,9 @@ function generateCombos(positions, settings) {
       );
       const missingRequiredExtras = settings.requiredExtras && settings.requiredExtras.some(
         r => (summary.requiredExtras[r.name] ?? 0) < r.count
+      );
+      const missingRequiredStars = settings.requiredStars && settings.requiredStars.some(
+        s => (summary.starCounts[s] ?? 0) < 1
       );
 
       const failsRequiredAny = settings.requireMode === 'any' &&
@@ -127,6 +149,8 @@ function generateCombos(positions, settings) {
 
       if (
         (settings.rerolls !== undefined && summary.rerolls !== settings.rerolls) ||
+        summary.stars > settings.maxStars ||
+        missingRequiredStars ||
         failsRequiredAny ||
         failsRequiredAll ||
         failsExtrasAny ||
@@ -160,19 +184,22 @@ function generateCombos(positions, settings) {
 
     const pos = positions[index];
     const isPlayer = (pos.type ?? 'player') === 'player';
+    const isStar = pos.role === 'star';
     const maxByCost = Math.floor(remainingCost / pos.cost);
     const playerRoom = isPlayer ? settings.maxPlayers - totalPlayers : Number.MAX_SAFE_INTEGER;
-    const maxCount = Math.min(pos.max, maxByCost, playerRoom);
+    const starRoom = isStar ? settings.maxStars - starCount : Number.MAX_SAFE_INTEGER;
+    const maxCount = Math.min(pos.max, maxByCost, playerRoom, starRoom);
 
     for (let count = 0; count <= maxCount; count++) {
-      path.push({ name: pos.name, count, cost: pos.cost, type: pos.type, role: pos.role });
+          path.push({ name: pos.name, count, cost: pos.cost, type: pos.type, role: pos.role });
       const nextPlayers = isPlayer ? totalPlayers + count : totalPlayers;
-      dfs(index + 1, remainingCost - count * pos.cost, nextPlayers);
+      const nextStars = isStar ? starCount + count : starCount;
+      dfs(index + 1, remainingCost - count * pos.cost, nextPlayers, nextStars);
       path.pop();
     }
   }
 
-  dfs(0, settings.tv, 0);
+  dfs(0, settings.tv, 0, 0);
 
   const sorted = results
     .filter(r => r.totalPlayers <= settings.maxPlayers)
@@ -250,6 +277,15 @@ function parseRequirements(str) {
   return parsed.length ? parsed : null;
 }
 
+function parseStars(str) {
+  const unique = new Set();
+  str.split(',').forEach(s => {
+    const t = s.trim().toLowerCase();
+    if (t) unique.add(t);
+  });
+  return Array.from(unique).slice(0, 2);
+}
+
 function loadRosters() {
   const dataPath = path.join(__dirname, 'bb2025_rosters.json');
   const raw = fs.readFileSync(dataPath, 'utf8');
@@ -268,6 +304,15 @@ function addAliases(map) {
   return map;
 }
 
+function buildPositions(team, starNames, maxStars) {
+  const base = team.positions || [];
+  const stars = (team.starPlayers || [])
+    .filter(sp => starNames.includes(sp.name.toLowerCase()))
+    .slice(0, maxStars)
+    .map(sp => ({ name: sp.name, cost: sp.cost, max: 1, type: 'player', role: 'star' }));
+  return [...base, ...stars];
+}
+
 function printHelp() {
   console.log(`
 Blood Bowl roster CLI
@@ -284,6 +329,8 @@ Options:
   --requireMode <all|any> Require all listed positionals (default) or any of them.
   --requireExtra <Name:cnt> Require specific extras; supports comma lists, e.g. "Bribe:1,Apothecary:1" (optional).
   --requireExtraMode <all|any> Require all listed extras (default) or any of them.
+  --stars <Name,Name>  Optional list of up to 2 star players to include.
+                        If provided, each listed star is required in the roster (max 2).
   --help               Show this message.
 
 Example:

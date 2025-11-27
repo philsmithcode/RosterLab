@@ -44,6 +44,8 @@ def get_rosters() -> Dict[str, Dict]:
         rosters[key] = {
             "name": team["name"],
             "positions": [Position(**pos) for pos in team["positions"]],
+            "starPlayers": team.get("starPlayers", []),
+            "inducements": team.get("inducements", []),
         }
     apply_aliases(rosters)
     return rosters
@@ -60,12 +62,44 @@ def apply_aliases(rosters: Dict[str, Dict]) -> None:
             rosters[alias] = rosters[key]
 
 
-def generate_combos(positions: List[Position], tv: int, min_players: int, max_players: int, max_results: int, sort: str) -> List[Combo]:
+def build_positions(team: Dict, star_names: List[str], max_stars: int) -> List[Position]:
+    base = team["positions"]
+    stars = []
+    for sp in team.get("starPlayers", []):
+        if sp["name"].lower() in star_names:
+            stars.append(Position(name=sp["name"], cost=sp["cost"], max=1, type="player", role="star"))
+        if len(stars) >= max_stars:
+            break
+    return [*base, *stars]
+
+
+def parse_stars(arg: Optional[str]) -> List[str]:
+    if not arg:
+        return []
+    seen = []
+    for s in arg.split(","):
+        t = s.strip().lower()
+        if t and t not in seen:
+            seen.append(t)
+        if len(seen) >= 2:
+            break
+    return seen
+
+
+def generate_combos(
+    positions: List[Position],
+    tv: int,
+    min_players: int,
+    max_players: int,
+    max_results: int,
+    sort: str,
+    max_stars: int,
+) -> List[Combo]:
     results: List[Combo] = []
     path: List[tuple] = []
     collect_cap = max_results * 500  # safety valve to avoid runaway searches
 
-    def dfs(index: int, remaining: int, total_players: int) -> None:
+    def dfs(index: int, remaining: int, total_players: int, stars: int) -> None:
         if total_players >= min_players:
             results.append(
                 Combo(players=list(path), cost=tv - remaining, total_players=total_players)
@@ -79,17 +113,20 @@ def generate_combos(positions: List[Position], tv: int, min_players: int, max_pl
         is_player = (pos.type or "player") == "player"
         max_by_cost = remaining // pos.cost
         player_room = max_players - total_players if is_player else max_players
-        max_count = min(pos.max, max_by_cost, player_room)
+        is_star = (pos.role or "").lower() == "star"
+        star_room = max_stars - stars if is_star else max_stars
+        max_count = min(pos.max, max_by_cost, player_room, star_room)
 
         for count in range(max_count + 1):
             path.append((pos.name, count, pos.cost))
             next_players = total_players + count if is_player else total_players
-            dfs(index + 1, remaining - count * pos.cost, next_players)
+            next_stars = stars + count if is_star else stars
+            dfs(index + 1, remaining - count * pos.cost, next_players, next_stars)
             path.pop()
             if len(results) >= collect_cap:
                 return
 
-    dfs(0, tv, 0)
+    dfs(0, tv, 0, 0)
 
     filtered = [r for r in results if r.total_players <= max_players]
     if sort == "players":
@@ -108,6 +145,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-players", type=int, default=16, help="Maximum player count (default 16).")
     parser.add_argument("--max-results", type=int, default=30, help="Limit number of combos returned (default 30).")
     parser.add_argument("--sort", choices=["cost", "players"], default="cost", help="Sort combos by total cost or player count.")
+    parser.add_argument("--stars", help="Comma list of up to 2 star players to include.")
     return parser.parse_args()
 
 
@@ -119,13 +157,27 @@ def main() -> None:
         print(f"Unknown team '{args.team}'. Known teams: {', '.join(rosters.keys())}")
         return
 
+    max_stars = 2
+    stars = parse_stars(args.stars)
+    if len(stars) > max_stars:
+        print(f"Select at most {max_stars} stars.")
+        return
+    available_stars = [sp["name"].lower() for sp in team.get("starPlayers", [])]
+    missing = [s for s in stars if s not in available_stars]
+    if missing:
+        print(f"Unknown star(s): {', '.join(missing)}. Available: {', '.join(available_stars) or 'none'}.")
+        return
+
+    positions = build_positions(team, stars, max_stars)
+
     combos = generate_combos(
-        positions=team["positions"],
+        positions=positions,
         tv=args.tv,
         min_players=args.min_players,
         max_players=args.max_players,
         max_results=args.max_results,
         sort=args.sort,
+        max_stars=max_stars,
     )
 
     if not combos:

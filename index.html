@@ -140,6 +140,9 @@
       <label>Require extras (comma list, e.g. Bribe:1,Apothecary:1)
         <input type="text" id="requireExtra" placeholder="Bribe:1,Apothecary:1" />
       </label>
+      <label>Bribes (exact, optional)
+        <input type="number" id="bribes" placeholder="leave blank" min="0" />
+      </label>
       <label>Star player 1 (optional)
         <select id="star1"></select>
       </label>
@@ -172,12 +175,12 @@
     const teamSelect = document.getElementById('team');
     const starSelect1 = document.getElementById('star1');
     const starSelect2 = document.getElementById('star2');
-    const inducementList = document.getElementById('inducementList');
+    const bribesInput = document.getElementById('bribes');
     const rosterReady = loadRosters();
 
     teamSelect.addEventListener('change', () => {
       populateStarSelects(teamSelect.value);
-      populateInducements(teamSelect.value);
+      updateBribeInput(teamSelect.value);
     });
 
     starSelect1.addEventListener('change', () => enforceDistinctStars(starSelect1, starSelect2));
@@ -205,6 +208,7 @@
         rosters = addAliases(await res.json());
         populateTeamSelect(rosters);
         populateStarSelects(teamSelect.value);
+        updateBribeInput(teamSelect.value);
       } catch (err) {
         console.error('Failed to load rosters', err);
         errorEl.textContent = 'Could not load roster data.';
@@ -224,8 +228,8 @@
           opt.textContent = team.name;
           teamSelect.appendChild(opt);
         });
-      populateStarSelects(teamSelect.value);
-      populateInducements(teamSelect.value);
+        populateStarSelects(teamSelect.value);
+        updateBribeInput(teamSelect.value);
     }
 
     function populateStarSelects(teamKey) {
@@ -248,34 +252,29 @@
       });
     }
 
-    function populateInducements(teamKey) {
-      const roster = rosters[teamKey];
+    function getBribeInfo(teamKeyOrObj) {
+      const roster = typeof teamKeyOrObj === 'string' ? rosters[teamKeyOrObj] : teamKeyOrObj;
       const inds = roster?.inducements || [];
-      inducementList.innerHTML = '';
-      if (!inds.length) {
-        const none = document.createElement('div');
-        none.className = 'muted';
-        none.textContent = 'No inducements available for this team.';
-        inducementList.appendChild(none);
+      const found = inds.find(i => (i.name || '').toLowerCase().includes('bribe'));
+      if (!found) return null;
+      const maxMatch = /0-(\d+)/i.exec(found.name || '');
+      const max = maxMatch ? Number(maxMatch[1]) : (found.max ?? 3);
+      const cost = Number(found.cost) || 100;
+      return { cost, max };
+    }
+
+    function updateBribeInput(teamKey) {
+      const info = getBribeInfo(teamKey);
+      if (!info) {
+        bribesInput.value = '';
+        bribesInput.disabled = true;
+        bribesInput.placeholder = 'not available';
         return;
       }
-      inds.forEach(ind => {
-        const row = document.createElement('div');
-        row.className = 'row';
-        row.style.alignItems = 'center';
-        row.style.gap = '8px';
-        const label = document.createElement('div');
-        label.textContent = `${ind.name} (${ind.cost}k, max ${ind.max ?? 1})`;
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.min = '0';
-        input.max = String(ind.max ?? 1);
-        input.value = '0';
-        input.dataset.name = ind.name;
-        row.appendChild(label);
-        row.appendChild(input);
-        inducementList.appendChild(row);
-      });
+      bribesInput.disabled = false;
+      bribesInput.min = '0';
+      bribesInput.max = String(info.max);
+      bribesInput.placeholder = `0..${info.max} @ ${info.cost}k`;
     }
 
     function addAliases(map) {
@@ -308,14 +307,9 @@
         .filter(sp => starNames.map(s => s.toLowerCase()).includes(sp.name.toLowerCase()))
         .slice(0, maxStars)
         .map(sp => ({ name: sp.name, cost: sp.cost, max: 1, type: 'player', role: 'star' }));
-      const inducements = (team.inducements || []).map(ind => ({
-        name: ind.name,
-        cost: ind.cost,
-        max: ind.max ?? 1,
-        type: 'extra',
-        role: 'inducement',
-      }));
-      return [...base, ...stars, ...inducements];
+      const bribeInfo = getBribeInfo(team);
+      const bribe = bribeInfo ? [{ name: 'Bribe', cost: bribeInfo.cost, max: bribeInfo.max, type: 'extra', role: 'bribe' }] : [];
+      return [...base, ...stars, ...bribe];
     }
 
     function collectSettings() {
@@ -332,7 +326,7 @@
       const requireExtraMode = document.getElementById('requireExtraMode').value;
       const team = document.getElementById('team').value;
       const stars = Array.from(new Set([starSelect1.value, starSelect2.value].filter(Boolean)));
-      const inducements = [];
+      const bribesVal = document.getElementById('bribes').value;
 
       if (!team) throw new Error('Please select a team.');
       if (!tv || tv <= 0) throw new Error('Provide a positive TV in thousands.');
@@ -340,6 +334,13 @@
       const rerolls = rerollVal === '' ? undefined : Number(rerollVal);
       if (rerolls !== undefined && (Number.isNaN(rerolls) || rerolls < 0)) {
         throw new Error('Rerolls must be a non-negative number.');
+      }
+      const bribeInfo = getBribeInfo(team);
+      const bribes = bribesVal === '' ? undefined : Number(bribesVal);
+      if (bribes !== undefined) {
+        if (Number.isNaN(bribes) || bribes < 0) throw new Error('Bribes must be non-negative.');
+        if (bribeInfo && bribes > bribeInfo.max) throw new Error(`Bribes cannot exceed ${bribeInfo.max}.`);
+        if (!bribeInfo && bribes > 0) throw new Error('Bribes not available for this team.');
       }
 
       const required = require ? parseRequirements(require) : [];
@@ -350,7 +351,9 @@
       const availableStarNames = (rosters[team].starPlayers || []).map(s => s.name.toLowerCase());
       const missingStars = stars.filter(s => !availableStarNames.includes(s.toLowerCase()));
       if (missingStars.length) throw new Error(`Unknown star(s): ${missingStars.join(', ')}`);
-      // inducements removed
+      if (bribes !== undefined && bribes > 0) {
+        requiredExtras.push({ name: 'bribe', count: bribes });
+      }
 
       return {
         team,
@@ -365,7 +368,6 @@
         requireMode,
         requireExtraMode,
         stars,
-        inducements,
         maxStars: 2,
       };
     }
@@ -492,11 +494,6 @@
           if (
             (settings.rerolls !== undefined && summary.rerolls !== settings.rerolls) ||
             settings.stars.some(s => (summary.starCounts[s.toLowerCase()] ?? 0) < 1) ||
-            (settings.inducements || []).some(i => {
-              const name = (i.name || String(i)).toLowerCase();
-              const need = i.count ?? 1;
-              return (summary.inducementCounts[name] ?? 0) < need;
-            }) ||
             summary.stars > settings.maxStars ||
             failsRequiredAny ||
             failsRequiredAll ||
