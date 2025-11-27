@@ -228,8 +228,16 @@
           opt.textContent = team.name;
           teamSelect.appendChild(opt);
         });
-        populateStarSelects(teamSelect.value);
-        updateBribeInput(teamSelect.value);
+      if (teamSelect.options.length) {
+        // ensure a value is selected so downstream populators have a key
+        teamSelect.selectedIndex = 0;
+        const sel = teamSelect.value;
+        populateStarSelects(sel);
+        updateBribeInput(sel);
+      } else {
+        populateStarSelects('');
+        updateBribeInput('');
+      }
     }
 
     function populateStarSelects(teamKey) {
