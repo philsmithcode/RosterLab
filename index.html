@@ -140,12 +140,6 @@
       <label>Require extras (comma list, e.g. Bribe:1,Apothecary:1)
         <input type="text" id="requireExtra" placeholder="Bribe:1,Apothecary:1" />
       </label>
-      <label>Require positional (picker)
-        <select id="positionalSelect"></select>
-      </label>
-      <label>Count for selected positional
-        <input type="number" id="positionalCount" value="1" min="1" />
-      </label>
       <label>Require mode (positionals)
         <select id="requireMode">
           <option value="all">All (default)</option>
@@ -170,18 +164,11 @@
   <script>
     const rosters = getRosters();
     const teamSelect = document.getElementById('team');
-    const positionalSelect = document.getElementById('positionalSelect');
     Object.entries(rosters).forEach(([key, team]) => {
       const opt = document.createElement('option');
       opt.value = key;
       opt.textContent = team.name;
       teamSelect.appendChild(opt);
-    });
-
-    populatePositionalSelect(teamSelect.value || Object.keys(rosters)[0]);
-
-    teamSelect.addEventListener('change', (e) => {
-      populatePositionalSelect(e.target.value);
     });
 
     document.getElementById('generate').addEventListener('click', () => {
@@ -208,8 +195,6 @@
       const requireMode = document.getElementById('requireMode').value;
       const requireExtraMode = document.getElementById('requireExtraMode').value;
       const team = document.getElementById('team').value;
-      const positionalPick = document.getElementById('positionalSelect').value;
-      const positionalCount = Number(document.getElementById('positionalCount').value || 0);
 
       if (!team) throw new Error('Please select a team.');
       if (!tv || tv <= 0) throw new Error('Provide a positive TV in thousands.');
@@ -219,21 +204,10 @@
         throw new Error('Rerolls must be a non-negative number.');
       }
 
-      const parsedRequired = require ? parseRequirements(require) : [];
+      const required = require ? parseRequirements(require) : [];
       const requiredExtras = requireExtra ? parseRequirements(requireExtra) : [];
-      if (require && (!parsedRequired || !parsedRequired.length)) throw new Error('Invalid require format. Use Name:count.');
+      if (require && (!required || !required.length)) throw new Error('Invalid require format. Use Name:count.');
       if (requireExtra && (!requiredExtras || !requiredExtras.length)) throw new Error('Invalid requireExtra format. Use Name:count.');
-      if (positionalPick && (Number.isNaN(positionalCount) || positionalCount <= 0)) {
-        throw new Error('Pick a positional count of at least 1.');
-      }
-
-      const pickerRequirement = positionalPick
-        ? { name: positionalPick.toLowerCase(), count: positionalCount }
-        : null;
-      const required = [
-        ...(parsedRequired || []),
-        ...(pickerRequirement ? [pickerRequirement] : []),
-      ];
 
       return {
         team,
@@ -433,25 +407,6 @@
         });
     }
 
-    function populatePositionalSelect(teamKey) {
-      positionalSelect.innerHTML = '';
-      const blank = document.createElement('option');
-      blank.value = '';
-      blank.textContent = 'None (optional)';
-      positionalSelect.appendChild(blank);
-
-      const team = rosters[teamKey];
-      if (!team) return;
-      team.positions
-        .filter(pos => (pos.type ?? 'player') === 'player')
-        .forEach(pos => {
-          const opt = document.createElement('option');
-          opt.value = pos.name;
-          opt.textContent = `${pos.name} (max ${pos.max})`;
-          positionalSelect.appendChild(opt);
-        });
-    }
-
     function getRosters() {
       return {
         humans: {
@@ -475,7 +430,7 @@
           name: 'Orcs',
           positions: [
             { name: 'Troll', cost: 115, max: 1, type: 'player' },
-            { name: 'Black Orc', cost: 90, max: 4, type: 'player' },
+            { name: 'Big Un Blocker', cost: 95, max: 2, type: 'player' },
             { name: 'Blitzer', cost: 90, max: 4, type: 'player' },
             { name: 'Thrower', cost: 65, max: 2, type: 'player' },
             { name: 'Lineman', cost: 50, max: 16, type: 'player', role: 'lineman' },
