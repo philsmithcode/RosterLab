@@ -140,6 +140,12 @@
       <label>Require extras (comma list, e.g. Bribe:1,Apothecary:1)
         <input type="text" id="requireExtra" placeholder="Bribe:1,Apothecary:1" />
       </label>
+      <label>Star player 1 (optional)
+        <select id="star1"></select>
+      </label>
+      <label>Star player 2 (optional)
+        <select id="star2"></select>
+      </label>
       <label>Require mode (positionals)
         <select id="requireMode">
           <option value="all">All (default)</option>
@@ -164,7 +170,18 @@
   <script>
     let rosters = {};
     const teamSelect = document.getElementById('team');
+    const starSelect1 = document.getElementById('star1');
+    const starSelect2 = document.getElementById('star2');
+    const inducementList = document.getElementById('inducementList');
     const rosterReady = loadRosters();
+
+    teamSelect.addEventListener('change', () => {
+      populateStarSelects(teamSelect.value);
+      populateInducements(teamSelect.value);
+    });
+
+    starSelect1.addEventListener('change', () => enforceDistinctStars(starSelect1, starSelect2));
+    starSelect2.addEventListener('change', () => enforceDistinctStars(starSelect2, starSelect1));
 
     document.getElementById('generate').addEventListener('click', async () => {
       await rosterReady;
@@ -172,7 +189,8 @@
       errorEl.textContent = '';
       try {
         const settings = collectSettings();
-        const combos = generateCombos(rosters[settings.team].positions, settings);
+        const positions = buildPositions(rosters[settings.team], settings.stars, settings.maxStars);
+        const combos = generateCombos(positions, settings);
         renderResults(rosters[settings.team].name, settings, combos);
       } catch (err) {
         errorEl.textContent = err.message || String(err);
@@ -186,6 +204,7 @@
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         rosters = addAliases(await res.json());
         populateTeamSelect(rosters);
+        populateStarSelects(teamSelect.value);
       } catch (err) {
         console.error('Failed to load rosters', err);
         errorEl.textContent = 'Could not load roster data.';
@@ -205,6 +224,58 @@
           opt.textContent = team.name;
           teamSelect.appendChild(opt);
         });
+      populateStarSelects(teamSelect.value);
+      populateInducements(teamSelect.value);
+    }
+
+    function populateStarSelects(teamKey) {
+      const roster = rosters[teamKey];
+      const stars = roster?.starPlayers || [];
+      const selects = [starSelect1, starSelect2];
+      selects.forEach(sel => {
+        sel.innerHTML = '';
+        const none = document.createElement('option');
+        none.value = '';
+        none.textContent = stars.length ? 'None' : 'No stars available';
+        sel.appendChild(none);
+        stars.forEach(sp => {
+          const opt = document.createElement('option');
+          opt.value = sp.name;
+          opt.textContent = `${sp.name} (${sp.cost}k)`;
+          sel.appendChild(opt);
+        });
+        sel.disabled = stars.length === 0;
+      });
+    }
+
+    function populateInducements(teamKey) {
+      const roster = rosters[teamKey];
+      const inds = roster?.inducements || [];
+      inducementList.innerHTML = '';
+      if (!inds.length) {
+        const none = document.createElement('div');
+        none.className = 'muted';
+        none.textContent = 'No inducements available for this team.';
+        inducementList.appendChild(none);
+        return;
+      }
+      inds.forEach(ind => {
+        const row = document.createElement('div');
+        row.className = 'row';
+        row.style.alignItems = 'center';
+        row.style.gap = '8px';
+        const label = document.createElement('div');
+        label.textContent = `${ind.name} (${ind.cost}k, max ${ind.max ?? 1})`;
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.min = '0';
+        input.max = String(ind.max ?? 1);
+        input.value = '0';
+        input.dataset.name = ind.name;
+        row.appendChild(label);
+        row.appendChild(input);
+        inducementList.appendChild(row);
+      });
     }
 
     function addAliases(map) {
@@ -217,6 +288,34 @@
         if (map[key]) map[alias] = map[key];
       });
       return map;
+    }
+
+    function enforceDistinct(changed, other) {
+      if (changed.value && changed.value === other.value) {
+        other.value = '';
+      }
+    }
+
+    function enforceDistinctStars(changed, other) {
+      if (changed.value && changed.value === other.value) {
+        other.value = '';
+      }
+    }
+
+    function buildPositions(team, starNames, maxStars) {
+      const base = team.positions || [];
+      const stars = (team.starPlayers || [])
+        .filter(sp => starNames.map(s => s.toLowerCase()).includes(sp.name.toLowerCase()))
+        .slice(0, maxStars)
+        .map(sp => ({ name: sp.name, cost: sp.cost, max: 1, type: 'player', role: 'star' }));
+      const inducements = (team.inducements || []).map(ind => ({
+        name: ind.name,
+        cost: ind.cost,
+        max: ind.max ?? 1,
+        type: 'extra',
+        role: 'inducement',
+      }));
+      return [...base, ...stars, ...inducements];
     }
 
     function collectSettings() {
@@ -232,6 +331,8 @@
       const requireMode = document.getElementById('requireMode').value;
       const requireExtraMode = document.getElementById('requireExtraMode').value;
       const team = document.getElementById('team').value;
+      const stars = Array.from(new Set([starSelect1.value, starSelect2.value].filter(Boolean)));
+      const inducements = [];
 
       if (!team) throw new Error('Please select a team.');
       if (!tv || tv <= 0) throw new Error('Provide a positive TV in thousands.');
@@ -245,6 +346,11 @@
       const requiredExtras = requireExtra ? parseRequirements(requireExtra) : [];
       if (require && (!required || !required.length)) throw new Error('Invalid require format. Use Name:count.');
       if (requireExtra && (!requiredExtras || !requiredExtras.length)) throw new Error('Invalid requireExtra format. Use Name:count.');
+      if (stars.length > 2) throw new Error('Select at most 2 stars.');
+      const availableStarNames = (rosters[team].starPlayers || []).map(s => s.name.toLowerCase());
+      const missingStars = stars.filter(s => !availableStarNames.includes(s.toLowerCase()));
+      if (missingStars.length) throw new Error(`Unknown star(s): ${missingStars.join(', ')}`);
+      // inducements removed
 
       return {
         team,
@@ -258,6 +364,9 @@
         requiredExtras,
         requireMode,
         requireExtraMode,
+        stars,
+        inducements,
+        maxStars: 2,
       };
     }
 
@@ -272,7 +381,8 @@
       if (!combos.length) {
         const none = document.createElement('div');
         none.className = 'error';
-        none.textContent = 'No combinations found under the given constraints.';
+        const stars = settings.stars && settings.stars.length ? ` (selected stars required: ${settings.stars.join(', ')})` : '';
+        none.textContent = `No combinations found under the given constraints${stars ? '; try raising TV or lowering min players so the stars fit' : ''}.`;
         container.appendChild(none);
         return;
       }
@@ -305,6 +415,7 @@
         card.appendChild(list);
         container.appendChild(card);
       });
+
     }
 
     function parseRequirements(str) {
@@ -327,17 +438,24 @@
       const path = [];
       let bestCost = 0;
 
-      function dfs(index, remainingCost, totalPlayers) {
+      function dfs(index, remainingCost, totalPlayers, starCount) {
         if (totalPlayers >= settings.minPlayers) {
           const spent = settings.tv - remainingCost;
           const summary = path.reduce(
             (acc, p) => {
               if (!p.count) return acc;
               const type = p.type ?? 'player';
-              const name = (p.name || '').toLowerCase();
-              if (type === 'extra' && name === 'reroll') acc.rerolls += p.count;
+            const name = (p.name || '').toLowerCase();
+            if (type === 'extra') {
+              if (name === 'reroll') acc.rerolls += p.count;
+            }
               if (type === 'player') {
                 const isLineman = p.role === 'lineman' || name.includes('lineman');
+                const isStar = p.role === 'star';
+                if (isStar) {
+                  acc.stars += p.count;
+                  acc.starCounts[name] = (acc.starCounts[name] ?? 0) + p.count;
+                }
                 if (isLineman) acc.lineman += p.count;
                 else acc.positionals += p.count;
               }
@@ -351,7 +469,7 @@
               }
               return acc;
             },
-            { rerolls: 0, positionals: 0, lineman: 0, required: {}, requiredExtras: {} }
+            { rerolls: 0, positionals: 0, lineman: 0, stars: 0, required: {}, requiredExtras: {}, starCounts: {} }
           );
 
           const missingRequired = settings.required && settings.required.some(
@@ -373,6 +491,13 @@
 
           if (
             (settings.rerolls !== undefined && summary.rerolls !== settings.rerolls) ||
+            settings.stars.some(s => (summary.starCounts[s.toLowerCase()] ?? 0) < 1) ||
+            (settings.inducements || []).some(i => {
+              const name = (i.name || String(i)).toLowerCase();
+              const need = i.count ?? 1;
+              return (summary.inducementCounts[name] ?? 0) < need;
+            }) ||
+            summary.stars > settings.maxStars ||
             failsRequiredAny ||
             failsRequiredAll ||
             failsExtrasAny ||
@@ -406,19 +531,22 @@
 
         const pos = positions[index];
         const isPlayer = (pos.type ?? 'player') === 'player';
+        const isStar = pos.role === 'star';
         const maxByCost = Math.floor(remainingCost / pos.cost);
         const playerRoom = isPlayer ? settings.maxPlayers - totalPlayers : Number.MAX_SAFE_INTEGER;
-        const maxCount = Math.min(pos.max, maxByCost, playerRoom);
+        const starRoom = isStar ? settings.maxStars - starCount : Number.MAX_SAFE_INTEGER;
+        const maxCount = Math.min(pos.max, maxByCost, playerRoom, starRoom);
 
         for (let count = 0; count <= maxCount; count++) {
           path.push({ name: pos.name, count, cost: pos.cost, type: pos.type, role: pos.role });
           const nextPlayers = isPlayer ? totalPlayers + count : totalPlayers;
-          dfs(index + 1, remainingCost - count * pos.cost, nextPlayers);
+          const nextStars = isStar ? starCount + count : starCount;
+          dfs(index + 1, remainingCost - count * pos.cost, nextPlayers, nextStars);
           path.pop();
         }
       }
 
-      dfs(0, settings.tv, 0);
+      dfs(0, settings.tv, 0, 0);
 
       return results
         .filter(r => r.totalPlayers <= settings.maxPlayers)
