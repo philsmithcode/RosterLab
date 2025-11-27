@@ -271,9 +271,9 @@ function getRosters() {
       name: 'Orcs',
       positions: [
         { name: 'Troll', cost: 115, max: 1, type: 'player' },
-        { name: 'Black Orc', cost: 90, max: 2, type: 'player' },
-        { name: 'Blitzer', cost: 90, max: 2, type: 'player' },
-        { name: 'Thrower', cost: 65, max: 2, type: 'player' },
+        { name: 'Big Un Blocker', cost: 95, max: 2, type: 'player' },
+        { name: 'Blitzer', cost: 85, max: 2, type: 'player' },
+        { name: 'Thrower', cost: 75, max: 2, type: 'player' },
         { name: 'Lineman', cost: 50, max: 16, type: 'player', role: 'lineman' },
         { name: 'Goblin', cost: 40, max: 4, type: 'player' },
         { name: 'Reroll', cost: 60, max: 8, type: 'extra' },
