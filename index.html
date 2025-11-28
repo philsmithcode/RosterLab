@@ -64,6 +64,23 @@
       transition: transform 120ms ease, box-shadow 120ms ease;
     }
     button:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(56,189,248,0.3); }
+    .icon-btn {
+      width: auto;
+      min-width: 36px;
+      padding: 6px 10px;
+      font-size: 14px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .icon-btn.secondary {
+      background: #0b162c;
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+    .icon-btn.secondary:hover { box-shadow: none; transform: translateY(-1px); }
     .row {
       display: flex;
       gap: 10px;
@@ -108,7 +125,12 @@
 </head>
 <body>
   <div class="card">
-    <h1>RosterLab v0.1</h1>
+    <div class="row" style="justify-content: space-between; align-items: center; margin-top: 0;">
+      <h1 style="margin: 0;">RosterLab v0.1</h1>
+      <button id="guideToggle" type="button" style="max-width: 160px;">Show guide</button>
+    </div>
+    <p id="userGuide" class="muted" style="margin-top: 10px; display: none;">Use the tool to pick your team, set your TV (in thousands), choose min/max players, and decide how many results you want per page. You can sort by total cost or by number of players, and even lock in exact rerolls if you like. If you want to force certain choices—like minimum numbers of positionals, up to two star players, or a set number of bribes—add those too. Hit Generate to see valid roster combinations, then flip through the pages to explore them. If nothing appears, ease your constraints by raising TV, lowering player minimums, or relaxing forced choices. Tweak, regenerate, and experiment until you find the perfect Blood Bowl roster.</p>
+
     <div class="grid">
       <label>Team
         <select id="team"></select>
@@ -171,6 +193,8 @@
     const bribesInput = document.getElementById('bribes');
     const positionalList = document.getElementById('positionalList');
     const rosterReady = loadRosters();
+    const guideToggle = document.getElementById('guideToggle');
+    const userGuide = document.getElementById('userGuide');
 
     teamSelect.addEventListener('change', () => {
       populateStarSelects(teamSelect.value);
@@ -213,6 +237,12 @@
         currentPage++;
         renderResults(lastCombos.teamName, lastCombos.settings, lastCombos.combos);
       }
+    });
+
+    guideToggle.addEventListener('click', () => {
+      const hidden = userGuide.style.display === 'none';
+      userGuide.style.display = hidden ? 'block' : 'none';
+      guideToggle.textContent = hidden ? 'Hide guide' : 'Show guide';
     });
 
     async function loadRosters() {
@@ -483,9 +513,55 @@
             list.appendChild(li);
           });
         card.appendChild(list);
+
+        const copyBtn = document.createElement('button');
+        copyBtn.type = 'button';
+        copyBtn.className = 'icon-btn secondary';
+        copyBtn.setAttribute('aria-label', 'Copy roster to clipboard');
+        copyBtn.style.marginTop = '8px';
+        copyBtn.textContent = '📋';
+        copyBtn.addEventListener('click', () => copyRosterToClipboard(teamName, settings, combo, start + idx + 1));
+        card.appendChild(copyBtn);
+
         container.appendChild(card);
       });
 
+    }
+
+    async function copyRosterToClipboard(teamName, settings, combo, rank) {
+      const lines = combo.players
+        .filter(p => p.count > 0)
+        .map(p => `${p.count} x ${p.name} @ ${p.cost}k`);
+      const header = `#${rank} | ${teamName}\nCost: ${combo.cost}k | Players: ${combo.totalPlayers}\nTV: ${settings.tv}k`;
+      const text = [header, ...lines].join('\n');
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        const fallback = legacyCopy(text);
+        if (!fallback) {
+          console.error('Clipboard copy failed', err);
+          alert('Could not copy roster to clipboard. Please copy manually.');
+        }
+      }
+    }
+
+    function legacyCopy(text) {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.top = '-1000px';
+        ta.style.left = '-1000px';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+      } catch (err) {
+        console.error('Legacy copy failed', err);
+        return false;
+      }
     }
 
     function parseRequirements(str) {
