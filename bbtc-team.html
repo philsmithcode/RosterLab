@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <title>Blood Bowl Team Creator</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<meta http-equiv="Cache-control" content="no-cache, no-store">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/assets/css/bbtc.css?v=1762341240" rel="stylesheet" >
+    <script src="/assets/js/theme.js?v=1761665340"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="/assets/js/bbtc.js?v=1763294379" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js" defer></script>
+</head>
+<body>
+    <div class="wrapper">
+        <aside id="sidebar" class="js-sidebar ">
+            <!-- Content For Sidebar -->
+            <div class="sidebar-wrapper">
+                <div class="sidebar-logo">
+                    <a href="#">Blood Bowl Team Creator</a>
+                </div>
+                <li class="sidebar-header">
+                    <span>BB EDITION</span>
+                </li>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link bb-menu-toggler " data-bs-target="#bb2025-edition" data-bs-toggle="collapse"><i class="bi bi-journal-plus"></i>
+                            <span>BB2025</span>
+                        </a>
+                        <ul id="bb2025-edition" class="sidebar-dropdown collapse show" data-bs-parent="">
+                            <li class="sidebar-item">
+                                <a href="https://bbtc.pl/roster/bb2025" class="sidebar-link"><i class="bi bi-search"></i>
+                                    <span>Explore rosters</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="https://bbtc.pl/team/bb2025" class="sidebar-link"><i class="bi bi-file-earmark-plus"></i>
+                                    <span>Create new team</span>
+                                </a>
+                            </li>
+                            <!-- FAVOURITES -->
+                                                        <!-- EXTRAS -->
+                            <li class="sidebar-item" id="bb2025-resources-list">
+                                <a href="#" class="sidebar-link bb-menu-toggler " data-bs-target="#bb2025-resources" data-bs-toggle="collapse"><i class="bi bi-journal-plus"></i>
+                                    <span>Extras</span>
+                                </a>
+                                <ul id="bb2025-resources" class="sidebar-dropdown collapse show" data-bs-parent="#bb2025-resources-list">
+                                    <li class="sidebar-item">
+                                        <a href="https://bbtc.pl/resources/bb2025/skills" class="sidebar-link">Skills</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="https://bbtc.pl/resources/bb2025/kickoff/default" class="sidebar-link">Kick-off Tables</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="https://bbtc.pl/resources/bb2025/weather/default" class="sidebar-link">Weather Tables</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="https://bbtc.pl/resources/bb2025/injury/default" class="sidebar-link">Injury roll</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link bb-menu-toggler collapsed" data-bs-target="#bb2020-edition" data-bs-toggle="collapse"><i class="bi bi-journal-plus"></i>
+                            <span>BB2020</span>
+                        </a>
+                        <ul id="bb2020-edition" class="sidebar-dropdown collapse " data-bs-parent="">
+                            <li class="sidebar-item">
+                                <a href="https://bbtc.pl/roster/bb2020" class="sidebar-link"><i class="bi bi-search"></i>
+                                    <span>Explore rosters</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="https://bbtc.pl/team/bb2020" class="sidebar-link"><i class="bi bi-file-earmark-plus"></i>
+                                    <span>Create new team</span>
+                                </a>
+                            </li>
+                            <!-- FAVOURITES -->
+                                                        <!-- EXTRAS -->
+                            <li class="sidebar-item" id="bb2020-resources-list">
+                                <a href="#" class="sidebar-link bb-menu-toggler " data-bs-target="#bb2020-resources" data-bs-toggle="collapse"><i class="bi bi-journal-plus"></i>
+                                    <span>Extras</span>
+                                </a>
+                                <ul id="bb2020-resources" class="sidebar-dropdown collapse show" data-bs-parent="#bb2020-resources-list">
+                                    <li class="sidebar-item">
+                                        <a href="https://bbtc.pl/resources/bb2020/kickoff/default" class="sidebar-link">Kick-off Tables</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="https://bbtc.pl/resources/bb2020/weather/default" class="sidebar-link">Weather Tables</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="https://bbtc.pl/resources/bb2020/sequence/pre-game" class="sidebar-link">Game sequence</a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a href="https://bbtc.pl/resources/bb2020/prayers/default" class="sidebar-link">Prayers to Nuffle</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-header">
+                        <span>COACH</span>
+                    </li>
+                                            <li class="sidebar-item">
+                            <a href="https://bbtc.pl/signup" class="sidebar-link"><i class="bi bi-person-plus"></i>
+                                <span>Create Account</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="https://bbtc.pl/login" class="sidebar-link"><i class="bi bi-box-arrow-right"></i>
+                                <span>Log in</span>
+                            </a>
+                        </li>
+                                                                            </ul>
+                <!-- Footer in sidebar -->
+                            </div>
+        </aside>
+        <div class="main">
+            <!-- Header -->
+            <nav class="navbar navbar-expand px-3 border-bottom py-0">
+                <!-- Sidebar toggler -->
+                <button class="btn" id="sidebar-toggle" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse navbar">
+                    <ul class="navbar-nav">
+                        <li class="theme-toggle me-2">
+                            <button type="button" class="btn btn-outline-secondary theme-light"><span class="bi bi-brightness-high"></span></button>
+                            <button type="button" class="btn btn-outline-secondary theme-dark"><span class="bi bi-moon"></span></button>
+                        </li>
+                                            </ul>
+                </div>
+            </nav>
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+
+
+<div class="row">
+    <div class="col-xl-5 col-lg-6 px-2"> 
+        <!-- Team -->
+        <div class="card" id="card-team">
+            <div class="card-header">
+                <h5 class="card-title">Team</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-1">
+                            <label for="coachName" class="form-label mb-1">Coach name</label>
+                            <input type="text" class="form-control" id="coachName" value="" >
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mb-1">
+                            <label for="teamName" class="form-label mb-1">Team name</label>
+                            <input type="text" class="form-control" id="teamName" value="" >
+                        </div>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-1">
+                            <label for="ruleset" class="form-label mb-1">Ruleset</label>
+                                                            <select class="selectpicker w-100" id="ruleset">
+                                                                                                                <option value="BB2025_DEFAULT"  selected>BB2025 Default</option>
+                                                                                                                <option value="BB2025_OFFICIAL" >BB2025 Matched Play</option>
+                                                                    </select>
+                                                    </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mb-1">
+                            <label for="rosterRace" class="form-label mb-1">Roster</label>
+                                                            <select class="selectpicker w-100" id="rosterRace" data-live-search="true">
+                                                                                                                <option value="amazon"  selected>Amazon</option>
+                                                                                                                <option value="black-orc" >Black Orc</option>
+                                                                                                                <option value="bretonnian" >Bretonnian</option>
+                                                                                                                <option value="chaos-chosen" >Chaos Chosen</option>
+                                                                                                                <option value="chaos-dwarf" >Chaos Dwarf</option>
+                                                                                                                <option value="chaos-renegade" >Chaos Renegade</option>
+                                                                                                                <option value="dark-elf" >Dark Elf</option>
+                                                                                                                <option value="dwarf" >Dwarf</option>
+                                                                                                                <option value="elven-union" >Elven Union</option>
+                                                                                                                <option value="gnome" >Gnome</option>
+                                                                                                                <option value="goblin" >Goblin</option>
+                                                                                                                <option value="halfling" >Halfling</option>
+                                                                                                                <option value="high-elf" >High Elf</option>
+                                                                                                                <option value="human" >Human</option>
+                                                                                                                <option value="imperial-nobility" >Imperial Nobility</option>
+                                                                                                                <option value="khorne" >Khorne</option>
+                                                                                                                <option value="lizardmen" >Lizardmen</option>
+                                                                                                                <option value="necromantic-horror" >Necromantic Horror</option>
+                                                                                                                <option value="norse" >Norse</option>
+                                                                                                                <option value="nurgle" >Nurgle</option>
+                                                                                                                <option value="ogre" >Ogre</option>
+                                                                                                                <option value="old-world-alliance" >Old World Alliance</option>
+                                                                                                                <option value="orc" >Orc</option>
+                                                                                                                <option value="shambling-undead" >Shambling Undead</option>
+                                                                                                                <option value="skaven" >Skaven</option>
+                                                                                                                <option value="snotling" >Snotling</option>
+                                                                                                                <option value="tomb-kings" >Tomb Kings</option>
+                                                                                                                <option value="underworld-denizens" >Underworld Denizens</option>
+                                                                                                                <option value="vampire" >Vampire</option>
+                                                                                                                <option value="wood-elf" >Wood Elf</option>
+                                                                    </select>
+                                                    </div>
+                    </div>
+                </div>
+            </div>   
+        </div>
+        <!-- Leagues & Special rules -->
+        <div class="card" id="card-special-rules">
+            <div class="card-header">
+                <h5 class="card-title">Leagues & Special rules</h5>
+            </div>
+            <div class="card-body">
+                <ul class="mb-0">
+    <!-- Leagues -->
+                        <li><span class="fw-semibold">League:</span> Lustrian Superleague</li>
+         
+        <!-- Special rules -->
+            <li><span class="fw-semibold">Special Rules:</span> None</li>
+    </ul>            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-4 col-lg-6 px-2">
+        <!-- Ruleset -->
+                    <div class="card" id="card-ruleset">
+                <div class="card-header">
+                    <h5 class="card-title">Ruleset (BB2025 Default)</h5>
+                </div>
+                <div class="card-body">
+                    <ul><li>You may not include more players with Insignificant Trait than players without this Trait</li>
+        <li>Elite Skills increase Player Value by an additional 10k</li></ul>                </div>
+            </div>
+            </div>
+
+    <div class="col-xl-3 px-2">
+        <!-- Team Value -->
+        <div class="card" id="card-teamValue">
+            <div class="card-header">
+                <h5 class="card-title">Team Value</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr data-bb-id="players">
+                    <td>Players</td>
+                    <td class="text-end bb-sum">0k</td>
+                </tr>
+                <tr data-bb-id="inducement">
+                    <td>Inducements</td>
+                    <td class="text-end bb-sum">0k</td>
+                </tr>
+                <tr data-bb-id="sideline">
+                    <td>Sideline Staff</td>
+                    <td class="text-end bb-sum">0k</td>
+                </tr>
+                <tr class="fw-bold text-end" data-bb-id="subtotal">
+                    <td><span style="margin-right: 5rem">SUBTOTAL</span></td>
+                    <td class="bb-sum bb-w-cost">0k</td>
+                </tr>
+                <tr data-bb-id="skills">
+                    <td>Skills</td>
+                    <td class="text-end bb-sum">0k</td>
+                </tr>
+                <tr class="fw-bold text-end" data-bb-id="total">
+                    <td><span style="margin-right: 5rem">TOTAL</span></td>
+                    <td class="bb-sum bb-w-cost">0k</td>
+                </tr>                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col px-2">
+        <!-- Player list -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Amazon</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table mb-0 text-body align-middle" id="playersTable">
+                        <thead>
+                            <tr>
+                                <th class="w-fit pb-1 text-center" scope="col"><i class="bi bi-plus-circle-dotted bb-add-players fs-4"></i></th>
+                                <th class="w-fit" scope="col">PLAYER</th>
+                                <th class="text-center w-fit" scope="col">MA</th>
+                                <th class="text-center w-fit" scope="col">ST</th>
+                                <th class="text-center w-fit" scope="col">AG</th>
+                                <th class="text-center w-fit" scope="col">PA</th>
+                                <th class="text-center w-fit" scope="col">AV</th>
+                                <th class="bb-skill-col" scope="col" >SKILLS & TRAITS</th>
+                                <th class="text-center bb-w-cost" scope="col">COST</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                                                            <tr  position="1">
+    <td>#1</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-1" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="2">
+    <td>#2</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-2" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="3">
+    <td>#3</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-3" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="4">
+    <td>#4</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-4" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="5">
+    <td>#5</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-5" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="6">
+    <td>#6</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-6" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="7">
+    <td>#7</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-7" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="8">
+    <td>#8</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-8" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="9">
+    <td>#9</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-9" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="10">
+    <td>#10</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-10" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="11">
+    <td>#11</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-11" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="12">
+    <td>#12</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-12" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="13">
+    <td>#13</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-13" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="14">
+    <td>#14</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-14" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="15">
+    <td>#15</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-15" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                            <tr  position="16">
+    <td>#16</td>
+            <td class="bb-player-select">
+            <select class="selectpicker" id="player-select-16" data-width="auto" title=" " data-container=".content">
+                <option value=0 ></option>
+                                                                                                <option value='251' data-subtext='16 left | Human, Lineman' >Eagle Warrior</option>                                                                                                <option value='254' data-subtext='2 left | Blocker, Human' >Jaguar Warrior</option>                                                                                                <option value='253' data-subtext='2 left | Blitzer, Human' >Piranha Warrior</option>                                                                                                <option value='252' data-subtext='2 left | Human, Thrower' >Python Warrior</option>                                <option data-divider="true"></option>
+                                                                                                                    <option value='406' data-subtext='1 left | Blitzer, Squirrel'>Akhorne the Squirrel</option>                                                                                                                    <option value='407' data-subtext='1 left | Blocker, Lizardman'>Anqi Panqi</option>                                                                                                                    <option value='425' data-subtext='1 left | Runner, Snakeman'>Boa Kon'ssstriktr</option>                                                                                                                    <option value='438' data-subtext='1 left | Halfling, Lineman'>Crumbleberry</option>                                                                                                                    <option value='429' data-subtext='1 left | Skink, Special'>Dribl</option>                                                                                                                    <option value='430' data-subtext='1 left | Skink, Special'>Drull</option>                                                                                                                    <option value='432' data-subtext='1 left | Human, Lineman'>Estelle la Veneaux</option>                                                                                                                    <option value='436' data-subtext='1 left | Big Guy, Lizardman'>Glotl Stop</option>                                                                                                                    <option value='437' data-subtext='1 left | Big Guy, Ogre'>Grak</option>                                                                                                                    <option value='449' data-subtext='1 left | Blitzer, Human'>Karla von Kill</option>                                                                                                                    <option value='415' data-subtext='1 left | Big Guy, Ogre'>Morg 'n' Thorg</option>                                                                                                                    <option value='470' data-subtext='1 left | Big Guy, Zoat'>Zolcath the Zoat</option>                            </select>
+        </td>
+                <td colspan="7"><span></td>
+    </tr>                                                    </tbody>        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <!-- Sideline Staff -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Sideline Staff</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table mb-0 align-middle" id="sidelineTable" data-bb-area="sideline">
+                        <tbody>
+                                                            <tr data-bb-id="apothecary">
+                                    <td>
+                                        <div>Apothecary</div>
+                                        <div class="lh-1">
+                                            <small class="text-muted">0-1</small>
+                                        </div>
+                                    </td>
+                                                                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                                        <td class="w-fit bb-quantity" data-bb-max="1" data-bb-min="0">0</td>
+                                        <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                                                                        <td class="w-fit">x</td>
+                                    <td class="w-fit">50k</td>
+                                    <td class="w-fit">=</td>
+                                    <td class="bb-w-cost bb-sum">0k</td>
+                                </tr>  
+                                                            <tr data-bb-id="coach">
+                                    <td>
+                                        <div>Assistant coaches</div>
+                                        <div class="lh-1">
+                                            <small class="text-muted">0-6</small>
+                                        </div>
+                                    </td>
+                                                                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                                        <td class="w-fit bb-quantity" data-bb-max="6" data-bb-min="0">0</td>
+                                        <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                                                                        <td class="w-fit">x</td>
+                                    <td class="w-fit">10k</td>
+                                    <td class="w-fit">=</td>
+                                    <td class="bb-w-cost bb-sum">0k</td>
+                                </tr>  
+                                                            <tr data-bb-id="cheerleader">
+                                    <td>
+                                        <div>Cheerleaders</div>
+                                        <div class="lh-1">
+                                            <small class="text-muted">0-6</small>
+                                        </div>
+                                    </td>
+                                                                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                                        <td class="w-fit bb-quantity" data-bb-max="6" data-bb-min="0">0</td>
+                                        <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                                                                        <td class="w-fit">x</td>
+                                    <td class="w-fit">10k</td>
+                                    <td class="w-fit">=</td>
+                                    <td class="bb-w-cost bb-sum">0k</td>
+                                </tr>  
+                                                            <tr data-bb-id="fans">
+                                    <td>
+                                        <div>Dedicated fans</div>
+                                        <div class="lh-1">
+                                            <small class="text-muted">0-3</small>
+                                        </div>
+                                    </td>
+                                                                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                                        <td class="w-fit bb-quantity" data-bb-max="3" data-bb-min="0">0</td>
+                                        <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                                                                        <td class="w-fit">x</td>
+                                    <td class="w-fit">5k</td>
+                                    <td class="w-fit">=</td>
+                                    <td class="bb-w-cost bb-sum">0k</td>
+                                </tr>  
+                                                            <tr data-bb-id="reroll">
+                                    <td>
+                                        <div>Re-rolls</div>
+                                        <div class="lh-1">
+                                            <small class="text-muted">0-8</small>
+                                        </div>
+                                    </td>
+                                                                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                                        <td class="w-fit bb-quantity" data-bb-max="8" data-bb-min="0">0</td>
+                                        <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                                                                        <td class="w-fit">x</td>
+                                    <td class="w-fit">60k</td>
+                                    <td class="w-fit">=</td>
+                                    <td class="bb-w-cost bb-sum">0k</td>
+                                </tr>  
+                                                    </tbody>        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <!-- Inducements -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Inducements</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table mb-0 align-middle" id="inducementsTable" data-bb-area="inducements">
+                        <tbody>
+                                        <tr data-bb-id="54">
+            <td>
+                <div>Blitzer's Best Kegs</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-2</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="2" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">50k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+            <tr data-bb-id="55">
+            <td>
+                <div>Bribes</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-3</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="3" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">100k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+            <tr data-bb-id="57">
+            <td>
+                <div>Extra Team Training</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-8</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="8" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">100k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+            <tr data-bb-id="62">
+            <td>
+                <div>Halfling Master Chef</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-1</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="1" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">300k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+            <tr data-bb-id="50">
+            <td>
+                <div>Part-time Assistant Coaches</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-5</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="5" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">20k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+            <tr data-bb-id="49">
+            <td>
+                <div>Prayers to Nuffle</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-3</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="3" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">10k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+            <tr data-bb-id="52">
+            <td>
+                <div>Team Mascot</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-1</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="1" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">25k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+            <tr data-bb-id="51">
+            <td>
+                <div>Temp Agency Cheerleaders</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-5</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="5" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">5k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+            <tr data-bb-id="61">
+            <td>
+                <div>Wandering Apothecary</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-2</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="2" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">100k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+            <tr data-bb-id="53">
+            <td>
+                <div>Weather Mage</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-1</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="1" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">25k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+        
+            <tr data-bb-id="63">
+            <td>
+                <div>Dodgy League Rep</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-1</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="1" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">120k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+        
+            <tr data-bb-id="64">
+            <td>
+                <div>Josef Bugman</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-1</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="1" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">100k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+        
+            <tr data-bb-id="65">
+            <td>
+                <div>Sports-wizard</div>
+                <div class="lh-1">
+                    <small class="text-muted">0-1</small>
+                </div>
+            </td>
+                            <td class="w-fit bb-operation bb-substract"><i class="bi bi-dash-circle"></i></td>
+                <td class="w-fit bb-quantity" data-bb-max="1" data-bb-min="0">0</td>
+                <td class="w-fit bb-operation bb-add"><i class="bi bi-plus-circle"></i></td>
+                        <td class="w-fit">x</td>
+            <td class="w-fit">150k</td>
+            <td class="w-fit">=</td>
+            <td class="bb-w-cost bb-sum">0k</td>
+        </tr>
+        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Save button -->
+<div class="d-flex justify-content-center mb-4 gap-2">
+        <form action="/pdf/team_create" method="post" target="_blank" id="pdf-form">
+        <input type="text" name="coach-name" id="coach-name" hidden>
+        <input type="text" name="team-name" id="team-name" hidden>
+        <input type="text" name="pdf-style" id="pdf-style" hidden>
+        <!--<button type="submit" class="btn btn-secondary">Generate PDF</button> -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Generate PDF
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="vertical-pdf">Vertical PDF</a></li>
+                <li><a class="dropdown-item" id="horizontal-pdf">Horizontal PDF</a></li>
+            </ul>
+        </div>
+    </form>
+</div>
+<div id="modal-wrapper"></div>
+                    </div>
+                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+
+                    </div>
+                </main>
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row text-muted">
+                            <div class="col-6 text-start">
+                                <!-- <p class="mb-0">
+                                    <a href="#" class="text-muted">
+                                        <strong></strong>
+                                    </a>
+                                </p> -->
+                            </div>
+                            <div class="col-6 text-end">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <a href="https://bbtc.pl/contact" class="text-muted">Contact</a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="/changelog" class="text-muted">Changelog (1.1.0)</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </body>
+    
+    <script>
+        function getAjaxEndpoint()
+        {
+            return "https://bbtc.pl/ajax";
+        }
+    </script>
+</html>

@@ -584,7 +584,20 @@
         copyBtn.style.marginTop = '8px';
         copyBtn.textContent = '📋';
         copyBtn.addEventListener('click', () => copyRosterToClipboard(teamName, settings, combo, start + idx + 1));
-        card.appendChild(copyBtn);
+        const sendBtn = document.createElement('button');
+        sendBtn.type = 'button';
+        sendBtn.className = 'icon-btn secondary';
+        sendBtn.setAttribute('aria-label', 'Populate this roster on BBTC');
+        sendBtn.style.marginTop = '8px';
+        sendBtn.textContent = '↗ BBTC';
+        sendBtn.addEventListener('click', () => exportRosterToBbtc(settings.team, teamName, settings, combo, start + idx + 1));
+        const actions = document.createElement('div');
+        actions.className = 'row';
+        actions.style.gap = '8px';
+        actions.style.flexWrap = 'wrap';
+        actions.appendChild(copyBtn);
+        actions.appendChild(sendBtn);
+        card.appendChild(actions);
 
         container.appendChild(card);
       });
@@ -628,6 +641,164 @@
         console.error('Legacy copy failed', err);
         return false;
       }
+    }
+
+    function sanitizeStarName(name) {
+      if (!name) return '';
+      // Strip affiliation suffixes the BBTC UI does not show.
+      return name.replace(/\s+(Old World Classic|Lustrian Superleague|Badlands Brawl|Worlds Edge Superleague|Sylvanian Spotlight|Elven Kingdoms|Underworld Challenge|Halfling Thimble Cup|Favoured of [^,]+)$/i, '').trim();
+    }
+
+    function buildBbtcPayload(teamKey, teamName, settings, combo, rank) {
+      const players = combo.players
+        .filter(p => (p.type ?? 'player') === 'player' && p.count > 0)
+        .map(p => ({ name: sanitizeStarName(p.name), count: p.count }));
+      const extras = combo.players
+        .filter(p => (p.type ?? 'player') === 'extra' && p.count > 0)
+        .map(p => ({ name: p.name, role: p.role || '', count: p.count }));
+      const rerollExtra = extras.find(e => (e.name || '').toLowerCase().includes('reroll'));
+      const bribesExtra = extras.find(e => (e.role === 'bribe') || (e.name || '').toLowerCase().includes('bribe'));
+      const rookiesExtra = extras.find(e => (e.role === 'riotous-rookies') || (e.name || '').toLowerCase().includes('riotous rookies'));
+      return {
+        teamSlug: teamKey,
+        teamName,
+        rank,
+        players,
+        rerolls: combo.rerolls ?? rerollExtra?.count ?? 0,
+        bribes: bribesExtra?.count ?? 0,
+        riotousRookies: rookiesExtra?.count ?? 0,
+      };
+    }
+
+    function buildBbtcInjectionScript(payload) {
+      const injector = (payload) => {
+        const normalize = (str) => (str || '').toLowerCase().replace(/[^a-z0-9+ ]+/g, ' ').replace(/\s+/g, ' ').trim();
+        const endpoint = (typeof window.getAjaxEndpoint === 'function') ? window.getAjaxEndpoint() : '/ajax';
+        const log = (msg) => console.log(`[RosterLab→BBTC] ${msg}`);
+        const requiredPath = `/team/bb2025/${payload.teamSlug}`;
+        if (!location.pathname.includes(requiredPath)) {
+          alert(`Open https://bbtc.pl${requiredPath} first, then paste again.`);
+          log(`Please navigate to ${requiredPath} before importing.`);
+          return;
+        }
+        if (typeof window.CallAjax !== 'function') {
+          alert('BBTC scripts not ready yet. Wait for the page to finish loading, then paste again.');
+          return;
+        }
+
+        const missing = [];
+        const selects = Array.from(document.querySelectorAll('#playersTable select.selectpicker'));
+        if (!selects.length) {
+          alert('Could not find the players table on BBTC.');
+          return;
+        }
+
+        const optionMap = {};
+        selects[0].querySelectorAll('option').forEach(opt => {
+          if (!opt.value) return;
+          optionMap[normalize(opt.textContent)] = opt.value;
+        });
+
+        const findPlayerId = (name) => {
+          const target = normalize(name);
+          if (optionMap[target]) return optionMap[target];
+          const fuzzy = Object.entries(optionMap).find(([optName]) => optName.includes(target) || target.includes(optName));
+          return fuzzy ? fuzzy[1] : null;
+        };
+
+        const queueDelete = () => {
+          selects.forEach(sel => {
+            const currentVal = sel.value;
+            if (!currentVal || currentVal === '0') return;
+            const position = Number(sel.id.replace('player-select-', ''));
+            const data = { operation: 'delete-player', app: 'team', action: 'create', data: { position }, busy: { area: 'player-select', id: sel.id }, previous: { area: 'player-select', id: sel.id, value: currentVal } };
+            window.CallAjax(endpoint, data, window.refreshPlayerRow);
+          });
+        };
+
+        const queuePlayers = () => {
+          let slot = 1;
+          payload.players.forEach(player => {
+            const playerId = findPlayerId(player.name);
+            if (!playerId) {
+              missing.push(`Player not found: ${player.name}`);
+              return;
+            }
+            for (let i = 0; i < player.count; i++) {
+              if (slot > selects.length) {
+                missing.push(`Not enough slots for ${player.name}`);
+                return;
+              }
+              const data = {
+                operation: 'add-player',
+                app: 'team',
+                action: 'create',
+                data: { position: slot, playerId },
+                busy: { area: 'player-select', id: `player-select-${slot}` },
+                previous: { area: 'player-select', id: `player-select-${slot}`, value: '0' },
+              };
+              window.CallAjax(endpoint, data, window.refreshPlayerRow);
+              slot += 1;
+            }
+          });
+        };
+
+        const setAreaQuantity = (tableSelector, targetName, value, fallbackArea) => {
+          if (value === undefined || value === null) return;
+          const normTarget = normalize(targetName);
+          const row = Array.from(document.querySelectorAll(`${tableSelector} tbody tr`)).find(tr => normalize(tr.textContent || '').includes(normTarget));
+          if (!row) {
+            missing.push(`Could not find row for ${targetName}`);
+            return;
+          }
+          const area = row.closest('[data-bb-area]')?.getAttribute('data-bb-area') || fallbackArea;
+          const id = row.getAttribute('data-bb-id');
+          const data = { operation: `update-${area}-quantity`, app: 'team', action: 'create', data: { id, value, area } };
+          window.CallAjax(endpoint, data, window.updateArea);
+        };
+
+        queueDelete();
+        queuePlayers();
+        setAreaQuantity('#sidelineTable', 're-roll', payload.rerolls, 'sideline');
+        setAreaQuantity('#inducementsTable', 'bribe', payload.bribes, 'inducements');
+        setAreaQuantity('#inducementsTable', 'riotous rookies', payload.riotousRookies, 'inducements');
+
+        if (missing.length) {
+          log(`Completed with notes:\\n- ${missing.join('\\n- ')}`);
+          alert(`Imported with notes:\\n${missing.join('\\n')}`);
+        } else {
+          log(`Queued roster import for ${payload.teamName || payload.teamSlug}. Watch the BBTC page update.`);
+        }
+      };
+
+      return `(${injector.toString()})(${JSON.stringify(payload)});`;
+    }
+
+    async function exportRosterToBbtc(teamKey, teamName, settings, combo, rank) {
+      const payload = buildBbtcPayload(teamKey, teamName, settings, combo, rank);
+      const script = buildBbtcInjectionScript(payload);
+      let copied = false;
+      try {
+        await navigator.clipboard.writeText(script);
+        copied = true;
+      } catch (err) {
+        copied = legacyCopy(script);
+        if (!copied) {
+          console.warn('RosterLab BBTC script (copy manually):\n', script);
+        }
+      }
+      const targetUrl = `https://bbtc.pl/team/bb2025/${teamKey}`;
+      const consoleHowTo = [
+        'On mac: press Cmd+Option+I (Chrome/Firefox/Safari) to open DevTools, then click the Console tab. On Windows/Linux: press Ctrl+Shift+I or F12, then select Console.',
+        'Click inside the console prompt (usually a > line), paste the script (Cmd+V / Ctrl+V), and press Enter.',
+        'Wait a few seconds while the page updates; watch the console for any “RosterLab→BBTC” messages or missing-player notes.',
+        'On mobile: browsers generally block console access; use a desktop/laptop to run the script.',
+      ].join('\n');
+      const note = (copied
+        ? `BBTC fill script copied. Open ${targetUrl}, paste into the browser console, and press Enter to queue the roster.`
+        : `Could not copy automatically. Open ${targetUrl} and paste the script shown in the console to import.`) + '\n\n' + consoleHowTo;
+      alert(note);
+      window.open(targetUrl, '_blank', 'noopener');
     }
 
     function parseRequirements(str) {
