@@ -163,6 +163,9 @@
       <label>Bribes (exact, optional)
         <input type="number" id="bribes" value="0" placeholder="leave blank" min="0" />
       </label>
+      <label id="riotousRookiesField" style="display: none;">Riotous rookies (optional)
+        <input type="number" id="riotousRookies" value="0" placeholder="only for Ogres/Snotlings" min="0" />
+      </label>
       <label>Star player 1 (optional)
         <select id="star1"></select>
       </label>
@@ -192,6 +195,8 @@
     const starSelect1 = document.getElementById('star1');
     const starSelect2 = document.getElementById('star2');
     const bribesInput = document.getElementById('bribes');
+    const rookiesInput = document.getElementById('riotousRookies');
+    const rookiesField = document.getElementById('riotousRookiesField');
     const positionalList = document.getElementById('positionalList');
     const rosterReady = loadRosters();
     const guideToggle = document.getElementById('guideToggle');
@@ -200,6 +205,7 @@
     teamSelect.addEventListener('change', () => {
       populateStarSelects(teamSelect.value);
       updateBribeInput(teamSelect.value);
+      updateRiotousRookiesInput(teamSelect.value);
       populatePositionalList(teamSelect.value);
     });
 
@@ -212,7 +218,13 @@
       errorEl.textContent = '';
       try {
         const settings = collectSettings();
-        const positions = buildPositions(rosters[settings.team], settings.stars, settings.maxStars, settings.bribes);
+        const positions = buildPositions(
+          rosters[settings.team],
+          settings.stars,
+          settings.maxStars,
+          settings.bribes,
+          settings.riotousRookies
+        );
         const combos = generateCombos(positions, settings);
         lastCombos = { teamName: rosters[settings.team].name, settings, combos };
         currentPage = 1;
@@ -255,6 +267,7 @@
         populateTeamSelect(rosters);
         populateStarSelects(teamSelect.value);
         updateBribeInput(teamSelect.value);
+        updateRiotousRookiesInput(teamSelect.value);
         populatePositionalList(teamSelect.value);
       } catch (err) {
         console.error('Failed to load rosters', err);
@@ -281,9 +294,11 @@
         const sel = teamSelect.value;
         populateStarSelects(sel);
         updateBribeInput(sel);
+        updateRiotousRookiesInput(sel);
       } else {
         populateStarSelects('');
         updateBribeInput('');
+        updateRiotousRookiesInput('');
       }
     }
 
@@ -318,6 +333,17 @@
       return { cost, max };
     }
 
+    function getRiotousRookiesInfo(teamKeyOrObj) {
+      const roster = typeof teamKeyOrObj === 'string' ? rosters[teamKeyOrObj] : teamKeyOrObj;
+      const inds = roster?.inducements || [];
+      const found = inds.find(i => (i.name || '').toLowerCase().includes('riotous rookies'));
+      if (!found) return null;
+      const maxMatch = /0-(\d+)/i.exec(found.name || '');
+      const max = maxMatch ? Number(maxMatch[1]) : (found.max ?? 1);
+      const cost = Number(found.cost) || 150;
+      return { cost, max };
+    }
+
     function updateBribeInput(teamKey) {
       const info = getBribeInfo(teamKey);
       if (!info) {
@@ -333,6 +359,26 @@
       const current = Number(bribesInput.value || 0);
       if (Number.isNaN(current) || current < 0 || current > info.max) {
         bribesInput.value = '0';
+      }
+    }
+
+    function updateRiotousRookiesInput(teamKey) {
+      const info = getRiotousRookiesInfo(teamKey);
+      if (!info) {
+        rookiesInput.value = '0';
+        rookiesInput.disabled = true;
+        rookiesInput.placeholder = 'not available';
+        rookiesField.style.display = 'none';
+        return;
+      }
+      rookiesField.style.display = 'block';
+      rookiesInput.disabled = false;
+      rookiesInput.min = '0';
+      rookiesInput.max = String(info.max);
+      rookiesInput.placeholder = `0..${info.max} @ ${info.cost}k`;
+      const current = Number(rookiesInput.value || 0);
+      if (Number.isNaN(current) || current < 0 || current > info.max) {
+        rookiesInput.value = '0';
       }
     }
 
@@ -384,7 +430,7 @@
       }
     }
 
-    function buildPositions(team, starNames, maxStars, bribes) {
+    function buildPositions(team, starNames, maxStars, bribes, riotousRookies) {
       const base = team.positions || [];
       const stars = (team.starPlayers || [])
         .filter(sp => starNames.map(s => s.toLowerCase()).includes(sp.name.toLowerCase()))
@@ -392,7 +438,15 @@
         .map(sp => ({ name: sp.name, cost: sp.cost, max: 1, type: 'player', role: 'star' }));
       const bribeInfo = bribes && bribes > 0 ? getBribeInfo(team) : null;
       const bribe = bribeInfo ? [{ name: 'Bribe', cost: bribeInfo.cost, max: bribes, type: 'extra', role: 'bribe' }] : [];
-      return [...base, ...stars, ...bribe];
+      const rookieInfo = riotousRookies && riotousRookies > 0 ? getRiotousRookiesInfo(team) : null;
+      const rookies = rookieInfo ? [{
+        name: 'Riotous Rookies',
+        cost: rookieInfo.cost,
+        max: riotousRookies,
+        type: 'extra',
+        role: 'riotous-rookies',
+      }] : [];
+      return [...base, ...stars, ...bribe, ...rookies];
     }
 
     function collectSettings() {
@@ -406,6 +460,7 @@
       const team = document.getElementById('team').value;
       const stars = Array.from(new Set([starSelect1.value, starSelect2.value].filter(Boolean)));
       const bribesVal = document.getElementById('bribes').value;
+      const rookiesVal = document.getElementById('riotousRookies').value;
       const requiredExtras = [];
       const positionalRequired = [];
       positionalList.querySelectorAll('input[type="number"]').forEach(input => {
@@ -428,6 +483,11 @@
         if (bribeInfo && bribes > bribeInfo.max) throw new Error(`Bribes cannot exceed ${bribeInfo.max}.`);
         if (!bribeInfo && bribes > 0) throw new Error('Bribes not available for this team.');
       }
+      const rookiesInfo = getRiotousRookiesInfo(team);
+      const riotousRookies = rookiesVal === '' ? 0 : Number(rookiesVal);
+      if (Number.isNaN(riotousRookies) || riotousRookies < 0) throw new Error('Riotous rookies must be non-negative.');
+      if (rookiesInfo && riotousRookies > rookiesInfo.max) throw new Error(`Riotous rookies cannot exceed ${rookiesInfo.max}.`);
+      if (!rookiesInfo && riotousRookies > 0) throw new Error('Riotous rookies not available for this team.');
 
       const combinedRequired = [...positionalRequired];
       if (stars.length > 2) throw new Error('Select at most 2 stars.');
@@ -452,6 +512,7 @@
         requireExtraMode: 'all',
         stars,
         bribes,
+        riotousRookies,
         maxStars: 2,
       };
     }
@@ -510,7 +571,8 @@
           .filter(p => p.count > 0)
           .forEach(p => {
             const li = document.createElement('li');
-            li.textContent = `${p.count} x ${p.name} @ ${p.cost}k`;
+            const extraBodies = p.addsPlayers ? ` (+${p.addsPlayers * p.count} players)` : '';
+            li.textContent = `${p.count} x ${p.name} @ ${p.cost}k${extraBodies}`;
             list.appendChild(li);
           });
         card.appendChild(list);
@@ -532,7 +594,10 @@
     async function copyRosterToClipboard(teamName, settings, combo, rank) {
       const lines = combo.players
         .filter(p => p.count > 0)
-        .map(p => `${p.count} x ${p.name} @ ${p.cost}k`);
+        .map(p => {
+          const extraBodies = p.addsPlayers ? ` (+${p.addsPlayers * p.count} players)` : '';
+          return `${p.count} x ${p.name} @ ${p.cost}k${extraBodies}`;
+        });
       const header = `#${rank} | ${teamName}\nCost: ${combo.cost}k | Players: ${combo.totalPlayers}\nTV: ${settings.tv}k`;
       const text = [header, ...lines].join('\n');
       try {
@@ -695,14 +760,15 @@
         const pos = positions[index];
         const isPlayer = (pos.type ?? 'player') === 'player';
         const isStar = pos.role === 'star';
+        const addedPerUnit = isPlayer ? 1 : 0;
         const maxByCost = Math.floor(remainingCost / pos.cost);
-        const playerRoom = isPlayer ? settings.maxPlayers - totalPlayers : Number.MAX_SAFE_INTEGER;
+        const playerRoom = addedPerUnit > 0 ? Math.floor((settings.maxPlayers - totalPlayers) / addedPerUnit) : Number.MAX_SAFE_INTEGER;
         const starRoom = isStar ? settings.maxStars - starCount : Number.MAX_SAFE_INTEGER;
         const maxCount = Math.min(pos.max, maxByCost, playerRoom, starRoom);
 
         for (let count = 0; count <= maxCount; count++) {
           path.push({ name: pos.name, count, cost: pos.cost, type: pos.type, role: pos.role });
-          const nextPlayers = isPlayer ? totalPlayers + count : totalPlayers;
+          const nextPlayers = totalPlayers + count * addedPerUnit;
           const nextStars = isStar ? starCount + count : starCount;
           dfs(index + 1, remainingCost - count * pos.cost, nextPlayers, nextStars);
           path.pop();
