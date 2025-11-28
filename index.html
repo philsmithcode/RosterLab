@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RosterLab</title>
+  <link rel="icon" type="image/png" href="mino.png" />
   <style>
     :root {
       --bg: #0f172a;
@@ -606,6 +607,15 @@
                 if (isLineman) acc.lineman += p.count;
                 else acc.positionals += p.count;
               }
+              const bigGuyTeams = ['old-world-alliance', 'chaos-chosen', 'chaos-renegade', 'underworld-denizens'];
+              if (bigGuyTeams.includes(settings.team)) {
+                const isTreeman = name.includes('treeman');
+                const isOgre = name === 'ogre';
+                const isTroll = name === 'troll';
+                const isMinotaur = name === 'minotaur';
+                const isRatOgre = name.includes('rat ogre');
+                if (isTreeman || isOgre || isTroll || isMinotaur || isRatOgre) acc.bigGuys += p.count;
+              }
               if (settings.required && settings.required.length) {
                 const req = settings.required.find(r => r.name === name);
                 if (req) acc.required[name] = (acc.required[name] ?? 0) + p.count;
@@ -616,7 +626,7 @@
               }
               return acc;
             },
-            { rerolls: 0, bribes: 0, positionals: 0, lineman: 0, stars: 0, required: {}, requiredExtras: {}, starCounts: {} }
+            { rerolls: 0, bribes: 0, positionals: 0, lineman: 0, stars: 0, bigGuys: 0, required: {}, requiredExtras: {}, starCounts: {} }
           );
 
           const missingRequired = settings.required && settings.required.some(
@@ -635,6 +645,14 @@
             settings.requiredExtras.length > 0 &&
             settings.requiredExtras.every(r => (summary.requiredExtras[r.name] ?? 0) < r.count);
           const failsExtrasAll = settings.requireExtraMode === 'all' && missingRequiredExtras;
+          let exceedsBigGuyLimit = false;
+          if (settings.team === 'old-world-alliance' || settings.team === 'chaos-chosen') {
+            exceedsBigGuyLimit = summary.bigGuys > 1;
+          } else if (settings.team === 'chaos-renegade') {
+            exceedsBigGuyLimit = summary.bigGuys > 3;
+          } else if (settings.team === 'underworld-denizens') {
+            exceedsBigGuyLimit = summary.bigGuys > 1;
+          }
 
           if (
             (settings.rerolls !== undefined && summary.rerolls !== settings.rerolls) ||
@@ -643,7 +661,8 @@
             failsRequiredAny ||
             failsRequiredAll ||
             failsExtrasAny ||
-            failsExtrasAll
+            failsExtrasAll ||
+            exceedsBigGuyLimit
           ) {
             // keep exploring
           } else if (spent > bestCost) {
