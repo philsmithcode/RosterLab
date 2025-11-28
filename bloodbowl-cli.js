@@ -99,7 +99,10 @@ function generateCombos(positions, settings) {
           if (!p.count) return acc;
           const type = p.type ?? 'player';
           const name = (p.name || '').toLowerCase();
-          if (type === 'extra' && name === 'reroll') acc.rerolls += p.count;
+          if (type === 'extra') {
+            if (name === 'reroll') acc.rerolls += p.count;
+            if (name.includes('bribe')) acc.bribes += p.count;
+          }
           if (type === 'player') {
             const isLineman = p.role === 'lineman' || name.includes('lineman');
             const isStar = p.role === 'star';
@@ -124,7 +127,7 @@ function generateCombos(positions, settings) {
           }
           return acc;
         },
-        { rerolls: 0, positionals: 0, lineman: 0, stars: 0, required: {}, requiredExtras: {}, starCounts: {} }
+        { rerolls: 0, bribes: 0, positionals: 0, lineman: 0, stars: 0, required: {}, requiredExtras: {}, starCounts: {} }
       );
 
       const missingRequired = settings.required && settings.required.some(
@@ -164,6 +167,7 @@ function generateCombos(positions, settings) {
           cost: spent,
           totalPlayers,
           rerolls: summary.rerolls,
+          bribes: summary.bribes,
           positionals: summary.positionals,
           linemen: summary.lineman,
         }];
@@ -173,6 +177,7 @@ function generateCombos(positions, settings) {
           cost: spent,
           totalPlayers,
           rerolls: summary.rerolls,
+          bribes: summary.bribes,
           positionals: summary.positionals,
           linemen: summary.lineman,
         });
@@ -210,6 +215,7 @@ function generateCombos(positions, settings) {
           b.positionals - a.positionals ||
           a.linemen - b.linemen ||
           b.cost - a.cost ||
+          a.bribes - b.bribes ||
           b.rerolls - a.rerolls ||
           0
         );
@@ -219,6 +225,7 @@ function generateCombos(positions, settings) {
         b.totalPlayers - a.totalPlayers ||
         b.positionals - a.positionals ||
         a.linemen - b.linemen ||
+        a.bribes - b.bribes ||
         b.rerolls - a.rerolls ||
         0
       );

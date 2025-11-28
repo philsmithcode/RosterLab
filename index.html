@@ -122,8 +122,8 @@
       <label>Max players
         <input type="number" id="maxPlayers" value="16" min="0" />
       </label>
-      <label>Max results
-        <input type="number" id="maxResults" value="20" min="1" />
+      <label>Max results per page
+        <input type="number" id="maxResults" value="5" min="1" />
       </label>
       <label>Sort by
         <select id="sort">
@@ -134,11 +134,8 @@
       <label>Rerolls (exact, optional)
         <input type="number" id="rerolls" placeholder="leave blank" min="0" />
       </label>
-      <label>Require positionals (comma list, e.g. Blitzer:2,Catcher:1)
-        <input type="text" id="require" placeholder="Blitzer:2,Catcher:1" />
-      </label>
-      <label>Require extras (comma list, e.g. Bribe:1,Apothecary:1)
-        <input type="text" id="requireExtra" placeholder="Bribe:1,Apothecary:1" />
+      <label>Positionals to force (enter minimums)
+        <div id="positionalList"></div>
       </label>
       <label>Bribes (exact, optional)
         <input type="number" id="bribes" placeholder="leave blank" min="0" />
@@ -149,18 +146,6 @@
       <label>Star player 2 (optional)
         <select id="star2"></select>
       </label>
-      <label>Require mode (positionals)
-        <select id="requireMode">
-          <option value="all">All (default)</option>
-          <option value="any">Any</option>
-        </select>
-      </label>
-      <label>Require mode (extras)
-        <select id="requireExtraMode">
-          <option value="all">All (default)</option>
-          <option value="any">Any</option>
-        </select>
-      </label>
     </div>
     <div class="row">
       <button id="generate">Generate</button>
@@ -168,19 +153,29 @@
     </div>
     <div id="error" class="error"></div>
     <div id="results" class="results"></div>
+    <div class="row">
+      <button id="prevPage" disabled>Prev</button>
+      <button id="nextPage" disabled>Next</button>
+      <span id="pageInfo" class="muted"></span>
+    </div>
   </div>
 
   <script>
     let rosters = {};
+    let lastCombos = null;
+    let currentPage = 1;
+    let pageSize = 5;
     const teamSelect = document.getElementById('team');
     const starSelect1 = document.getElementById('star1');
     const starSelect2 = document.getElementById('star2');
     const bribesInput = document.getElementById('bribes');
+    const positionalList = document.getElementById('positionalList');
     const rosterReady = loadRosters();
 
     teamSelect.addEventListener('change', () => {
       populateStarSelects(teamSelect.value);
       updateBribeInput(teamSelect.value);
+      populatePositionalList(teamSelect.value);
     });
 
     starSelect1.addEventListener('change', () => enforceDistinctStars(starSelect1, starSelect2));
@@ -194,9 +189,29 @@
         const settings = collectSettings();
         const positions = buildPositions(rosters[settings.team], settings.stars, settings.maxStars);
         const combos = generateCombos(positions, settings);
+        lastCombos = { teamName: rosters[settings.team].name, settings, combos };
+        currentPage = 1;
+        pageSize = maxResults;
         renderResults(rosters[settings.team].name, settings, combos);
       } catch (err) {
         errorEl.textContent = err.message || String(err);
+      }
+    });
+
+    document.getElementById('prevPage').addEventListener('click', () => {
+      if (!lastCombos) return;
+      if (currentPage > 1) {
+        currentPage--;
+        renderResults(lastCombos.teamName, lastCombos.settings, lastCombos.combos);
+      }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', () => {
+      if (!lastCombos) return;
+      const totalPages = Math.max(1, Math.ceil(lastCombos.combos.length / pageSize));
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderResults(lastCombos.teamName, lastCombos.settings, lastCombos.combos);
       }
     });
 
@@ -209,6 +224,7 @@
         populateTeamSelect(rosters);
         populateStarSelects(teamSelect.value);
         updateBribeInput(teamSelect.value);
+        populatePositionalList(teamSelect.value);
       } catch (err) {
         console.error('Failed to load rosters', err);
         errorEl.textContent = 'Could not load roster data.';
@@ -256,7 +272,7 @@
           opt.textContent = `${sp.name} (${sp.cost}k)`;
           sel.appendChild(opt);
         });
-        sel.disabled = stars.length === 0;
+        sel.disabled = false; // keep enabled even if empty to avoid lock-out
       });
     }
 
@@ -283,6 +299,30 @@
       bribesInput.min = '0';
       bribesInput.max = String(info.max);
       bribesInput.placeholder = `0..${info.max} @ ${info.cost}k`;
+    }
+
+    function populatePositionalList(teamKey) {
+      const roster = rosters[teamKey];
+      positionalList.innerHTML = '';
+      if (!roster) return;
+      const players = (roster.positions || []).filter(p => (p.type ?? 'player') === 'player');
+      players.forEach(pos => {
+        const row = document.createElement('div');
+        row.className = 'row';
+        row.style.alignItems = 'center';
+        row.style.gap = '8px';
+        const label = document.createElement('div');
+        label.textContent = `${pos.name} (max ${pos.max})`;
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.min = '0';
+        input.max = String(pos.max);
+        input.value = '0';
+        input.dataset.name = pos.name;
+        row.appendChild(label);
+        row.appendChild(input);
+        positionalList.appendChild(row);
+      });
     }
 
     function addAliases(map) {
@@ -325,16 +365,18 @@
       const tv = Number(document.getElementById('tv').value);
       const minPlayers = Number(document.getElementById('minPlayers').value);
       const maxPlayers = Number(document.getElementById('maxPlayers').value);
-      const maxResults = Number(document.getElementById('maxResults').value || 20);
+      const maxResults = Number(document.getElementById('maxResults').value || 5);
       const sort = document.getElementById('sort').value;
       const rerollVal = document.getElementById('rerolls').value;
-      const require = document.getElementById('require').value.trim();
-      const requireExtra = document.getElementById('requireExtra').value.trim();
-      const requireMode = document.getElementById('requireMode').value;
-      const requireExtraMode = document.getElementById('requireExtraMode').value;
       const team = document.getElementById('team').value;
       const stars = Array.from(new Set([starSelect1.value, starSelect2.value].filter(Boolean)));
       const bribesVal = document.getElementById('bribes').value;
+      const positionalRequired = [];
+      positionalList.querySelectorAll('input[type="number"]').forEach(input => {
+        const name = input.dataset.name;
+        const cnt = Number(input.value || 0);
+        if (name && cnt > 0) positionalRequired.push({ name: name.toLowerCase(), count: cnt });
+      });
 
       if (!team) throw new Error('Please select a team.');
       if (!tv || tv <= 0) throw new Error('Provide a positive TV in thousands.');
@@ -351,10 +393,7 @@
         if (!bribeInfo && bribes > 0) throw new Error('Bribes not available for this team.');
       }
 
-      const required = require ? parseRequirements(require) : [];
-      const requiredExtras = requireExtra ? parseRequirements(requireExtra) : [];
-      if (require && (!required || !required.length)) throw new Error('Invalid require format. Use Name:count.');
-      if (requireExtra && (!requiredExtras || !requiredExtras.length)) throw new Error('Invalid requireExtra format. Use Name:count.');
+      const combinedRequired = [...positionalRequired];
       if (stars.length > 2) throw new Error('Select at most 2 stars.');
       const availableStarNames = (rosters[team].starPlayers || []).map(s => s.name.toLowerCase());
       const missingStars = stars.filter(s => !availableStarNames.includes(s.toLowerCase()));
@@ -371,24 +410,36 @@
         maxResults,
         sort,
         rerolls,
-        required,
-        requiredExtras,
-        requireMode,
-        requireExtraMode,
+        required: combinedRequired,
+        requiredExtras: [],
+        requireMode: 'all',
+        requireExtraMode: 'all',
         stars,
         maxStars: 2,
       };
     }
 
     function renderResults(teamName, settings, combos) {
+      const list = Array.isArray(combos) ? combos : [];
+      const effectivePageSize = Number(settings.maxResults) > 0 ? Number(settings.maxResults) : (pageSize || 5);
+      pageSize = effectivePageSize;
+      const totalPages = list.length ? Math.ceil(list.length / effectivePageSize) : 1;
+      currentPage = Math.min(Math.max(1, currentPage), totalPages);
       const container = document.getElementById('results');
       container.innerHTML = '';
       const header = document.createElement('div');
       header.className = 'muted';
-      header.textContent = `Team: ${teamName} • Target TV: ${settings.tv}k • Results: ${Math.min(settings.maxResults, combos.length)} of ${combos.length || 0}`;
+      header.textContent = `Team: ${teamName} • Target TV: ${settings.tv}k • Results: ${list.length || 0}`;
       container.appendChild(header);
 
-      if (!combos.length) {
+      const pageInfo = document.getElementById('pageInfo');
+      const prevBtn = document.getElementById('prevPage');
+      const nextBtn = document.getElementById('nextPage');
+      pageInfo.textContent = list.length ? `Page ${currentPage} of ${totalPages}` : '';
+      prevBtn.disabled = currentPage <= 1 || !list.length;
+      nextBtn.disabled = currentPage >= totalPages || !list.length;
+
+      if (!list.length) {
         const none = document.createElement('div');
         none.className = 'error';
         const stars = settings.stars && settings.stars.length ? ` (selected stars required: ${settings.stars.join(', ')})` : '';
@@ -397,11 +448,14 @@
         return;
       }
 
-      combos.slice(0, settings.maxResults).forEach((combo, idx) => {
+      const start = (currentPage - 1) * effectivePageSize;
+      const pageItems = list.slice(start, start + effectivePageSize);
+
+      pageItems.forEach((combo, idx) => {
         const card = document.createElement('div');
         card.className = 'result';
         const title = document.createElement('div');
-        title.innerHTML = `<strong>#${idx + 1}</strong> | Cost: ${combo.cost}k | Players: ${combo.totalPlayers}`;
+        title.innerHTML = `<strong>#${start + idx + 1}</strong> | Cost: ${combo.cost}k | Players: ${combo.totalPlayers}`;
         card.appendChild(title);
 
         const pills = document.createElement('div');
@@ -453,17 +507,18 @@
           const spent = settings.tv - remainingCost;
           const summary = path.reduce(
             (acc, p) => {
-              if (!p.count) return acc;
-              const type = p.type ?? 'player';
-            const name = (p.name || '').toLowerCase();
-            if (type === 'extra') {
-              if (name === 'reroll') acc.rerolls += p.count;
-            }
-              if (type === 'player') {
-                const isLineman = p.role === 'lineman' || name.includes('lineman');
-                const isStar = p.role === 'star';
-                if (isStar) {
-                  acc.stars += p.count;
+          if (!p.count) return acc;
+          const type = p.type ?? 'player';
+          const name = (p.name || '').toLowerCase();
+          if (type === 'extra') {
+            if (name === 'reroll') acc.rerolls += p.count;
+            if (name.includes('bribe')) acc.bribes += p.count;
+          }
+          if (type === 'player') {
+            const isLineman = p.role === 'lineman' || name.includes('lineman');
+            const isStar = p.role === 'star';
+            if (isStar) {
+              acc.stars += p.count;
                   acc.starCounts[name] = (acc.starCounts[name] ?? 0) + p.count;
                 }
                 if (isLineman) acc.lineman += p.count;
@@ -479,7 +534,7 @@
               }
               return acc;
             },
-            { rerolls: 0, positionals: 0, lineman: 0, stars: 0, required: {}, requiredExtras: {}, starCounts: {} }
+            { rerolls: 0, bribes: 0, positionals: 0, lineman: 0, stars: 0, required: {}, requiredExtras: {}, starCounts: {} }
           );
 
           const missingRequired = settings.required && settings.required.some(
@@ -571,6 +626,7 @@
             b.totalPlayers - a.totalPlayers ||
             b.positionals - a.positionals ||
             a.linemen - b.linemen ||
+            a.bribes - b.bribes ||
             b.rerolls - a.rerolls ||
             0
           );
