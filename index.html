@@ -108,7 +108,7 @@
 </head>
 <body>
   <div class="card">
-    <h1>RosterLab</h1>
+    <h1>RosterLab v0.1</h1>
     <div class="grid">
       <label>Team
         <select id="team"></select>
@@ -138,7 +138,7 @@
         <div id="positionalList"></div>
       </label>
       <label>Bribes (exact, optional)
-        <input type="number" id="bribes" placeholder="leave blank" min="0" />
+        <input type="number" id="bribes" value="0" placeholder="leave blank" min="0" />
       </label>
       <label>Star player 1 (optional)
         <select id="star1"></select>
@@ -187,7 +187,7 @@
       errorEl.textContent = '';
       try {
         const settings = collectSettings();
-        const positions = buildPositions(rosters[settings.team], settings.stars, settings.maxStars);
+        const positions = buildPositions(rosters[settings.team], settings.stars, settings.maxStars, settings.bribes);
         const combos = generateCombos(positions, settings);
         lastCombos = { teamName: rosters[settings.team].name, settings, combos };
         currentPage = 1;
@@ -290,7 +290,7 @@
     function updateBribeInput(teamKey) {
       const info = getBribeInfo(teamKey);
       if (!info) {
-        bribesInput.value = '';
+        bribesInput.value = '0';
         bribesInput.disabled = true;
         bribesInput.placeholder = 'not available';
         return;
@@ -299,6 +299,10 @@
       bribesInput.min = '0';
       bribesInput.max = String(info.max);
       bribesInput.placeholder = `0..${info.max} @ ${info.cost}k`;
+      const current = Number(bribesInput.value || 0);
+      if (Number.isNaN(current) || current < 0 || current > info.max) {
+        bribesInput.value = '0';
+      }
     }
 
     function populatePositionalList(teamKey) {
@@ -349,14 +353,14 @@
       }
     }
 
-    function buildPositions(team, starNames, maxStars) {
+    function buildPositions(team, starNames, maxStars, bribes) {
       const base = team.positions || [];
       const stars = (team.starPlayers || [])
         .filter(sp => starNames.map(s => s.toLowerCase()).includes(sp.name.toLowerCase()))
         .slice(0, maxStars)
         .map(sp => ({ name: sp.name, cost: sp.cost, max: 1, type: 'player', role: 'star' }));
-      const bribeInfo = getBribeInfo(team);
-      const bribe = bribeInfo ? [{ name: 'Bribe', cost: bribeInfo.cost, max: bribeInfo.max, type: 'extra', role: 'bribe' }] : [];
+      const bribeInfo = bribes && bribes > 0 ? getBribeInfo(team) : null;
+      const bribe = bribeInfo ? [{ name: 'Bribe', cost: bribeInfo.cost, max: bribes, type: 'extra', role: 'bribe' }] : [];
       return [...base, ...stars, ...bribe];
     }
 
@@ -371,6 +375,7 @@
       const team = document.getElementById('team').value;
       const stars = Array.from(new Set([starSelect1.value, starSelect2.value].filter(Boolean)));
       const bribesVal = document.getElementById('bribes').value;
+      const requiredExtras = [];
       const positionalRequired = [];
       positionalList.querySelectorAll('input[type="number"]').forEach(input => {
         const name = input.dataset.name;
@@ -411,10 +416,11 @@
         sort,
         rerolls,
         required: combinedRequired,
-        requiredExtras: [],
+        requiredExtras,
         requireMode: 'all',
         requireExtraMode: 'all',
         stars,
+        bribes,
         maxStars: 2,
       };
     }
@@ -571,6 +577,7 @@
               cost: spent,
               totalPlayers,
               rerolls: summary.rerolls,
+              bribes: summary.bribes,
               positionals: summary.positionals,
               linemen: summary.lineman,
             }];
@@ -580,6 +587,7 @@
               cost: spent,
               totalPlayers,
               rerolls: summary.rerolls,
+              bribes: summary.bribes,
               positionals: summary.positionals,
               linemen: summary.lineman,
             });
