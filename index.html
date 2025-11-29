@@ -120,6 +120,45 @@
       margin-top: 10px;
       background: #0c1426;
     }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 16px;
+    }
+    .modal-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      max-width: 1100px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+      padding: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    }
+    .modal-card table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+    .modal-card th, .modal-card td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 13px;
+    }
+    .modal-card th {
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .modal-card .text-center { text-align: center; }
     .muted { color: var(--muted); font-size: 13px; }
     .pill {
       display: inline-flex;
@@ -215,6 +254,16 @@
     </div>
   </div>
 
+  <div id="detailModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="row" style="justify-content: space-between; align-items: center; margin: 0 0 8px 0;">
+        <div id="detailTitle" style="font-weight: 700; font-size: 16px;"></div>
+        <button id="detailClose" type="button" class="icon-btn secondary" style="width: auto; min-width: 0;">Close</button>
+      </div>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
   <script>
     let rosters = {};
     let lastCombos = null;
@@ -231,6 +280,10 @@
     const rosterReady = loadRosters();
     const guideToggle = document.getElementById('guideToggle');
     const userGuide = document.getElementById('userGuide');
+    const detailModal = document.getElementById('detailModal');
+    const detailContent = document.getElementById('detailContent');
+    const detailTitle = document.getElementById('detailTitle');
+    const detailClose = document.getElementById('detailClose');
     document.querySelectorAll('input[type="number"]').forEach(applyStepper);
 
     teamSelect.addEventListener('change', () => {
@@ -290,11 +343,15 @@
       userGuide.style.display = hidden ? 'block' : 'none';
       guideToggle.textContent = hidden ? 'Hide guide' : 'Show guide';
     });
+    detailClose.addEventListener('click', hideDetailModal);
+    detailModal.addEventListener('click', (evt) => {
+      if (evt.target === detailModal) hideDetailModal();
+    });
 
     async function loadRosters() {
       const errorEl = document.getElementById('error');
       try {
-        const res = await fetch('bb2025_rosters.json');
+        const res = await fetch('bb2025_rosters_detailed.json');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         rosters = addAliases(await res.json());
         populateTeamSelect(rosters);
@@ -493,6 +550,16 @@
       if (changed.value && changed.value === other.value) {
         other.value = '';
       }
+    }
+
+    function hideDetailModal() {
+      detailModal.style.display = 'none';
+    }
+
+    function showDetailModal(html, title) {
+      detailTitle.textContent = title || 'Roster details';
+      detailContent.innerHTML = html;
+      detailModal.style.display = 'flex';
     }
 
     function applyStepper(input) {
@@ -730,17 +797,104 @@
         sendBtn.style.marginTop = '8px';
         sendBtn.textContent = '↗ BBTC';
         sendBtn.addEventListener('click', () => exportRosterToBbtc(settings.team, teamName, settings, combo, start + idx + 1));
+        const detailBtn = document.createElement('button');
+        detailBtn.type = 'button';
+        detailBtn.className = 'icon-btn secondary';
+        detailBtn.setAttribute('aria-label', 'View full roster details');
+        detailBtn.style.marginTop = '8px';
+        detailBtn.textContent = '🗒 Details';
+        detailBtn.addEventListener('click', () => showRosterDetails(settings.team, teamName, settings, combo, start + idx + 1));
         const actions = document.createElement('div');
         actions.className = 'row';
         actions.style.gap = '8px';
         actions.style.flexWrap = 'wrap';
         actions.appendChild(copyBtn);
         actions.appendChild(sendBtn);
+        actions.appendChild(detailBtn);
         card.appendChild(actions);
 
         container.appendChild(card);
       });
 
+    }
+
+    function findPlayerDetails(teamKey, playerName) {
+      const roster = rosters[teamKey];
+      if (!roster) return null;
+      const norm = (playerName || '').toLowerCase();
+      const sanitized = sanitizeStarName(playerName).toLowerCase();
+      const pos = (roster.positions || []).find(p => (p.name || '').toLowerCase() === norm);
+      if (pos) return pos;
+      const star = (roster.starPlayers || []).find(sp => sanitizeStarName(sp.name).toLowerCase() === sanitized);
+      return star || null;
+    }
+
+    function fmtStat(value, withPlus = false) {
+      if (value === undefined || value === null || value === '') return '-';
+      return withPlus ? `${value}+` : String(value);
+    }
+
+    function buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank) {
+      const roster = rosters[teamKey] || {};
+      const players = combo.players.filter(p => (p.type ?? 'player') === 'player' && p.count > 0);
+      const extras = combo.players.filter(p => (p.type ?? 'player') === 'extra' && p.count > 0);
+      const leagues = (roster.leagues || []).join(', ') || '—';
+      const specialRules = (roster.specialRules || []).join(', ') || 'None';
+      const rerollInfo = roster.rerolls || null;
+      const apothecaryInfo = roster.hasApothecary === undefined ? 'Unknown' : (roster.hasApothecary ? 'Yes' : 'No');
+      const playerRows = players.map(p => {
+        const info = findPlayerDetails(teamKey, p.name) || {};
+        const skills = (info.skills || []).join(', ') || '—';
+        const subtotal = p.cost * p.count;
+        return `
+          <tr>
+            <td>${p.count} x ${p.name}</td>
+            <td>${fmtStat(info.ma)}</td>
+            <td>${fmtStat(info.st)}</td>
+            <td>${fmtStat(info.ag, true)}</td>
+            <td>${fmtStat(info.pa, true)}</td>
+            <td>${fmtStat(info.av, true)}</td>
+            <td>${skills}</td>
+            <td>${info.primary || '—'}</td>
+            <td>${info.secondary || '—'}</td>
+            <td class="text-center">${p.cost}k</td>
+            <td class="text-center">${subtotal}k</td>
+          </tr>`;
+      }).join('');
+      const extrasRows = extras.length
+        ? extras.map(ex => `<tr><td>${ex.count} x ${ex.name}</td><td class="text-center">${ex.cost}k</td><td class="text-center">${ex.cost * ex.count}k</td></tr>`).join('')
+        : '<tr><td colspan="3" class="muted">No inducements or sideline extras selected.</td></tr>';
+
+      const rerollPos = (roster.positions || []).find(p => (p.name || '').toLowerCase() === 'reroll');
+      const rerollText = rerollInfo || rerollPos
+        ? `Re-rolls: 0-${(rerollInfo?.max ?? rerollPos?.max ?? '?')} @ ${(rerollInfo?.cost ?? rerollPos?.cost ?? '?')}k`
+        : 'Re-roll info unavailable';
+      return `
+        <div class="muted" style="margin-bottom: 6px;">
+          #${rank} • ${teamName} • Players: ${combo.totalPlayers} • Cost: ${combo.cost}k (target TV ${settings.tv}k)
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Player</th><th>MA</th><th>ST</th><th>AG</th><th>PA</th><th>AV</th><th>Skills</th><th>Primary</th><th>Secondary</th><th>Cost</th><th>Total</th>
+            </tr>
+          </thead>
+          <tbody>${playerRows || '<tr><td colspan="11" class="muted">No players in this roster.</td></tr>'}</tbody>
+        </table>
+        <h4 style="margin: 12px 0 4px 0;">Inducements & Extras</h4>
+        <table>
+          <thead><tr><th>Name</th><th class="text-center">Cost</th><th class="text-center">Total</th></tr></thead>
+          <tbody>${extrasRows}</tbody>
+        </table>
+        <div class="muted" style="margin-top: 10px;">
+          ${rerollText} • Apothecary: ${apothecaryInfo} • Leagues: ${leagues} • Special rules: ${specialRules}
+        </div>
+      `;
+    }
+
+    function showRosterDetails(teamKey, teamName, settings, combo, rank) {
+      const html = buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank);
+      showDetailModal(html, `${teamName} roster #${rank}`);
     }
 
     async function copyRosterToClipboard(teamName, settings, combo, rank) {
