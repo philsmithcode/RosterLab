@@ -870,13 +870,6 @@
         copyBtn.style.marginTop = '8px';
         copyBtn.textContent = '📋';
         copyBtn.addEventListener('click', () => copyRosterToClipboard(teamName, settings, combo, start + idx + 1));
-        const sendBtn = document.createElement('button');
-        sendBtn.type = 'button';
-        sendBtn.className = 'icon-btn secondary';
-        sendBtn.setAttribute('aria-label', 'Populate this roster on BBTC');
-        sendBtn.style.marginTop = '8px';
-        sendBtn.textContent = '↗ BBTC';
-        sendBtn.addEventListener('click', () => exportRosterToBbtc(settings.team, teamName, settings, combo, start + idx + 1));
         const detailBtn = document.createElement('button');
         detailBtn.type = 'button';
         detailBtn.className = 'icon-btn secondary';
@@ -889,7 +882,6 @@
         actions.style.gap = '8px';
         actions.style.flexWrap = 'wrap';
         actions.appendChild(copyBtn);
-        actions.appendChild(sendBtn);
         actions.appendChild(detailBtn);
         card.appendChild(actions);
 
