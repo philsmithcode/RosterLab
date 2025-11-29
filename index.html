@@ -959,27 +959,29 @@
     }
 
     function generateCombos(positions, settings) {
-      let results = [];
+      const results = [];
       const path = [];
-      let bestCost = 0;
 
       function dfs(index, remainingCost, totalPlayers, starCount) {
-        if (totalPlayers >= settings.minPlayers) {
+        if (remainingCost < 0 || totalPlayers > settings.maxPlayers) return;
+        if (index >= positions.length || remainingCost === 0) {
+          if (totalPlayers < settings.minPlayers || totalPlayers > settings.maxPlayers) return;
           const spent = settings.tv - remainingCost;
           const summary = path.reduce(
             (acc, p) => {
-          if (!p.count) return acc;
-          const type = p.type ?? 'player';
-          const name = (p.name || '').toLowerCase();
-          if (type === 'extra') {
-            if (name === 'reroll') acc.rerolls += p.count;
-            if (name.includes('bribe')) acc.bribes += p.count;
-          }
-          if (type === 'player') {
-            const isLineman = p.role === 'lineman' || name.includes('lineman');
-            const isStar = p.role === 'star';
-            if (isStar) {
-              acc.stars += p.count;
+              if (!p.count) return acc;
+              const type = p.type ?? 'player';
+              const name = (p.name || '').toLowerCase();
+              if (type === 'extra') {
+                if (name === 'reroll') acc.rerolls += p.count;
+                if (name.includes('bribe')) acc.bribes += p.count;
+                if (name.includes('apothecary')) acc.apothecary += p.count;
+              }
+              if (type === 'player') {
+                const isLineman = p.role === 'lineman' || name.includes('lineman');
+                const isStar = p.role === 'star';
+                if (isStar) {
+                  acc.stars += p.count;
                   acc.starCounts[name] = (acc.starCounts[name] ?? 0) + p.count;
                 }
                 if (isLineman) acc.lineman += p.count;
@@ -1004,7 +1006,7 @@
               }
               return acc;
             },
-            { rerolls: 0, bribes: 0, positionals: 0, lineman: 0, stars: 0, bigGuys: 0, required: {}, requiredExtras: {}, starCounts: {} }
+            { rerolls: 0, bribes: 0, apothecary: 0, positionals: 0, lineman: 0, stars: 0, bigGuys: 0, required: {}, requiredExtras: {}, starCounts: {} }
           );
 
           const missingRequired = settings.required && settings.required.some(
@@ -1042,39 +1044,26 @@
             failsExtrasAll ||
             exceedsBigGuyLimit
           ) {
-            // keep exploring
-          } else if (spent > bestCost) {
-            bestCost = spent;
-            results = [{
-              players: [...path],
-              cost: spent,
-              totalPlayers,
-              rerolls: summary.rerolls,
-              bribes: summary.bribes,
-              positionals: summary.positionals,
-              linemen: summary.lineman,
-            }];
-          } else if (spent === bestCost) {
-            results.push({
-              players: [...path],
-              cost: spent,
-              totalPlayers,
-              rerolls: summary.rerolls,
-              bribes: summary.bribes,
-              positionals: summary.positionals,
-              linemen: summary.lineman,
-            });
+            return;
           }
-          // continue exploring to see if we can spend closer to cap
-        }
 
-        if (index >= positions.length || remainingCost <= 0) return;
+          results.push({
+            players: [...path],
+            cost: spent,
+            totalPlayers,
+            rerolls: summary.rerolls,
+            bribes: summary.bribes,
+            positionals: summary.positionals,
+            linemen: summary.lineman,
+          });
+          return;
+        }
 
         const pos = positions[index];
         const isPlayer = (pos.type ?? 'player') === 'player';
         const isStar = pos.role === 'star';
         const addedPerUnit = isPlayer ? 1 : 0;
-        const maxByCost = Math.floor(remainingCost / pos.cost);
+        const maxByCost = pos.cost > 0 ? Math.floor(remainingCost / pos.cost) : pos.max;
         const playerRoom = addedPerUnit > 0 ? Math.floor((settings.maxPlayers - totalPlayers) / addedPerUnit) : Number.MAX_SAFE_INTEGER;
         const starRoom = isStar ? settings.maxStars - starCount : Number.MAX_SAFE_INTEGER;
         const maxCount = Math.min(pos.max, maxByCost, playerRoom, starRoom);
