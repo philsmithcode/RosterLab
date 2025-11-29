@@ -159,6 +159,7 @@
       letter-spacing: 0.3px;
     }
     .modal-card .text-center { text-align: center; }
+    .subtle { color: var(--muted); font-size: 12px; }
     .muted { color: var(--muted); font-size: 13px; }
     .pill {
       display: inline-flex;
@@ -252,6 +253,12 @@
       <button id="nextPage" disabled>Next</button>
       <span id="pageInfo" class="muted"></span>
     </div>
+    <div class="row" style="margin-top: 4px;">
+      <label style="flex: 1 1 auto; align-items: center; gap: 8px; display: inline-flex; color: var(--muted);">
+        <input type="checkbox" id="detailedView" checked style="width: auto; accent-color: var(--accent);" />
+        Use detailed per-player roster view
+      </label>
+    </div>
   </div>
 
   <div id="detailModal" class="modal-overlay" role="dialog" aria-modal="true">
@@ -284,6 +291,7 @@
     const detailContent = document.getElementById('detailContent');
     const detailTitle = document.getElementById('detailTitle');
     const detailClose = document.getElementById('detailClose');
+    const detailedViewToggle = document.getElementById('detailedView');
     document.querySelectorAll('input[type="number"]').forEach(applyStepper);
 
     teamSelect.addEventListener('change', () => {
@@ -550,6 +558,78 @@
       if (changed.value && changed.value === other.value) {
         other.value = '';
       }
+    }
+
+    function seededRandom(seedStr) {
+      let h = 2166136261 >>> 0;
+      for (let i = 0; i < seedStr.length; i++) {
+        h ^= seedStr.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return () => {
+        h += h << 13; h ^= h >>> 7; h += h << 3; h ^= h >>> 17; h += h << 5;
+        return (h >>> 0) / 4294967295;
+      };
+    }
+
+    function getNamePool(teamKey, rosterName) {
+      const key = (teamKey || '').toLowerCase();
+      const name = (rosterName || '').toLowerCase();
+      const pools = {
+        human: ['Marcus Crowe', 'Alric Holt', 'Jonas Pike', 'Derek Vane', 'Silas Reed', 'Corvin Hale', 'Ronan Briggs', 'Evan Talbot', 'Quinn Laird', 'Gavin Stone', 'Lyle Mercer', 'Cedric Harlow'],
+        amazon: ['Ixchel', 'Tepin', 'Xoco', 'Malinali', 'Chaska', 'Yaretzi', 'Amana', 'Chilali', 'Nayeli', 'Zyanya', 'Miztli', 'Citlali'],
+        'imperial-nobility': ['Sir Alden', 'Baron Urswick', 'Galen d\'Or', 'Otho Harlowe', 'Serafin Voss', 'Roland Tyne', 'Lucan Verne', 'Cassian Bright', 'Benedict Roe', 'Perrin Vale'],
+        bretonnian: ['Guillaume', 'Etienne', 'Lothaire', 'Roland', 'Bastion', 'Amaury', 'Thierry', 'Alaric', 'Durand', 'Hector'],
+        'black-orc': ['Graz Ironjaw', 'Morgluk', 'Grubnash', 'Skarruk', 'Draktooth', 'Gorbad', 'Hruk', 'Mogrot', 'Skorg', 'Grash'],
+        orc: ['Uzgash', 'Ghazbag', 'Snaga', 'Urblok', 'Krugg', 'Dronk', 'Hargash', 'Zognar', 'Mugluk', 'Snorble'],
+        goblin: ['Snikt', 'Dreggit', 'Fizzle', 'Zibzib', 'Gobbo', 'Snorbo', 'Wazzik', 'Pibz', 'Nixx', 'Grott'],
+        snotling: ['Skit', 'Mib', 'Zib', 'Pok', 'Likkit', 'Nib', 'Fik', 'Splug', 'Zug', 'Prip'],
+        ogre: ['Brak Boulder', 'Durk Smash', 'Grothar', 'Hrukkar', 'Mok Gut', 'Throk', 'Uldrum', 'Vorlag', 'Roknar', 'Krag'],
+        dwarf: ['Thrain', 'Borin', 'Kazrik', 'Durin', 'Bromli', 'Rurik', 'Dorin', 'Grumli', 'Bardin', 'Skaggi'],
+        'chaos-dwarf': ['Zhatan', 'Drakkar', 'Gorthak', 'Rhazak', 'Varkhur', 'Drazho', 'Zhorin', 'Grugni', 'Kharek', 'Zhul'],
+        elf: ['Aelar', 'Calen', 'Theren', 'Erevan', 'Lathai', 'Syllin', 'Firael', 'Vaelis', 'Myrian', 'Talanis'],
+        'dark-elf': ['Liraeth', 'Zereth', 'Drusil', 'Velkyn', 'Nerith', 'Zariel', 'Maelis', 'Sorath', 'Valryn', 'Rhyss'],
+        'high-elf': ['Althoran', 'Caelir', 'Ithandir', 'Lorien', 'Maethor', 'Aeril', 'Thamior', 'Vaelor', 'Elandril', 'Saryth'],
+        'elven-union': ['Rhenar', 'Silvan', 'Thalar', 'Valion', 'Elathis', 'Cyran', 'Nymil', 'Orlian', 'Pereth', 'Riviel'],
+        'wood-elf': ['Thalion', 'Erlin', 'Fenwyn', 'Lethariel', 'Rowan', 'Sylvar', 'Tauren', 'Orin', 'Galad', 'Celion'],
+        skaven: ['Snikch', 'Queek', 'Riktik', 'Skrolk', 'Vermis', 'Snarl', 'Krikt', 'Vaztik', 'Skreech', 'Razzik'],
+        lizardmen: ['Xlaq', 'Tlaz', 'Zhotec', 'Qolotl', 'Zaq', 'Itza', 'Tzunki', 'Maztal', 'Chotec', 'Quenchi'],
+        gnome: ['Pip Thistle', 'Milo Bramble', 'Nix Copper', 'Tinker Cob', 'Wizzle Reed', 'Fennel Gear', 'Dill Penny', 'Crispin Quick', 'Larkspur', 'Wort'],
+        halfling: ['Pip Applebottom', 'Milo Greenleaf', 'Rosco Underbough', 'Finnan Goodbarrel', 'Tobias Tunnelly', 'Clover Proudfoot', 'Peony Hilltopple', 'Myrtle Meadow', 'Daisy Thornbush', 'Ruby Hedgerow'],
+        nurgle: ['Pusgore', 'Rotswell', 'Phlegm', 'Mirek', 'Gristle', 'Bilemar', 'Slopdar', 'Ghurk', 'Moldrak', 'Plagrum'],
+        'chaos-chosen': ['Varek', 'Zhul', 'Mordrak', 'Gorath', 'Khalgor', 'Rhazak', 'Vorgrim', 'Skarn', 'Azrak', 'Korhul'],
+        'chaos-renegade': ['Rukhar', 'Zath', 'Kren', 'Malchor', 'Vesk', 'Torvak', 'Zern', 'Harrek', 'Sark', 'Velgor'],
+        khorne: ['Skal Blood', 'Threx', 'Gorth', 'Kharzak', 'Vulkar', 'Drath', 'Rashak', 'Zorn', 'Skorn', 'Morgath'],
+        nurgle: ['Pusgore', 'Rotswell', 'Phlegm', 'Mirek', 'Gristle', 'Bilemar', 'Slopdar', 'Ghurk', 'Moldrak', 'Plagrum'],
+        vampire: ['Lucian Voss', 'Seraphine Dusk', 'Valen Night', 'Isolde Shade', 'Corvin Dray', 'Lilith Noire', 'Marius Crowl', 'Selene Vein', 'Alaric Grave', 'Ravenna'],
+        'necromantic-horror': ['Jon Hollow', 'Mora Shade', 'Gregor Veil', 'Iskra Vile', 'Ulric Gloom', 'Bram Noct', 'Sable Wight', 'Nyssa Grin', 'Ghent Voss', 'Lena Dreg'],
+        'shambling-undead': ['Hark Mort', 'Darius Rot', 'Lydia Grave', 'Morbus', 'Zed Nek', 'Corvash', 'Morlen', 'Ghoula', 'Varn Skul', 'Pallor'],
+        'tomb-kings': ['Rahtep', 'Amenhotar', 'Khalida', 'Setra', 'Tutep', 'Nebrekh', 'Khepra', 'Osiron', 'Sutekh', 'Pharek'],
+        norse: ['Bjorn', 'Sven', 'Erik', 'Leif', 'Rurik', 'Hakon', 'Torvald', 'Ulfr', 'Stig', 'Kjell'],
+        'underworld-denizens': ['Snikkit', 'Drogg', 'Fizzle', 'Gritz', 'Klack', 'Vretch', 'Murt', 'Kribl', 'Skitz', 'Pug'],
+      };
+      const keyCandidates = [key, name];
+      for (const candidate of keyCandidates) {
+        if (!candidate) continue;
+        if (candidate.includes('elf')) return pools['elf'];
+        if (candidate.includes('orc') && pools['black-orc']) return pools['black-orc'];
+        if (pools[candidate]) return pools[candidate];
+      }
+      return ['Arin Vale', 'Kellen Ridge', 'Mara Kest', 'Tamsin Grey', 'Rook Ell', 'Perrin Vale', 'Lysa Crow', 'Taran Vey', 'Silas Thorn', 'Rhea Locke'];
+    }
+
+    function generatePlayerNames(teamKey, rosterName, baseName, count, seedSalt) {
+      const pool = getNamePool(teamKey, rosterName);
+      const rng = seededRandom(`${teamKey}|${baseName}|${seedSalt}`);
+      const used = new Map();
+      const names = [];
+      for (let i = 0; i < count; i++) {
+        const pick = pool.length ? pool[Math.floor(rng() * pool.length) % pool.length] : `Player ${i + 1}`;
+        const seen = used.get(pick) || 0;
+        used.set(pick, seen + 1);
+        names.push(seen ? `${pick} ${seen + 1}` : pick);
+      }
+      return names;
     }
 
     function hideDetailModal() {
@@ -834,7 +914,7 @@
       return withPlus ? `${value}+` : String(value);
     }
 
-    function buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank) {
+    function buildSimpleRosterDetailsHtml(teamKey, teamName, settings, combo, rank) {
       const roster = rosters[teamKey] || {};
       const players = combo.players.filter(p => (p.type ?? 'player') === 'player' && p.count > 0);
       const extras = combo.players.filter(p => (p.type ?? 'player') === 'extra' && p.count > 0);
@@ -849,14 +929,14 @@
         return `
           <tr>
             <td>${p.count} x ${p.name}</td>
-            <td>${fmtStat(info.ma)}</td>
-            <td>${fmtStat(info.st)}</td>
-            <td>${fmtStat(info.ag, true)}</td>
-            <td>${fmtStat(info.pa, true)}</td>
-            <td>${fmtStat(info.av, true)}</td>
+            <td class="text-center">${fmtStat(info.ma)}</td>
+            <td class="text-center">${fmtStat(info.st)}</td>
+            <td class="text-center">${fmtStat(info.ag, true)}</td>
+            <td class="text-center">${fmtStat(info.pa, true)}</td>
+            <td class="text-center">${fmtStat(info.av, true)}</td>
             <td>${skills}</td>
-            <td>${info.primary || '—'}</td>
-            <td>${info.secondary || '—'}</td>
+            <td class="text-center">${info.primary || '—'}</td>
+            <td class="text-center">${info.secondary || '—'}</td>
             <td class="text-center">${p.cost}k</td>
             <td class="text-center">${subtotal}k</td>
           </tr>`;
@@ -864,7 +944,6 @@
       const extrasRows = extras.length
         ? extras.map(ex => `<tr><td>${ex.count} x ${ex.name}</td><td class="text-center">${ex.cost}k</td><td class="text-center">${ex.cost * ex.count}k</td></tr>`).join('')
         : '<tr><td colspan="3" class="muted">No inducements or sideline extras selected.</td></tr>';
-
       const rerollPos = (roster.positions || []).find(p => (p.name || '').toLowerCase() === 'reroll');
       const rerollText = rerollInfo || rerollPos
         ? `Re-rolls: 0-${(rerollInfo?.max ?? rerollPos?.max ?? '?')} @ ${(rerollInfo?.cost ?? rerollPos?.cost ?? '?')}k`
@@ -876,7 +955,7 @@
         <table>
           <thead>
             <tr>
-              <th>Player</th><th>MA</th><th>ST</th><th>AG</th><th>PA</th><th>AV</th><th>Skills</th><th>Primary</th><th>Secondary</th><th>Cost</th><th>Total</th>
+              <th>Position</th><th class="text-center">MA</th><th class="text-center">ST</th><th class="text-center">AG</th><th class="text-center">PA</th><th class="text-center">AV</th><th>Skills</th><th class="text-center">Primary</th><th class="text-center">Secondary</th><th class="text-center">Cost</th><th class="text-center">Total</th>
             </tr>
           </thead>
           <tbody>${playerRows || '<tr><td colspan="11" class="muted">No players in this roster.</td></tr>'}</tbody>
@@ -892,8 +971,73 @@
       `;
     }
 
+    function buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank) {
+      const roster = rosters[teamKey] || {};
+      const players = combo.players.filter(p => (p.type ?? 'player') === 'player' && p.count > 0);
+      const extras = combo.players.filter(p => (p.type ?? 'player') === 'extra' && p.count > 0);
+      const leagues = (roster.leagues || []).join(', ') || '—';
+      const specialRules = (roster.specialRules || []).join(', ') || 'None';
+      const rerollInfo = roster.rerolls || null;
+      const apothecaryInfo = roster.hasApothecary === undefined ? 'Unknown' : (roster.hasApothecary ? 'Yes' : 'No');
+      const playerRows = [];
+      players.forEach(p => {
+        const info = findPlayerDetails(teamKey, p.name) || {};
+        const skills = (info.skills || []).join(', ') || '—';
+        const names = generatePlayerNames(teamKey, roster.name || teamName, p.name, p.count, `${rank}-${settings.tv}-${p.name}`);
+        names.forEach((playerName, idx) => {
+          playerRows.push(`
+            <tr>
+              <td class="text-center">${playerRows.length + 1}</td>
+              <td>${playerName}</td>
+              <td>${p.name}</td>
+              <td class="text-center">${fmtStat(info.ma)}</td>
+              <td class="text-center">${fmtStat(info.st)}</td>
+              <td class="text-center">${fmtStat(info.ag, true)}</td>
+              <td class="text-center">${fmtStat(info.pa, true)}</td>
+              <td class="text-center">${fmtStat(info.av, true)}</td>
+              <td>${skills}</td>
+              <td class="text-center">${info.primary || '—'}</td>
+              <td class="text-center">${info.secondary || '—'}</td>
+              <td class="text-center">${p.cost}k</td>
+            </tr>`);
+        });
+      });
+      const playerRowsHtml = playerRows.join('');
+      const extrasRows = extras.length
+        ? extras.map(ex => `<tr><td>${ex.count} x ${ex.name}</td><td class="text-center">${ex.cost}k</td><td class="text-center">${ex.cost * ex.count}k</td></tr>`).join('')
+        : '<tr><td colspan="3" class="muted">No inducements or sideline extras selected.</td></tr>';
+
+      const rerollPos = (roster.positions || []).find(p => (p.name || '').toLowerCase() === 'reroll');
+      const rerollText = rerollInfo || rerollPos
+        ? `Re-rolls: 0-${(rerollInfo?.max ?? rerollPos?.max ?? '?')} @ ${(rerollInfo?.cost ?? rerollPos?.cost ?? '?')}k`
+        : 'Re-roll info unavailable';
+      return `
+        <div class="muted" style="margin-bottom: 6px;">
+          #${rank} • ${teamName} • Players: ${combo.totalPlayers} • Cost: ${combo.cost}k (target TV ${settings.tv}k)
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th class="text-center">#</th><th>Name</th><th>Position</th><th class="text-center">MA</th><th class="text-center">ST</th><th class="text-center">AG</th><th class="text-center">PA</th><th class="text-center">AV</th><th>Skills</th><th class="text-center">Primary</th><th class="text-center">Secondary</th><th class="text-center">Cost</th>
+            </tr>
+          </thead>
+          <tbody>${playerRowsHtml || '<tr><td colspan="11" class="muted">No players in this roster.</td></tr>'}</tbody>
+        </table>
+        <h4 style="margin: 12px 0 4px 0;">Inducements & Extras</h4>
+        <table>
+          <thead><tr><th>Name</th><th class="text-center">Cost</th><th class="text-center">Total</th></tr></thead>
+          <tbody>${extrasRows}</tbody>
+        </table>
+        <div class="muted" style="margin-top: 10px;">
+          ${rerollText} • Apothecary: ${apothecaryInfo} • Leagues: ${leagues} • Special rules: ${specialRules}
+        </div>
+      `;
+    }
+
     function showRosterDetails(teamKey, teamName, settings, combo, rank) {
-      const html = buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank);
+      const html = detailedViewToggle?.checked
+        ? buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank)
+        : buildSimpleRosterDetailsHtml(teamKey, teamName, settings, combo, rank);
       showDetailModal(html, `${teamName} roster #${rank}`);
     }
 
