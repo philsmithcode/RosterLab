@@ -192,8 +192,8 @@
   <div class="card">
     <div class="row" style="justify-content: space-between; align-items: center; margin-top: 0;">
       <h1 style="margin: 0; display: inline-flex; align-items: center; gap: 8px;">
-        <img src="wmino.png" alt="RosterLab icon" style="width: 28px; height: 28px; border-radius: 6px;" />
-        RosterLab v0.2
+        <img src="img/v03.png" alt="RosterLab icon" style="width: 28px; height: 28px; border-radius: 6px;" />
+        RosterLab v0.3
       </h1>
       <button id="guideToggle" type="button" style="max-width: 160px;">Show guide</button>
     </div>
@@ -281,12 +281,14 @@
     let currentPage = 1;
     let pageSize = 5;
     const addedSkillsStore = {};
+    const lastDetailContext = { teamKey: null, teamName: null, settings: null, combo: null, rank: null, teamTitle: null, detailed: true };
     const skillCatalog = {
       G: ["Block","Dauntless","Fend","Frenzy*","Kick","Pro","Steady Footing","Strip Ball","Sure Hands","Tackle","Taunt","Wrestle"],
       A: ["Catch","Defensive","Diving Catch","Diving Tackle","Dodge","Hit and Run","Jump up","Leap","Safe Pair of Hands","Sidestep","Sprint","Sure Feet"],
       S: ["Arm Bar","Brawler","Break Tackle","Bullseye","Grab","Guard","Juggernaut","Mighty Blow","Multiple Block","Stand Firm","Strong Arm","Thick Skull"],
       P: ["Accurate","Cannoneer","Cloud Burster","Dump-off","Give and Go","Hail Mary Pass","Leader","Nerves of Steel","On the Ball","Pass","Punt","Safe Pass"],
       M: ["Big Hand","Claws","Disturbing Presence*","Extra Arms","Foul Appearance","Horns","Iron Hard Skin","Monstrous Mouth","Prehensile Tail","Tentacles","Two Heads","Very Long Legs"],
+      D: ["Dirty Player","Eye Gouge","Fumblerooski","Lethal Flight","Lone Fouler","Pile Driver","Put the Boot In","Quick Foul","Saboteur","Shadowing","Sneaky Git","Violent Innovator"],
     };
     const teamSelect = document.getElementById('team');
     const starSelect1 = document.getElementById('star1');
@@ -778,6 +780,7 @@
       addedSkillsStore[teamKey][rank][playerKey] = addedSkillsStore[teamKey][rank][playerKey] || [];
       const list = addedSkillsStore[teamKey][rank][playerKey];
       if (!list.includes(skillName)) list.push(skillName);
+      markDetailDirty();
     }
 
     function removeSkill(teamKey, rank, playerKey, skillName) {
@@ -785,6 +788,7 @@
       if (!list) return;
       const idx = list.indexOf(skillName);
       if (idx >= 0) list.splice(idx, 1);
+      markDetailDirty();
     }
 
     function renderAddedSkillsPills(container, teamKey, rank, playerKey) {
@@ -792,6 +796,10 @@
       container.innerHTML = skills.length
         ? skills.map(s => `<span class="pill" data-skill="${s}">${s} <button type="button" class="icon-btn secondary skill-remove" data-skill="${s}" style="padding:2px 6px;min-width:0;">×</button></span>`).join(' ')
         : '<span class="muted">-</span>';
+    }
+
+    function markDetailDirty() {
+      lastDetailContext.dirty = true;
     }
 
     function wireSkillControls(root) {
@@ -832,12 +840,25 @@
       detailTitle.textContent = lastDetailTitle;
       detailContent.innerHTML = html;
       detailModal.style.display = 'flex';
+      markDetailDirty(); // force recompute before export to include latest edits
     }
 
     function exportDetailPdf() {
-      if (!lastDetailHtml) {
+      if (!lastDetailHtml || !lastDetailContext.teamKey) {
         alert('No roster details to export yet.');
         return;
+      }
+      try {
+        const ctx = lastDetailContext;
+        const settingsCopy = ctx.settings ? JSON.parse(JSON.stringify(ctx.settings)) : null;
+        const comboCopy = ctx.combo ? JSON.parse(JSON.stringify(ctx.combo)) : null;
+        const rebuilt = ctx.detailed
+          ? buildRosterDetailsHtml(ctx.teamKey, ctx.teamName, settingsCopy, comboCopy, ctx.rank, ctx.teamTitle)
+          : buildSimpleRosterDetailsHtml(ctx.teamKey, ctx.teamName, settingsCopy, comboCopy, ctx.rank, ctx.teamTitle);
+        lastDetailHtml = rebuilt;
+        detailContent.innerHTML = rebuilt;
+      } catch (err) {
+        console.error('Failed to rebuild detail view before export', err);
       }
       const styles = document.querySelector('style')?.innerHTML || '';
       const printable = `
@@ -846,15 +867,22 @@
           <head>
             <title>${lastDetailTitle}</title>
             <style>
-              @page { size: A4 landscape; margin: 8mm; }
+              @page { size: A4 landscape; margin: 6mm; }
               html, body { width: 100%; height: 100%; }
-              body { font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; padding: 12px; color: #111827; transform: scale(0.82); transform-origin: top left; }
-              h3 { margin: 0 0 6px 0; font-size: 16px; }
+              body { font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; padding: 6mm; color: #111827; }
+              h3 { margin: 0 0 6px 0; font-size: 15px; }
               table { width: 100%; border-collapse: collapse; margin-top: 6px; page-break-inside: avoid; table-layout: fixed; }
-              th, td { padding: 2px 3px; border: 1px solid #d1d5db; font-size: 9px; text-align: left; word-break: break-word; }
+              th, td { padding: 2px 3px; border: 1px solid #d1d5db; font-size: 8.5px; text-align: left; word-break: break-word; }
               th.w-narrow, td.w-narrow { width: 4%; text-align: center; }
               th.w-narrow-stat, td.w-narrow-stat { width: 4.5%; text-align: center; }
-              th.skills-wide, td.skills-wide { width: 22%; }
+              th.skills-wide, td.skills-wide { width: 28%; }
+              th.cost-col, td.cost-col { width: 8%; text-align: center; }
+              .web-only { display: table-cell; }
+              .print-only { display: none; }
+              @media print {
+                .web-only { display: none !important; }
+                .print-only { display: table-cell !important; }
+              }
               th { background: #f3f4f6; text-transform: uppercase; letter-spacing: 0.2px; }
               .muted { color: #6b7280; font-size: 9px; }
               .pill { display: inline-block; padding: 1px 6px; border-radius: 999px; background: #e0f2fe; margin-right: 3px; margin-bottom: 3px; font-size: 9px; }
@@ -864,6 +892,9 @@
           </head>
           <body>
             ${lastDetailHtml}
+            <div style="position: fixed; bottom: 6px; right: 10px; text-align: right; font-size: 9px; color: #6b7280;">
+              Every TV. Every combo. Every winning roster. Created with RosterLab.
+            </div>
           </body>
         </html>`;
       const iframe = document.createElement('iframe');
@@ -1242,6 +1273,7 @@
           const addedPills = added.length
             ? added.map(s => `<span class="pill" data-skill="${s}">${s} <button type="button" class="icon-btn secondary skill-remove" data-skill="${s}" style="padding:2px 6px;min-width:0;">×</button></span>`).join(' ')
             : '<span class="muted">-</span>';
+          const addedText = added.length ? added.join(', ') : '-';
           playerRows.push(`
             <tr>
               <td class="text-center">${playerRows.length + 1}</td>
@@ -1252,12 +1284,16 @@
               <td class="text-center">${fmtStat(info.ag, true)}</td>
               <td class="text-center">${fmtStat(info.pa, true)}</td>
               <td class="text-center">${fmtStat(info.av, true)}</td>
+              <td class="skills-wide web-only">${skills}</td>
+              <td class="text-center web-only">${info.primary || '—'}</td>
+              <td class="text-center web-only">${info.secondary || '—'}</td>
               <td class="skills-wide">${skills}</td>
-              <td class="text-center">${p.cost}k</td>
-              <td>
+              <td class="web-only">
                 <div class="added-skills" data-team="${teamKey}" data-rank="${rank}" data-player="${playerKey}">${addedPills}</div>
                 <select class="skill-select" data-team="${teamKey}" data-rank="${rank}" data-player="${playerKey}" style="margin-top: 6px;">${optionsHtml}</select>
               </td>
+             <td class="skills-wide print-only">${addedText}</td>
+              <td class="text-center w-narrow cost-col">${p.cost}k</td>
             </tr>`);
         });
       });
@@ -1278,10 +1314,10 @@
         <table>
           <thead>
             <tr>
-              <th class="w-narrow">#</th><th>Name</th><th>Position</th><th class="w-narrow-stat">MA</th><th class="w-narrow-stat">ST</th><th class="w-narrow-stat">AG</th><th class="w-narrow-stat">PA</th><th class="w-narrow-stat">AV</th><th class="skills-wide">Skills</th><th class="text-center">Cost</th><th>Added Skills</th>
+              <th class="w-narrow">#</th><th>Name</th><th>Position</th><th class="w-narrow-stat">MA</th><th class="w-narrow-stat">ST</th><th class="w-narrow-stat">AG</th><th class="w-narrow-stat">PA</th><th class="w-narrow-stat">AV</th><th class="skills-wide web-only">Skills</th><th class="text-center web-only">Primary</th><th class="text-center web-only">Secondary</th><th class="skills-wide print-only">Skills</th><th class="skills-wide print-only">Added Skills</th><th class="text-center w-narrow cost-col">Cost</th>
             </tr>
           </thead>
-          <tbody>${playerRowsHtml || '<tr><td colspan="11" class="muted">No players in this roster.</td></tr>'}</tbody>
+          <tbody>${playerRowsHtml || '<tr><td colspan="14" class="muted">No players in this roster.</td></tr>'}</tbody>
         </table>
         <h4 style="margin: 12px 0 4px 0;">Inducements & Extras</h4>
         <table>
@@ -1297,6 +1333,14 @@
     function showRosterDetails(teamKey, teamName, settings, combo, rank) {
       const generatedName = generateTeamName(teamKey, teamName, `${settings.tv}-${rank}`);
       const teamTitle = `${teamName} - ${generatedName}`;
+      lastDetailContext.teamKey = teamKey;
+      lastDetailContext.teamName = teamName;
+      lastDetailContext.settings = JSON.parse(JSON.stringify(settings));
+      lastDetailContext.combo = JSON.parse(JSON.stringify(combo));
+      lastDetailContext.rank = rank;
+      lastDetailContext.teamTitle = teamTitle;
+      lastDetailContext.detailed = Boolean(detailedViewToggle?.checked);
+      lastDetailContext.dirty = false;
       const html = detailedViewToggle?.checked
         ? buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitle)
         : buildSimpleRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitle);
