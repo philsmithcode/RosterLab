@@ -548,6 +548,59 @@
       return map;
     }
 
+    function getTeamNamePool(teamKey, rosterName) {
+      const key = (teamKey || '').toLowerCase();
+      const name = (rosterName || '').toLowerCase();
+      const basePools = {
+        human: ['Guardians', 'Sentinels', 'Rangers', 'Pilots', 'Commanders', 'Stallions', 'Legion', 'Outriders', 'Minutemen', 'Warriors', 'Vanguards'],
+        amazon: ['Serpents', 'Jaguars', 'Eagles', 'Pythons', 'Storm Maidens', 'Sun Spears', 'Valkyries'],
+        'imperial-nobility': ['Barons', 'Lancers', 'Royals', 'Cavaliers', 'Legates', 'Dynasts'],
+        bretonnian: ['Chevaliers', 'Lions', 'Grail Knights', 'Falcons', 'Lancers'],
+        'black-orc': ['Bruisers', 'Maulers', 'Skullcrushers', 'Iron Tusks', 'Bruising Bulls'],
+        orc: ['Brawlers', 'Crushers', 'Bashers', 'Tusks', 'Grimjaws'],
+        goblin: ['Sneaks', 'Bog Jumpers', 'Mischiefs', 'Snots', 'Boomers'],
+        snotling: ['Mudskippers', 'Gnats', 'Grubs', 'Scramblers', 'Bog Hoppers'],
+        ogre: ['Maulers', 'Boulderbacks', 'Stonefists', 'Anvils', 'Titans'],
+        dwarf: ['Anvils', 'Ramparts', 'Forged', 'Stonehammers', 'Mountaineers'],
+        'chaos-dwarf': ['Inferno', 'Bullheads', 'Ash Raiders', 'Hellforged', 'Overlords'],
+        elf: ['Falcons', 'Skyblades', 'Starlight', 'Sentinels', 'Windrunners'],
+        'dark-elf': ['Shadows', 'Ravens', 'Corsairs', 'Nightblades', 'Black Arrows'],
+        'high-elf': ['Arcanists', 'Lancers', 'Sunspears', 'Pride', 'Skyhawks'],
+        'elven-union': ['Sleek', 'Wardens', 'Gliders', 'Silver Arrows', 'Wavebreakers'],
+        'wood-elf': ['Wildrunners', 'Sylvans', 'Wardancers', 'Glades', 'Barkhawks'],
+        skaven: ['Skitterers', 'Warpclaws', 'Plaguewind', 'Gnawers', 'Underfeet'],
+        lizardmen: ['Sunfangs', 'Junglebacks', 'Scaleguard', 'Marsh Raptors', 'Thunder Lizards'],
+        gnome: ['Tricksters', 'Tinkerers', 'Riveters', 'Cogs', 'Quickfoots'],
+        halfling: ['Stouthearts', 'Pieslingers', 'Harvesters', 'Haybales', 'Hilltop'],
+        nurgle: ['Rotwings', 'Blight', 'Carrion', 'Muckrunners', 'Decay'],
+        'chaos-chosen': ['Ravagers', 'Dreadlords', 'Harbingers', 'Ruiners', 'Desecrators'],
+        'chaos-renegade': ['Outcasts', 'Reavers', 'Despoilers', 'Betrayers', 'Warpspawn'],
+        khorne: ['Bloodhounds', 'Skulls', 'Butchers', 'Gorefury', 'Red Tide'],
+        vampire: ['Nightwings', 'Crimson', 'Bloodlines', 'Moonveil', 'Nocturnes'],
+        'necromantic-horror': ['Gravewalkers', 'Moongrim', 'Pallbearers', 'Night Howlers', 'Shadelords'],
+        'shambling-undead': ['Graveguard', 'Bonewalkers', 'Tombstorm', 'Deathrattle', 'Pale Legion'],
+        'tomb-kings': ['Dynasty', 'Pharaohs', 'Sunscarabs', 'Eternals', 'Obelisks'],
+        norse: ['Raiders', 'Frostfangs', 'Berserkers', 'Icewolves', 'Longboats'],
+        'underworld-denizens': ['Warped', 'Burrowers', 'Tunnellers', 'Madcaps', 'Grotmass'],
+      };
+      if (basePools[name]) return basePools[name];
+      if (basePools[key]) return basePools[key];
+      if (name.includes('elf')) return basePools.elf;
+      if (name.includes('orc') && basePools['black-orc']) return basePools['black-orc'];
+      return ['Gridiron', 'Defenders', 'Blitz', 'Legion', 'Thunder', 'Storm', 'Titans'];
+    }
+
+    function generateTeamName(teamKey, rosterName, seedSalt = '') {
+      const pool = getTeamNamePool(teamKey, rosterName);
+      const rng = seededRandom(`teamname|${teamKey}|${rosterName}|${seedSalt}`);
+      return pool[Math.floor(rng() * pool.length) % pool.length] + ' ' + sanitizeTeamBase(rosterName || teamKey);
+    }
+
+    function sanitizeTeamBase(name) {
+      if (!name) return 'Squad';
+      return name.replace(/[^a-z0-9]+/gi, ' ').trim();
+    }
+
     function enforceDistinct(changed, other) {
       if (changed.value && changed.value === other.value) {
         other.value = '';
@@ -618,16 +671,48 @@
       return ['Arin Vale', 'Kellen Ridge', 'Mara Kest', 'Tamsin Grey', 'Rook Ell', 'Perrin Vale', 'Lysa Crow', 'Taran Vey', 'Silas Thorn', 'Rhea Locke'];
     }
 
-    function generatePlayerNames(teamKey, rosterName, baseName, count, seedSalt) {
-      const pool = getNamePool(teamKey, rosterName);
+    function generatePlayerNames(teamKey, rosterName, baseName, count, seedSalt, globalUsed) {
+      const pool = [...new Set(getNamePool(teamKey, rosterName))];
       const rng = seededRandom(`${teamKey}|${baseName}|${seedSalt}`);
-      const used = new Map();
+      const syllA = ['ar', 'bel', 'cor', 'dra', 'el', 'far', 'gal', 'hal', 'is', 'jor', 'kal', 'lor', 'mir', 'nor', 'or', 'per', 'quil', 'ron', 'sil', 'tor', 'ur', 'vor', 'wyn', 'zan'];
+      const syllB = ['en', 'ion', 'as', 'eth', 'ian', 'or', 'us', 'iel', 'or', 'ak', 'os', 'ir', 'eth', 'ym', 'as', 'yn', 'or', 'ath', 'el', 'or'];
       const names = [];
+      const used = globalUsed || new Set();
+
+      const synthName = () => {
+        let attempt = 0;
+        while (attempt < 200) {
+          const part1 = syllA[Math.floor(rng() * syllA.length) % syllA.length];
+          const part2 = syllB[Math.floor(rng() * syllB.length) % syllB.length];
+          const composed = (part1 + part2).replace(/(^\w)/, c => c.toUpperCase());
+          if (!used.has(composed) && !pool.includes(composed)) return composed;
+          attempt += 1;
+        }
+        const fallback = `Name${Math.floor(rng() * 1_000_000)}`;
+        return used.has(fallback) ? `${fallback}X` : fallback;
+      };
+
+      while (pool.length < 16) {
+        const candidate = synthName();
+        if (!pool.includes(candidate)) pool.push(candidate);
+      }
+
       for (let i = 0; i < count; i++) {
-        const pick = pool.length ? pool[Math.floor(rng() * pool.length) % pool.length] : `Player ${i + 1}`;
-        const seen = used.get(pick) || 0;
-        used.set(pick, seen + 1);
-        names.push(seen ? `${pick} ${seen + 1}` : pick);
+        let candidate = null;
+        let attempts = 0;
+        while (attempts < 200 && !candidate) {
+          const pick = pool[Math.floor(rng() * pool.length) % pool.length];
+          if (!used.has(pick)) {
+            candidate = pick;
+            break;
+          }
+          attempts += 1;
+        }
+        if (!candidate) {
+          candidate = synthName();
+        }
+        used.add(candidate);
+        names.push(candidate);
       }
       return names;
     }
@@ -811,9 +896,10 @@
       currentPage = Math.min(Math.max(1, currentPage), totalPages);
       const container = document.getElementById('results');
       container.innerHTML = '';
+      const generatedTeamName = generateTeamName(settings.team, teamName, `${settings.tv}-${list.length || 0}`);
       const header = document.createElement('div');
       header.className = 'muted';
-      header.textContent = `Team: ${teamName} • Target TV: ${settings.tv}k • Results: ${list.length || 0}`;
+      header.textContent = `Team: ${teamName} - ${generatedTeamName} • Target TV: ${settings.tv}k • Results: ${list.length || 0}`;
       container.appendChild(header);
 
       const pageInfo = document.getElementById('pageInfo');
@@ -971,11 +1057,12 @@
       const specialRules = (roster.specialRules || []).join(', ') || 'None';
       const rerollInfo = roster.rerolls || null;
       const apothecaryInfo = roster.hasApothecary === undefined ? 'Unknown' : (roster.hasApothecary ? 'Yes' : 'No');
+      const usedNames = new Set();
       const playerRows = [];
       players.forEach(p => {
         const info = findPlayerDetails(teamKey, p.name) || {};
         const skills = (info.skills || []).join(', ') || '—';
-        const names = generatePlayerNames(teamKey, roster.name || teamName, p.name, p.count, `${rank}-${settings.tv}-${p.name}`);
+        const names = generatePlayerNames(teamKey, roster.name || teamName, p.name, p.count, `${rank}-${settings.tv}-${p.name}`, usedNames);
         names.forEach((playerName, idx) => {
           playerRows.push(`
             <tr>
@@ -1030,7 +1117,8 @@
       const html = detailedViewToggle?.checked
         ? buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank)
         : buildSimpleRosterDetailsHtml(teamKey, teamName, settings, combo, rank);
-      showDetailModal(html, `${teamName} roster #${rank}`);
+      const teamTitle = generateTeamName(teamKey, teamName, `${settings.tv}-${rank}`);
+      showDetailModal(html, `${teamTitle} (roster #${rank})`);
     }
 
     async function copyRosterToClipboard(teamName, settings, combo, rank) {
