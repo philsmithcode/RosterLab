@@ -552,48 +552,69 @@
       const key = (teamKey || '').toLowerCase();
       const name = (rosterName || '').toLowerCase();
       const basePools = {
-        human: ['Guardians', 'Sentinels', 'Rangers', 'Pilots', 'Commanders', 'Stallions', 'Legion', 'Outriders', 'Minutemen', 'Warriors', 'Vanguards'],
-        amazon: ['Serpents', 'Jaguars', 'Eagles', 'Pythons', 'Storm Maidens', 'Sun Spears', 'Valkyries'],
-        'imperial-nobility': ['Barons', 'Lancers', 'Royals', 'Cavaliers', 'Legates', 'Dynasts'],
-        bretonnian: ['Chevaliers', 'Lions', 'Grail Knights', 'Falcons', 'Lancers'],
-        'black-orc': ['Bruisers', 'Maulers', 'Skullcrushers', 'Iron Tusks', 'Bruising Bulls'],
-        orc: ['Brawlers', 'Crushers', 'Bashers', 'Tusks', 'Grimjaws'],
-        goblin: ['Sneaks', 'Bog Jumpers', 'Mischiefs', 'Snots', 'Boomers'],
-        snotling: ['Mudskippers', 'Gnats', 'Grubs', 'Scramblers', 'Bog Hoppers'],
-        ogre: ['Maulers', 'Boulderbacks', 'Stonefists', 'Anvils', 'Titans'],
-        dwarf: ['Anvils', 'Ramparts', 'Forged', 'Stonehammers', 'Mountaineers'],
-        'chaos-dwarf': ['Inferno', 'Bullheads', 'Ash Raiders', 'Hellforged', 'Overlords'],
-        elf: ['Falcons', 'Skyblades', 'Starlight', 'Sentinels', 'Windrunners'],
-        'dark-elf': ['Shadows', 'Ravens', 'Corsairs', 'Nightblades', 'Black Arrows'],
-        'high-elf': ['Arcanists', 'Lancers', 'Sunspears', 'Pride', 'Skyhawks'],
-        'elven-union': ['Sleek', 'Wardens', 'Gliders', 'Silver Arrows', 'Wavebreakers'],
-        'wood-elf': ['Wildrunners', 'Sylvans', 'Wardancers', 'Glades', 'Barkhawks'],
-        skaven: ['Skitterers', 'Warpclaws', 'Plaguewind', 'Gnawers', 'Underfeet'],
-        lizardmen: ['Sunfangs', 'Junglebacks', 'Scaleguard', 'Marsh Raptors', 'Thunder Lizards'],
-        gnome: ['Tricksters', 'Tinkerers', 'Riveters', 'Cogs', 'Quickfoots'],
-        halfling: ['Stouthearts', 'Pieslingers', 'Harvesters', 'Haybales', 'Hilltop'],
-        nurgle: ['Rotwings', 'Blight', 'Carrion', 'Muckrunners', 'Decay'],
-        'chaos-chosen': ['Ravagers', 'Dreadlords', 'Harbingers', 'Ruiners', 'Desecrators'],
-        'chaos-renegade': ['Outcasts', 'Reavers', 'Despoilers', 'Betrayers', 'Warpspawn'],
-        khorne: ['Bloodhounds', 'Skulls', 'Butchers', 'Gorefury', 'Red Tide'],
-        vampire: ['Nightwings', 'Crimson', 'Bloodlines', 'Moonveil', 'Nocturnes'],
-        'necromantic-horror': ['Gravewalkers', 'Moongrim', 'Pallbearers', 'Night Howlers', 'Shadelords'],
-        'shambling-undead': ['Graveguard', 'Bonewalkers', 'Tombstorm', 'Deathrattle', 'Pale Legion'],
-        'tomb-kings': ['Dynasty', 'Pharaohs', 'Sunscarabs', 'Eternals', 'Obelisks'],
-        norse: ['Raiders', 'Frostfangs', 'Berserkers', 'Icewolves', 'Longboats'],
-        'underworld-denizens': ['Warped', 'Burrowers', 'Tunnellers', 'Madcaps', 'Grotmass'],
+        human: ['Guardians', 'Sentinels', 'Rangers', 'Pilots', 'Commanders', 'Stallions', 'Legion', 'Outriders', 'Minutemen', 'Warriors', 'Vanguards', 'Titans', 'Chargers'],
+        amazon: ['Serpents', 'Jaguars', 'Eagles', 'Pythons', 'Storm Maidens', 'Sun Spears', 'Valkyries', 'Blaze', 'Vipers'],
+        'imperial-nobility': ['Barons', 'Lancers', 'Royals', 'Cavaliers', 'Legates', 'Dynasts', 'Kingsmen'],
+        bretonnian: ['Chevaliers', 'Lions', 'Grail Knights', 'Falcons', 'Lancers', 'Crusaders'],
+        'black-orc': ['Bruisers', 'Maulers', 'Skullcrushers', 'Iron Tusks', 'Bruising Bulls', 'Rampage'],
+        orc: ['Brawlers', 'Crushers', 'Bashers', 'Tusks', 'Grimjaws', 'Bruisers'],
+        goblin: ['Sneaks', 'Bog Jumpers', 'Mischiefs', 'Snots', 'Boomers', 'Tricksters'],
+        snotling: ['Mudskippers', 'Gnats', 'Grubs', 'Scramblers', 'Bog Hoppers', 'Skippers'],
+        ogre: ['Maulers', 'Boulderbacks', 'Stonefists', 'Anvils', 'Titans', 'Mammoths'],
+        dwarf: ['Anvils', 'Ramparts', 'Forgeguard', 'Stonehammers', 'Mountaineers', 'Ironclads'],
+        'chaos-dwarf': ['Inferno', 'Bullheads', 'Ash Raiders', 'Hellforged', 'Overlords', 'Havoc'],
+        elf: ['Falcons', 'Skyblades', 'Starlight', 'Sentinels', 'Windrunners', 'Wildcats'],
+        'dark-elf': ['Shadows', 'Ravens', 'Corsairs', 'Nightblades', 'Black Arrows', 'Reavers'],
+        'high-elf': ['Arcanists', 'Lancers', 'Sunspears', 'Pride', 'Skyhawks', 'Royals'],
+        'elven-union': ['Wardens', 'Gliders', 'Silver Arrows', 'Wavebreakers', 'Striders'],
+        'wood-elf': ['Wildrunners', 'Sylvans', 'Wardancers', 'Glades', 'Barkhawks', 'Forest Hawks'],
+        skaven: ['Skitterers', 'Warpclaws', 'Plaguewind', 'Gnawers', 'Underfeet', 'Ratskins'],
+        lizardmen: ['Sunfangs', 'Junglebacks', 'Scaleguard', 'Marsh Raptors', 'Thunder Lizards', 'Swamp Stalkers'],
+        gnome: ['Tricksters', 'Tinkerers', 'Riveters', 'Cogs', 'Quickfoots', 'Gadgets'],
+        halfling: ['Stouthearts', 'Pieslingers', 'Harvesters', 'Haybales', 'Hilltop', 'Acorns'],
+        nurgle: ['Rotwings', 'Blight', 'Carrion', 'Muckrunners', 'Decay', 'Spores'],
+        'chaos-chosen': ['Ravagers', 'Dreadlords', 'Harbingers', 'Ruiners', 'Desecrators', 'Raiders'],
+        'chaos-renegade': ['Outcasts', 'Reavers', 'Despoilers', 'Betrayers', 'Warpspawn', 'Renegades'],
+        khorne: ['Bloodhounds', 'Skulls', 'Butchers', 'Gorefury', 'Red Tide', 'Berserkers'],
+        vampire: ['Nightwings', 'Crimson', 'Bloodlines', 'Moonveil', 'Nocturnes', 'Shadows'],
+        'necromantic-horror': ['Gravewalkers', 'Moongrim', 'Pallbearers', 'Night Howlers', 'Shadelords', 'Phantoms'],
+        'shambling-undead': ['Graveguard', 'Bonewalkers', 'Tombstorm', 'Deathrattle', 'Pale Legion', 'Wraiths'],
+        'tomb-kings': ['Dynasty', 'Pharaohs', 'Sunscarabs', 'Eternals', 'Obelisks', 'Scarab Kings'],
+        norse: ['Raiders', 'Frostfangs', 'Berserkers', 'Icewolves', 'Longboats', 'Stormborn'],
+        'underworld-denizens': ['Warped', 'Burrowers', 'Tunnellers', 'Madcaps', 'Grotmass', 'Nightcrawlers'],
       };
-      if (basePools[name]) return basePools[name];
-      if (basePools[key]) return basePools[key];
-      if (name.includes('elf')) return basePools.elf;
-      if (name.includes('orc') && basePools['black-orc']) return basePools['black-orc'];
-      return ['Gridiron', 'Defenders', 'Blitz', 'Legion', 'Thunder', 'Storm', 'Titans'];
+      const cityPools = {
+        human: ['Empire City', 'Steel Harbor', 'Crown Point', 'Rivergate', 'Lone Star', 'Bayport'],
+        amazon: ['Sunspire', 'Jungle Bay', 'Rainport', 'Serpent Bay', 'Sky Temple'],
+        orc: ['Ironjaw', 'Blackfang', 'Red Crag', 'Grimmoor'],
+        dwarf: ['Stonehold', 'Deepforge', 'Anvil Bay', 'Hammerfall'],
+        elf: ['Silverglade', 'Starhaven', 'Highspire', 'Brightwind'],
+        skaven: ['Underkeep', 'Warrens', 'Sewerpoint', 'Skittergate'],
+        lizardmen: ['Xotl', 'Zlan Ridge', 'Marshpoint', 'Tepok Bay'],
+        halfling: ['Hillshire', 'Greenfield', 'Oakvale', 'Meadowbrook'],
+        vampire: ['Nightshade', 'Crimson Hollow', 'Duskhaven', 'Mooncrest'],
+        undead: ['Gravehaven', 'Bonefield', 'Ghoulcrest', 'Tombrook'],
+        chaos: ['Warped Reach', 'Dreadmoor', 'Ruinport', 'Blightgate'],
+        norse: ['Frostholm', 'Longfjord', 'Stormfjord', 'Icebay'],
+        goblin: ['Bog Bottom', 'Swamptown', 'Muckport', 'Grotto Bay'],
+      };
+      const nicknamePool = basePools[name] || basePools[key] || (name.includes('elf') ? basePools.elf : (name.includes('orc') ? basePools['black-orc'] : null)) || ['Guardians', 'Defenders', 'Blitz', 'Legion', 'Thunder', 'Storm', 'Titans', 'Falcons'];
+      const cityPool =
+        cityPools[key] ||
+        cityPools[name] ||
+        (name.includes('elf') ? cityPools.elf : null) ||
+        (name.includes('orc') ? cityPools.orc : null) ||
+        cityPools.human ||
+        ['Metro City', 'Harbor Bay', 'Capital', 'Great Plains'];
+      return { nicknamePool, cityPool };
     }
 
     function generateTeamName(teamKey, rosterName, seedSalt = '') {
-      const pool = getTeamNamePool(teamKey, rosterName);
+      const { nicknamePool, cityPool } = getTeamNamePool(teamKey, rosterName);
       const rng = seededRandom(`teamname|${teamKey}|${rosterName}|${seedSalt}`);
-      return pool[Math.floor(rng() * pool.length) % pool.length] + ' ' + sanitizeTeamBase(rosterName || teamKey);
+      const nick = nicknamePool[Math.floor(rng() * nicknamePool.length) % nicknamePool.length];
+      const city = cityPool[Math.floor(rng() * cityPool.length) % cityPool.length];
+      return `${city} ${nick}`;
     }
 
     function sanitizeTeamBase(name) {
@@ -992,7 +1013,7 @@
       return withPlus ? `${value}+` : String(value);
     }
 
-    function buildSimpleRosterDetailsHtml(teamKey, teamName, settings, combo, rank) {
+    function buildSimpleRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitleText) {
       const roster = rosters[teamKey] || {};
       const players = combo.players.filter(p => (p.type ?? 'player') === 'player' && p.count > 0);
       const extras = combo.players.filter(p => (p.type ?? 'player') === 'extra' && p.count > 0);
@@ -1027,6 +1048,7 @@
         ? `Re-rolls: 0-${(rerollInfo?.max ?? rerollPos?.max ?? '?')} @ ${(rerollInfo?.cost ?? rerollPos?.cost ?? '?')}k`
         : 'Re-roll info unavailable';
       return `
+        <h3 style="margin: 0 0 6px 0;">${teamTitleText || teamName}</h3>
         <div class="muted" style="margin-bottom: 6px;">
           #${rank} • ${teamName} • Players: ${combo.totalPlayers} • Cost: ${combo.cost}k (target TV ${settings.tv}k)
         </div>
@@ -1049,7 +1071,7 @@
       `;
     }
 
-    function buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank) {
+    function buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitleText) {
       const roster = rosters[teamKey] || {};
       const players = combo.players.filter(p => (p.type ?? 'player') === 'player' && p.count > 0);
       const extras = combo.players.filter(p => (p.type ?? 'player') === 'extra' && p.count > 0);
@@ -1091,6 +1113,7 @@
         ? `Re-rolls: 0-${(rerollInfo?.max ?? rerollPos?.max ?? '?')} @ ${(rerollInfo?.cost ?? rerollPos?.cost ?? '?')}k`
         : 'Re-roll info unavailable';
       return `
+        <h3 style="margin: 0 0 6px 0;">${teamTitleText || teamName}</h3>
         <div class="muted" style="margin-bottom: 6px;">
           #${rank} • ${teamName} • Players: ${combo.totalPlayers} • Cost: ${combo.cost}k (target TV ${settings.tv}k)
         </div>
@@ -1114,10 +1137,11 @@
     }
 
     function showRosterDetails(teamKey, teamName, settings, combo, rank) {
+      const generatedName = generateTeamName(teamKey, teamName, `${settings.tv}-${rank}`);
+      const teamTitle = `${teamName} - ${generatedName}`;
       const html = detailedViewToggle?.checked
-        ? buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank)
-        : buildSimpleRosterDetailsHtml(teamKey, teamName, settings, combo, rank);
-      const teamTitle = generateTeamName(teamKey, teamName, `${settings.tv}-${rank}`);
+        ? buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitle)
+        : buildSimpleRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitle);
       showDetailModal(html, `${teamTitle} (roster #${rank})`);
     }
 
