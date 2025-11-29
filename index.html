@@ -133,7 +133,7 @@
       </h1>
       <button id="guideToggle" type="button" style="max-width: 160px;">Show guide</button>
     </div>
-    <p id="userGuide" class="muted" style="margin-top: 10px; display: none;">Use the tool to pick your team, set your TV (in thousands), choose min/max players, and decide how many results you want per page. You can sort by total cost or by number of players, and even lock in exact rerolls if you like. If you want to force certain choices—like minimum numbers of positionals, up to two star players, or a set number of bribes—add those too. Hit Generate to see valid roster combinations, then flip through the pages to explore them. If nothing appears, ease your constraints by raising TV, lowering player minimums, or relaxing forced choices. Tweak, regenerate, and experiment until you find the perfect Blood Bowl roster.</p>
+    <p id="userGuide" class="muted" style="margin-top: 10px; display: none;">Use the tool to pick your team, set your TV (in thousands), choose min/max players, and decide how many results you want per page. You can sort by total cost or by number of players, and even lock in exact rerolls if you like. If you want to force certain choices—like minimum numbers of positionals, up to two star players, a set number of bribes, or taking an apothecary—add those too. Hit Generate to see valid roster combinations, then flip through the pages to explore them. If nothing appears, ease your constraints by raising TV, lowering player minimums, or relaxing forced choices. Tweak, regenerate, and experiment until you find the perfect Blood Bowl roster.</p>
 
     <div class="grid">
       <label>Team
@@ -165,6 +165,9 @@
       </label>
       <label>Bribes (exact, optional)
         <input type="number" id="bribes" value="0" placeholder="leave blank" min="0" />
+      </label>
+      <label>Apothecary (exact, optional)
+        <input type="number" id="apothecary" placeholder="0 or 1, leave blank to skip" min="0" max="1" />
       </label>
       <label id="riotousRookiesField" style="display: none;">Riotous rookies (optional)
         <input type="number" id="riotousRookies" value="0" placeholder="only for Ogres/Snotlings" min="0" />
@@ -198,6 +201,7 @@
     const starSelect1 = document.getElementById('star1');
     const starSelect2 = document.getElementById('star2');
     const bribesInput = document.getElementById('bribes');
+    const apothecaryInput = document.getElementById('apothecary');
     const rookiesInput = document.getElementById('riotousRookies');
     const rookiesField = document.getElementById('riotousRookiesField');
     const positionalList = document.getElementById('positionalList');
@@ -208,6 +212,7 @@
     teamSelect.addEventListener('change', () => {
       populateStarSelects(teamSelect.value);
       updateBribeInput(teamSelect.value);
+      updateApothecaryInput(teamSelect.value);
       updateRiotousRookiesInput(teamSelect.value);
       populatePositionalList(teamSelect.value);
     });
@@ -226,7 +231,8 @@
           settings.stars,
           settings.maxStars,
           settings.bribes,
-          settings.riotousRookies
+          settings.riotousRookies,
+          settings.apothecary
         );
         const combos = generateCombos(positions, settings);
         lastCombos = { teamName: rosters[settings.team].name, settings, combos };
@@ -270,6 +276,7 @@
         populateTeamSelect(rosters);
         populateStarSelects(teamSelect.value);
         updateBribeInput(teamSelect.value);
+        updateApothecaryInput(teamSelect.value);
         updateRiotousRookiesInput(teamSelect.value);
         populatePositionalList(teamSelect.value);
       } catch (err) {
@@ -297,10 +304,12 @@
         const sel = teamSelect.value;
         populateStarSelects(sel);
         updateBribeInput(sel);
+        updateApothecaryInput(sel);
         updateRiotousRookiesInput(sel);
       } else {
         populateStarSelects('');
         updateBribeInput('');
+        updateApothecaryInput('');
         updateRiotousRookiesInput('');
       }
     }
@@ -336,6 +345,15 @@
       return { cost, max };
     }
 
+    function getApothecaryInfo(teamKeyOrObj) {
+      const roster = typeof teamKeyOrObj === 'string' ? rosters[teamKeyOrObj] : teamKeyOrObj;
+      const pos = (roster?.positions || []).find(p => (p.name || '').toLowerCase() === 'apothecary');
+      if (!pos) return null;
+      const max = Number(pos.max ?? 1);
+      const cost = Number(pos.cost) || 50;
+      return { cost, max };
+    }
+
     function getRiotousRookiesInfo(teamKeyOrObj) {
       const roster = typeof teamKeyOrObj === 'string' ? rosters[teamKeyOrObj] : teamKeyOrObj;
       const inds = roster?.inducements || [];
@@ -362,6 +380,25 @@
       const current = Number(bribesInput.value || 0);
       if (Number.isNaN(current) || current < 0 || current > info.max) {
         bribesInput.value = '0';
+      }
+    }
+
+    function updateApothecaryInput(teamKey) {
+      const info = getApothecaryInfo(teamKey);
+      if (!info) {
+        apothecaryInput.value = '';
+        apothecaryInput.disabled = true;
+        apothecaryInput.placeholder = 'not available';
+        return;
+      }
+      apothecaryInput.disabled = false;
+      apothecaryInput.min = '0';
+      apothecaryInput.max = String(info.max);
+      apothecaryInput.placeholder = `0..${info.max} @ ${info.cost}k`;
+      const current = apothecaryInput.value === '' ? undefined : Number(apothecaryInput.value);
+      if (current === undefined) return;
+      if (Number.isNaN(current) || current < 0 || current > info.max) {
+        apothecaryInput.value = '';
       }
     }
 
@@ -433,8 +470,22 @@
       }
     }
 
-    function buildPositions(team, starNames, maxStars, bribes, riotousRookies) {
-      const base = team.positions || [];
+    function buildPositions(team, starNames, maxStars, bribes, riotousRookies, apothecaryCount) {
+      const base = (team.positions || []).map(pos => {
+        const copy = { ...pos };
+        if ((copy.name || '').toLowerCase() === 'apothecary' && !copy.role) {
+          copy.role = 'apothecary';
+        }
+        return copy;
+      });
+      if (apothecaryCount !== undefined) {
+        base.forEach(pos => {
+          if ((pos.name || '').toLowerCase() === 'apothecary') {
+            const currentMax = Number(pos.max ?? apothecaryCount);
+            pos.max = Math.min(currentMax, apothecaryCount);
+          }
+        });
+      }
       const stars = (team.starPlayers || [])
         .filter(sp => starNames.map(s => s.toLowerCase()).includes(sp.name.toLowerCase()))
         .slice(0, maxStars)
@@ -463,6 +514,7 @@
       const team = document.getElementById('team').value;
       const stars = Array.from(new Set([starSelect1.value, starSelect2.value].filter(Boolean)));
       const bribesVal = document.getElementById('bribes').value;
+      const apothecaryVal = document.getElementById('apothecary').value;
       const rookiesVal = document.getElementById('riotousRookies').value;
       const requiredExtras = [];
       const positionalRequired = [];
@@ -486,6 +538,13 @@
         if (bribeInfo && bribes > bribeInfo.max) throw new Error(`Bribes cannot exceed ${bribeInfo.max}.`);
         if (!bribeInfo && bribes > 0) throw new Error('Bribes not available for this team.');
       }
+      const apothecaryInfo = getApothecaryInfo(team);
+      const apothecary = apothecaryVal === '' ? undefined : Number(apothecaryVal);
+      if (apothecary !== undefined) {
+        if (Number.isNaN(apothecary) || apothecary < 0) throw new Error('Apothecary must be non-negative.');
+        if (!apothecaryInfo) throw new Error('Apothecary not available for this team.');
+        if (apothecaryInfo && apothecary > apothecaryInfo.max) throw new Error(`Apothecary cannot exceed ${apothecaryInfo.max}.`);
+      }
       const rookiesInfo = getRiotousRookiesInfo(team);
       const riotousRookies = rookiesVal === '' ? 0 : Number(rookiesVal);
       if (Number.isNaN(riotousRookies) || riotousRookies < 0) throw new Error('Riotous rookies must be non-negative.');
@@ -499,6 +558,9 @@
       if (missingStars.length) throw new Error(`Unknown star(s): ${missingStars.join(', ')}`);
       if (bribes !== undefined && bribes > 0) {
         requiredExtras.push({ name: 'bribe', count: bribes });
+      }
+      if (apothecary !== undefined && apothecary > 0) {
+        requiredExtras.push({ name: 'apothecary', count: apothecary });
       }
 
       return {
@@ -515,6 +577,7 @@
         requireExtraMode: 'all',
         stars,
         bribes,
+        apothecary,
         riotousRookies,
         maxStars: 2,
       };
@@ -662,6 +725,7 @@
       const rerollExtra = extras.find(e => (e.name || '').toLowerCase().includes('reroll'));
       const bribesExtra = extras.find(e => (e.role === 'bribe') || (e.name || '').toLowerCase().includes('bribe'));
       const rookiesExtra = extras.find(e => (e.role === 'riotous-rookies') || (e.name || '').toLowerCase().includes('riotous rookies'));
+      const apothecaryExtra = extras.find(e => (e.role === 'apothecary') || (e.name || '').toLowerCase().includes('apothecary'));
       return {
         teamSlug: teamKey,
         teamName,
@@ -669,6 +733,7 @@
         players,
         rerolls: combo.rerolls ?? rerollExtra?.count ?? 0,
         bribes: bribesExtra?.count ?? 0,
+        apothecary: apothecaryExtra?.count ?? 0,
         riotousRookies: rookiesExtra?.count ?? 0,
       };
     }
@@ -751,7 +816,7 @@
           const normTarget = normalize(targetName);
           const row = Array.from(document.querySelectorAll(`${tableSelector} tbody tr`)).find(tr => normalize(tr.textContent || '').includes(normTarget));
           if (!row) {
-            missing.push(`Could not find row for ${targetName}`);
+            if (value > 0) missing.push(`Could not find row for ${targetName}`);
             return;
           }
           const area = row.closest('[data-bb-area]')?.getAttribute('data-bb-area') || fallbackArea;
@@ -763,6 +828,7 @@
         queueDelete();
         queuePlayers();
         setAreaQuantity('#sidelineTable', 're-roll', payload.rerolls, 'sideline');
+        setAreaQuantity('#sidelineTable', 'apothecary', payload.apothecary, 'sideline');
         setAreaQuantity('#inducementsTable', 'bribe', payload.bribes, 'inducements');
         setAreaQuantity('#inducementsTable', 'riotous rookies', payload.riotousRookies, 'inducements');
 
