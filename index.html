@@ -65,6 +65,29 @@
       transition: transform 120ms ease, box-shadow 120ms ease;
     }
     button:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(56,189,248,0.3); }
+    .stepper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+    .stepper input[type="number"] {
+      flex: 1;
+      width: auto;
+    }
+    .stepper-btn {
+      width: 38px;
+      padding: 10px 0;
+      background: #0b162c;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      font-weight: 700;
+      line-height: 1;
+      box-shadow: none;
+    }
+    .stepper-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .stepper.stepper-disabled .stepper-btn { opacity: 0.45; cursor: not-allowed; }
     .icon-btn {
       width: auto;
       min-width: 36px;
@@ -208,6 +231,7 @@
     const rosterReady = loadRosters();
     const guideToggle = document.getElementById('guideToggle');
     const userGuide = document.getElementById('userGuide');
+    document.querySelectorAll('input[type="number"]').forEach(applyStepper);
 
     teamSelect.addEventListener('change', () => {
       populateStarSelects(teamSelect.value);
@@ -442,6 +466,7 @@
         input.dataset.name = pos.name;
         row.appendChild(label);
         row.appendChild(input);
+        applyStepper(input);
         positionalList.appendChild(row);
       });
     }
@@ -468,6 +493,54 @@
       if (changed.value && changed.value === other.value) {
         other.value = '';
       }
+    }
+
+    function applyStepper(input) {
+      if (!input || input.dataset.stepper === '1') return;
+      input.dataset.stepper = '1';
+      const wrapper = document.createElement('div');
+      wrapper.className = 'stepper';
+      const dec = document.createElement('button');
+      dec.type = 'button';
+      dec.className = 'stepper-btn';
+      dec.textContent = '-';
+      const inc = document.createElement('button');
+      inc.type = 'button';
+      inc.className = 'stepper-btn';
+      inc.textContent = '+';
+      const parent = input.parentNode;
+      parent.insertBefore(wrapper, input);
+      wrapper.appendChild(dec);
+      wrapper.appendChild(input);
+      wrapper.appendChild(inc);
+
+      const stepVal = Math.abs(Number(input.step) || 1) || 1;
+      const toNum = (val) => {
+        const parsed = Number(val);
+        return Number.isNaN(parsed) ? 0 : parsed;
+      };
+      const clamp = (val) => {
+        const min = input.min === '' || input.min === undefined ? -Infinity : Number(input.min);
+        const max = input.max === '' || input.max === undefined ? Infinity : Number(input.max);
+        return Math.max(min, Math.min(max, val));
+      };
+      const syncDisabled = () => {
+        const disabled = input.disabled;
+        dec.disabled = disabled;
+        inc.disabled = disabled;
+        wrapper.classList.toggle('stepper-disabled', disabled);
+      };
+      const adjust = (delta) => {
+        const base = input.value === '' ? 0 : toNum(input.value);
+        input.value = String(clamp(base + delta));
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      };
+
+      dec.addEventListener('click', () => adjust(-stepVal));
+      inc.addEventListener('click', () => adjust(stepVal));
+      syncDisabled();
+      new MutationObserver(syncDisabled).observe(input, { attributes: true, attributeFilter: ['disabled'] });
     }
 
     function buildPositions(team, starNames, maxStars, bribes, riotousRookies, apothecaryCount) {
