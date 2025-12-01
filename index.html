@@ -17,6 +17,7 @@
       --success: #22c55e;
       --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     }
+    .icon-btn.sm { padding: 4px 8px; font-size: 12px; }
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -192,10 +193,10 @@
   <div class="card">
     <div class="row" style="justify-content: space-between; align-items: center; margin-top: 0;">
       <h1 style="margin: 0; display: inline-flex; align-items: center; gap: 8px;">
-        <a href="img/v03.png" target="_blank" rel="noopener" style="display:inline-flex; align-items:center;">
-          <img src="img/v03.png" alt="RosterLab icon" style="width: 28px; height: 28px; border-radius: 6px;" />
+        <a href="img/v04.png" target="_blank" rel="noopener" style="display:inline-flex; align-items:center;">
+          <img src="img/v04.png" alt="RosterLab icon" style="width: 28px; height: 28px; border-radius: 6px;" />
         </a>
-        RosterLab v0.3
+        RosterLab v0.4
       </h1>
       <div class="row" style="gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
         <button id="sharePage" type="button" class="icon-btn secondary" style="width: auto; min-width: 0;">Share snapshot</button>
@@ -271,11 +272,21 @@
     <div class="modal-card">
       <div class="row" style="justify-content: space-between; align-items: center; margin: 0 0 8px 0;">
         <div id="detailTitle" style="font-weight: 700; font-size: 16px;"></div>
-        <div class="row" style="gap: 8px; flex-wrap: wrap; justify-content: flex-end; margin-top: 0;">
-          <button id="detailExport" type="button" class="icon-btn secondary" style="width: auto; min-width: 0;">Export PDF</button>
-          <button id="detailClose" type="button" class="icon-btn secondary" style="width: auto; min-width: 0;">Close</button>
-        </div>
+      <div class="row" style="gap: 8px; flex-wrap: wrap; justify-content: flex-end; margin-top: 0;">
+        <label class="muted" style="display:inline-flex; align-items:center; gap:4px; font-size:12px;">
+          Auto skills
+          <input type="number" id="autoSkillBudget" value="1" min="0" style="width: 64px; padding: 6px 8px; font-size: 12px;" />
+        </label>
+        <label class="muted" style="display:inline-flex; align-items:center; gap:6px; font-size:12px;">
+          Flavor
+          <input type="range" id="autoSkillFlavor" min="0" max="2" step="1" value="1" style="width: 120px;" />
+          <span id="autoSkillFlavorLabel">Balanced</span>
+        </label>
+        <button id="autoSkills" type="button" class="icon-btn secondary sm" style="width: auto; min-width: 0;">Apply</button>
+        <button id="detailExport" type="button" class="icon-btn secondary" style="width: auto; min-width: 0;">Export PDF</button>
+        <button id="detailClose" type="button" class="icon-btn secondary" style="width: auto; min-width: 0;">Close</button>
       </div>
+    </div>
       <div id="detailContent"></div>
     </div>
   </div>
@@ -311,6 +322,10 @@
     const detailTitle = document.getElementById('detailTitle');
     const detailClose = document.getElementById('detailClose');
     const detailExport = document.getElementById('detailExport');
+    const autoSkillsBtn = document.getElementById('autoSkills');
+    const autoSkillBudgetInput = document.getElementById('autoSkillBudget');
+    const autoSkillFlavorInput = document.getElementById('autoSkillFlavor');
+    const autoSkillFlavorLabel = document.getElementById('autoSkillFlavorLabel');
     const sharePageBtn = document.getElementById('sharePage');
     const detailedViewToggle = document.getElementById('detailedView');
     let lastDetailHtml = '';
@@ -372,6 +387,15 @@
       }
     });
     if (sharePageBtn) sharePageBtn.addEventListener('click', shareCurrentPage);
+    if (autoSkillsBtn) autoSkillsBtn.addEventListener('click', autoAssignSkills);
+    if (autoSkillFlavorInput) {
+      const updateFlavorLabel = () => {
+        const val = Number(autoSkillFlavorInput.value || 1);
+        autoSkillFlavorLabel.textContent = val <= 0 ? 'Conservative' : val >= 2 ? 'Creative' : 'Balanced';
+      };
+      autoSkillFlavorInput.addEventListener('input', updateFlavorLabel);
+      updateFlavorLabel();
+    }
 
     guideToggle.addEventListener('click', () => {
       const hidden = userGuide.style.display === 'none';
@@ -1025,6 +1049,191 @@
       });
     }
 
+    const eliteSkills = ['Block', 'Dodge', 'Mighty Blow', 'Guard'];
+    const prioritySkillsBase = [
+      ...eliteSkills,
+      'Sure Hands',
+      'Tackle',
+      'Wrestle',
+      'Strip Ball',
+      'Frenzy',
+      'Leader',
+      'Kick',
+      'Pro',
+      'Sidestep',
+      'Stand Firm',
+      'Break Tackle',
+    ];
+
+    const skillCategoryLookup = (() => {
+      const map = {};
+      Object.entries(skillCatalog).forEach(([cat, skills]) => {
+        skills.forEach(s => map[s.toLowerCase()] = cat);
+      });
+      return map;
+    })();
+
+    function shuffle(arr, rng) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function suggestSkill(allowedCats, existingSet, positionName, roleHint, rng, starSkills, rosterSummary, flavor) {
+      // prioritize role-aware picks
+      const roleLower = (roleHint || '').toLowerCase();
+      const posLower = (positionName || '').toLowerCase();
+      const rolePreferred = [];
+      if (posLower.includes('thrower') || roleLower.includes('thrower') || posLower.includes('runner')) {
+        rolePreferred.push('Sure Hands', 'Leader', 'Dodge');
+      }
+      if (posLower.includes('blitzer') || roleLower.includes('blitzer')) {
+        rolePreferred.push('Block', 'Mighty Blow', 'Tackle', 'Guard', 'Dodge');
+      }
+      if (posLower.includes('lineman') || roleLower.includes('lineman')) {
+        rolePreferred.push('Block', 'Wrestle', 'Kick', 'Dodge');
+      }
+      if (posLower.includes('big guy') || posLower.includes('ogre') || posLower.includes('troll') || posLower.includes('treeman') || posLower.includes('mummy') || posLower.includes('krox')) {
+        rolePreferred.push('Guard', 'Stand Firm', 'Break Tackle', 'Mighty Blow', 'Brawler');
+      }
+      const synergy = [];
+      const starSet = starSkills || new Set();
+      if (starSet.has('guard')) {
+        synergy.push('Tackle', 'Mighty Blow', 'Stand Firm');
+      }
+      if (starSet.has('mighty blow')) {
+        synergy.push('Tackle', 'Wrestle');
+      }
+      if (starSet.has('sure hands')) {
+        synergy.push('Guard', 'Block');
+      }
+      if (starSet.has('dodge')) {
+        synergy.push('Sidestep', 'Tackle');
+      }
+      const prioritySkills = shuffle(prioritySkillsBase, rng);
+      const roleTarget = [...synergy, ...rolePreferred, ...prioritySkills];
+      const seen = new Set();
+      const prioritized = roleTarget.filter(s => {
+        const lower = s.toLowerCase();
+        if (seen.has(lower)) return false;
+        seen.add(lower);
+        if (lower === 'leader' && rosterSummary?.leaderUsed) return false;
+        return allowedCats.has(skillCategoryLookup[lower]) && !existingSet.has(s);
+      });
+
+      const fallbackCat = Array.from(allowedCats).find(cat => (skillCatalog[cat] || []).some(s => !existingSet.has(s)));
+      if (!fallbackCat) return null;
+      const pool = shuffle(skillCatalog[fallbackCat] || [], rng);
+      const fallback = pool.filter(s => {
+        const lower = s.toLowerCase();
+        if (lower === 'leader' && rosterSummary?.leaderUsed) return false;
+        return !existingSet.has(s);
+      });
+
+      const candidates = [...prioritized, ...fallback];
+      if (!candidates.length) return null;
+      const skillCounts = rosterSummary?.skillCounts || {};
+      // flavor: 0 = conservative, 1 = balanced, 2 = creative
+      if (flavor <= 0) {
+        return candidates[0];
+      }
+      if (flavor >= 2) {
+        return candidates[Math.floor(rng() * candidates.length)];
+      }
+      let best = candidates[0];
+      let bestCount = skillCounts[best.toLowerCase()] || 0;
+      candidates.forEach(s => {
+        const c = skillCounts[s.toLowerCase()] || 0;
+        if (c < bestCount || (c === bestCount && rng() > 0.5)) {
+          best = s;
+          bestCount = c;
+        }
+      });
+      return best;
+    }
+
+    function autoAssignSkills() {
+      if (!lastDetailContext.teamKey || !lastDetailContext.combo) {
+        alert('Open a roster (Details) first, then auto-assign skills.');
+        return;
+      }
+      const budgetRaw = autoSkillBudgetInput?.value ?? '0';
+      const budget = Number(budgetRaw);
+      if (!Number.isFinite(budget) || budget < 0) {
+        alert('Enter a non-negative number of skills to assign.');
+        return;
+      }
+      if (budget === 0) return;
+      const { teamKey, rank } = lastDetailContext;
+      const settings = lastDetailContext.settings;
+      const roster = rosters[teamKey];
+      if (!roster) return;
+      const nameCache = lastDetailContext.nameCache || buildNameCache(teamKey, roster.name || teamKey, settings, lastDetailContext.combo, rank);
+      const starSkills = new Set(
+        (lastDetailContext.combo.players || [])
+          .filter(p => p.role === 'star')
+          .flatMap(p => (findPlayerDetails(teamKey, p.name)?.skills || []).map(s => s.toLowerCase()))
+      );
+      const rng = seededRandom(`${teamKey}|${settings.tv}|${rank}|auto-skills`);
+      const rosterSummary = { leaderUsed: false, skillCounts: {} };
+      // detect existing leader
+      (lastDetailContext.combo.players || []).forEach(p => {
+        const info = findPlayerDetails(teamKey, p.name);
+        (info?.skills || []).forEach(s => {
+          const lower = (s || '').toLowerCase();
+          rosterSummary.skillCounts[lower] = (rosterSummary.skillCounts[lower] || 0) + 1;
+          if (lower === 'leader') rosterSummary.leaderUsed = true;
+        });
+      });
+      Object.values(addedSkillsStore[teamKey]?.[rank] || {}).forEach(skills => {
+        (skills || []).forEach(s => {
+          const lower = (s || '').toLowerCase();
+          rosterSummary.skillCounts[lower] = (rosterSummary.skillCounts[lower] || 0) + 1;
+          if (lower === 'leader') rosterSummary.leaderUsed = true;
+        });
+      });
+      let remaining = Math.floor(budget);
+      const flavor = Number(autoSkillFlavorInput?.value || 1);
+      lastDetailContext.combo.players
+        .filter(p => (p.type ?? 'player') === 'player' && p.count > 0)
+        .map((p, idx) => ({ p, idx }))
+        .sort((a, b) => {
+          const aPos = (a.p.name || '').toLowerCase();
+          const bPos = (b.p.name || '').toLowerCase();
+          const aIsLino = aPos.includes('lineman');
+          const bIsLino = bPos.includes('lineman');
+          if (aIsLino !== bIsLino) return aIsLino ? 1 : -1; // positionals first
+          return (b.p.max || 0) - (a.p.max || 0);
+        })
+        .forEach(({ p, idx }) => {
+          if (remaining <= 0) return;
+          const info = findPlayerDetails(teamKey, p.name) || {};
+          const allowedCats = new Set((info.primary || '').split('').filter(Boolean));
+          if (!allowedCats.size) return;
+          const names = nameCache[idx] || [];
+        names.forEach(playerName => {
+          if (remaining <= 0) return;
+          const playerKey = `${teamKey}|${rank}|${playerName}`;
+          const existing = new Set([...(info.skills || []), ...(getAddedSkills(teamKey, rank, playerKey))]);
+          const nextSkill = suggestSkill(allowedCats, existing, p.name, info.role || p.role, rng, starSkills, rosterSummary, flavor);
+            if (!nextSkill) return;
+            addSkill(teamKey, rank, playerKey, nextSkill);
+            if (nextSkill.toLowerCase() === 'leader') rosterSummary.leaderUsed = true;
+            rosterSummary.skillCounts[nextSkill.toLowerCase()] = (rosterSummary.skillCounts[nextSkill.toLowerCase()] || 0) + 1;
+            existing.add(nextSkill);
+            remaining -= 1;
+          });
+        });
+      const html = detailedViewToggle?.checked
+        ? buildRosterDetailsHtml(teamKey, lastDetailContext.teamName, settings, lastDetailContext.combo, rank, lastDetailContext.teamTitle, nameCache)
+        : buildSimpleRosterDetailsHtml(teamKey, lastDetailContext.teamName, settings, lastDetailContext.combo, rank, lastDetailContext.teamTitle);
+      showDetailModal(html, `${lastDetailContext.teamTitle} (roster #${rank})`);
+      wireSkillControls(detailContent);
+    }
+
     function applyStepper(input) {
       if (!input || input.dataset.stepper === '1') return;
       input.dataset.stepper = '1';
@@ -1278,11 +1487,11 @@
       const roster = rosters[teamKey];
       if (!roster) return null;
       const norm = (playerName || '').toLowerCase();
-      const sanitized = sanitizeStarName(playerName).toLowerCase();
-      const pos = (roster.positions || []).find(p => (p.name || '').toLowerCase() === norm);
-      if (pos) return pos;
-      const star = (roster.starPlayers || []).find(sp => sanitizeStarName(sp.name).toLowerCase() === sanitized);
-      return star || null;
+          const sanitized = sanitizeStarName(playerName).toLowerCase();
+          const pos = (roster.positions || []).find(p => (p.name || '').toLowerCase() === norm);
+          if (pos) return pos;
+          const star = (roster.starPlayers || []).find(sp => sanitizeStarName(sp.name).toLowerCase() === sanitized);
+          return star || null;
     }
 
     function fmtStat(value, withPlus = false) {
@@ -1348,7 +1557,7 @@
       `;
     }
 
-    function buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitleText) {
+    function buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitleText, namesMap) {
       const roster = rosters[teamKey] || {};
       const players = combo.players.filter(p => (p.type ?? 'player') === 'player' && p.count > 0);
       const extras = combo.players.filter(p => (p.type ?? 'player') === 'extra' && p.count > 0);
@@ -1358,10 +1567,10 @@
       const apothecaryInfo = roster.hasApothecary === undefined ? 'Unknown' : (roster.hasApothecary ? 'Yes' : 'No');
       const usedNames = new Set();
       const playerRows = [];
-      players.forEach(p => {
+      players.forEach((p, idx) => {
         const info = findPlayerDetails(teamKey, p.name) || {};
         const skills = (info.skills || []).join(', ') || '—';
-        const names = generatePlayerNames(teamKey, roster.name || teamName, p.name, p.count, `${rank}-${settings.tv}-${p.name}`, usedNames);
+        const names = (namesMap && namesMap[idx]) || generatePlayerNames(teamKey, roster.name || teamName, p.name, p.count, `${rank}-${settings.tv}-${p.name}`, usedNames);
         names.forEach((playerName, idx) => {
           const playerKey = `${teamKey}|${rank}|${playerName}`;
           const added = getAddedSkills(teamKey, rank, playerKey);
@@ -1388,15 +1597,12 @@
               <td class="text-center">${fmtStat(info.ag, true)}</td>
               <td class="text-center">${fmtStat(info.pa, true)}</td>
               <td class="text-center">${fmtStat(info.av, true)}</td>
-              <td class="skills-wide web-only">${skills}</td>
-              <td class="text-center web-only">${info.primary || '—'}</td>
-              <td class="text-center web-only">${info.secondary || '—'}</td>
               <td class="skills-wide">${skills}</td>
               <td class="web-only">
                 <div class="added-skills" data-team="${teamKey}" data-rank="${rank}" data-player="${playerKey}">${addedPills}</div>
                 <select class="skill-select" data-team="${teamKey}" data-rank="${rank}" data-player="${playerKey}" style="margin-top: 6px;">${optionsHtml}</select>
               </td>
-             <td class="skills-wide print-only">${addedText}</td>
+              <td class="skills-wide print-only">${addedText}</td>
               <td class="text-center w-narrow cost-col">${p.cost}k</td>
             </tr>`);
         });
@@ -1418,10 +1624,10 @@
         <table>
           <thead>
             <tr>
-              <th class="w-narrow">#</th><th>Name</th><th>Position</th><th class="w-narrow-stat">MA</th><th class="w-narrow-stat">ST</th><th class="w-narrow-stat">AG</th><th class="w-narrow-stat">PA</th><th class="w-narrow-stat">AV</th><th class="skills-wide web-only">Skills</th><th class="text-center web-only">Primary</th><th class="text-center web-only">Secondary</th><th class="skills-wide print-only">Skills</th><th class="skills-wide print-only">Added Skills</th><th class="text-center w-narrow cost-col">Cost</th>
+              <th class="w-narrow">#</th><th>Name</th><th>Position</th><th class="w-narrow-stat">MA</th><th class="w-narrow-stat">ST</th><th class="w-narrow-stat">AG</th><th class="w-narrow-stat">PA</th><th class="w-narrow-stat">AV</th><th class="skills-wide">Skills</th><th class="skills-wide print-only">Added Skills</th><th class="text-center w-narrow cost-col">Cost</th>
             </tr>
           </thead>
-          <tbody>${playerRowsHtml || '<tr><td colspan="14" class="muted">No players in this roster.</td></tr>'}</tbody>
+          <tbody>${playerRowsHtml || '<tr><td colspan="12" class="muted">No players in this roster.</td></tr>'}</tbody>
         </table>
         <h4 style="margin: 12px 0 4px 0;">Inducements & Extras</h4>
         <table>
@@ -1434,9 +1640,31 @@
       `;
     }
 
+    function isStarPlayer(teamKey, name) {
+      const roster = rosters[teamKey];
+      const target = sanitizeStarName(name).toLowerCase();
+      return (roster?.starPlayers || []).some(sp => sanitizeStarName(sp.name).toLowerCase() === target);
+    }
+
+    function buildNameCache(teamKey, teamName, settings, combo, rank) {
+      const used = new Set();
+      const cache = {};
+      combo.players
+        .filter(p => (p.type ?? 'player') === 'player' && p.count > 0)
+        .forEach((p, idx) => {
+          if (p.role === 'star' || isStarPlayer(teamKey, p.name)) {
+            cache[idx] = [sanitizeStarName(p.name)];
+          } else {
+            cache[idx] = generatePlayerNames(teamKey, teamName, p.name, p.count, `${rank}-${settings.tv}-${p.name}`, used);
+          }
+        });
+      return cache;
+    }
+
     function showRosterDetails(teamKey, teamName, settings, combo, rank) {
       const generatedName = generateTeamName(teamKey, teamName, `${settings.tv}-${rank}`);
       const teamTitle = `${teamName} - ${generatedName}`;
+      const nameCache = buildNameCache(teamKey, teamName, settings, combo, rank);
       lastDetailContext.teamKey = teamKey;
       lastDetailContext.teamName = teamName;
       lastDetailContext.settings = JSON.parse(JSON.stringify(settings));
@@ -1445,8 +1673,9 @@
       lastDetailContext.teamTitle = teamTitle;
       lastDetailContext.detailed = Boolean(detailedViewToggle?.checked);
       lastDetailContext.dirty = false;
+      lastDetailContext.nameCache = nameCache;
       const html = detailedViewToggle?.checked
-        ? buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitle)
+        ? buildRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitle, nameCache)
         : buildSimpleRosterDetailsHtml(teamKey, teamName, settings, combo, rank, teamTitle);
       showDetailModal(html, `${teamTitle} (roster #${rank})`);
       wireSkillControls(detailContent);
@@ -1493,8 +1722,11 @@
 
     function sanitizeStarName(name) {
       if (!name) return '';
-      // Strip affiliation suffixes the BBTC UI does not show.
-      return name.replace(/\s+(Old World Classic|Lustrian Superleague|Badlands Brawl|Worlds Edge Superleague|Sylvanian Spotlight|Elven Kingdoms|Underworld Challenge|Halfling Thimble Cup|Favoured of [^,]+)$/i, '').trim();
+      // Strip affiliation suffixes and punctuation.
+      return name
+        .replace(/\s+(Old World Classic|Lustrian Superleague|Badlands Brawl|Worlds Edge Superleague|Sylvanian Spotlight|Elven Kingdoms|Underworld Challenge|Halfling Thimble Cup|Favoured of [^,]+)$/i, '')
+        .replace(/\s*,.*$/,'')
+        .trim();
     }
 
     function buildBbtcPayload(teamKey, teamName, settings, combo, rank) {
