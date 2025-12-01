@@ -197,7 +197,10 @@
         </a>
         RosterLab v0.3
       </h1>
-      <button id="guideToggle" type="button" style="max-width: 160px;">Show guide</button>
+      <div class="row" style="gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+        <button id="sharePage" type="button" class="icon-btn secondary" style="width: auto; min-width: 0;">Share snapshot</button>
+        <button id="guideToggle" type="button" style="max-width: 160px;">Show guide</button>
+      </div>
     </div>
     <p id="userGuide" class="muted" style="margin-top: 10px; display: none;">Use the tool to pick your team, set your TV (in thousands), choose min/max players, and decide how many results you want per page. You can sort by total cost or by number of players, and even lock in exact rerolls if you like. If you want to force certain choices—like minimum numbers of positionals, up to two star players, a set number of bribes, or taking an apothecary—add those too. Hit Generate to see valid roster combinations, then flip through the pages to explore them. If nothing appears, ease your constraints by raising TV, lowering player minimums, or relaxing forced choices. Tweak, regenerate, and experiment until you find the perfect Blood Bowl roster.</p>
 
@@ -308,6 +311,7 @@
     const detailTitle = document.getElementById('detailTitle');
     const detailClose = document.getElementById('detailClose');
     const detailExport = document.getElementById('detailExport');
+    const sharePageBtn = document.getElementById('sharePage');
     const detailedViewToggle = document.getElementById('detailedView');
     let lastDetailHtml = '';
     let lastDetailTitle = '';
@@ -343,6 +347,9 @@
         currentPage = 1;
         pageSize = maxResults;
         renderResults(rosters[settings.team].name, settings, combos);
+        if (location.hash.startsWith('#share=')) {
+          location.hash = '';
+        }
       } catch (err) {
         errorEl.textContent = err.message || String(err);
       }
@@ -364,6 +371,7 @@
         renderResults(lastCombos.teamName, lastCombos.settings, lastCombos.combos);
       }
     });
+    if (sharePageBtn) sharePageBtn.addEventListener('click', shareCurrentPage);
 
     guideToggle.addEventListener('click', () => {
       const hidden = userGuide.style.display === 'none';
@@ -388,6 +396,7 @@
         updateApothecaryInput(teamSelect.value);
         updateRiotousRookiesInput(teamSelect.value);
         populatePositionalList(teamSelect.value);
+        await hydrateFromShareLink();
       } catch (err) {
         console.error('Failed to load rosters', err);
         errorEl.textContent = 'Could not load roster data.';
@@ -845,6 +854,74 @@
       markDetailDirty(); // force recompute before export to include latest edits
     }
 
+    function shareCurrentPage() {
+      if (!lastCombos) {
+        alert('Generate a roster first, then share.');
+        return;
+      }
+      try {
+        const payload = { settings: lastCombos.settings };
+        const encoded = btoa(encodeURIComponent(JSON.stringify(payload)));
+        const url = `${location.origin}${location.pathname}#share=${encoded}`;
+        const doAlert = () => alert(`Share URL ready. If it was not copied automatically, copy it from below:\n\n${url}`);
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(url).then(doAlert).catch(() => {
+            fallbackCopy(url);
+            doAlert();
+          });
+        } else {
+          fallbackCopy(url);
+          doAlert();
+        }
+      } catch (err) {
+        console.error('Failed to build share link', err);
+        alert('Could not build share link.');
+      }
+    }
+
+    function fallbackCopy(text) {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.top = '-2000px';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      } catch {
+        // ignore, alert will show URL anyway
+      }
+    }
+
+    async function hydrateFromShareLink() {
+      if (!location.hash.startsWith('#share=')) return;
+      try {
+        const encoded = location.hash.replace('#share=', '');
+        const json = decodeURIComponent(atob(encoded));
+        const payload = JSON.parse(json);
+        const settings = payload?.settings;
+        if (!settings || !settings.team) return;
+        applySharedSettings(settings);
+        const positions = buildPositions(
+          rosters[settings.team],
+          settings.stars,
+          settings.maxStars,
+          settings.bribes,
+          settings.riotousRookies,
+          settings.apothecary
+        );
+        const combos = generateCombos(positions, settings);
+        lastCombos = { teamName: rosters[settings.team]?.name || settings.team, settings, combos };
+        currentPage = 1;
+        pageSize = settings.maxResults || 5;
+        renderResults(lastCombos.teamName, lastCombos.settings, lastCombos.combos);
+      } catch (err) {
+        console.warn('Failed to hydrate shared roster', err);
+      }
+    }
+
     function exportDetailPdf() {
       if (!lastDetailHtml || !lastDetailContext.teamKey) {
         alert('No roster details to export yet.');
@@ -921,6 +998,31 @@
         }
         setTimeout(() => iframe.remove(), 1000);
       };
+    }
+
+    function applySharedSettings(settings) {
+      if (!settings || !settings.team) return;
+      teamSelect.value = settings.team;
+      populateStarSelects(settings.team);
+      updateBribeInput(settings.team);
+      updateApothecaryInput(settings.team);
+      updateRiotousRookiesInput(settings.team);
+      populatePositionalList(settings.team);
+      document.getElementById('tv').value = settings.tv;
+      document.getElementById('minPlayers').value = settings.minPlayers;
+      document.getElementById('maxPlayers').value = settings.maxPlayers;
+      document.getElementById('maxResults').value = settings.maxResults;
+      document.getElementById('sort').value = settings.sort;
+      document.getElementById('rerolls').value = settings.rerolls ?? '';
+      document.getElementById('bribes').value = settings.bribes ?? '0';
+      document.getElementById('apothecary').value = settings.apothecary ?? '';
+      document.getElementById('riotousRookies').value = settings.riotousRookies ?? '0';
+      starSelect1.value = settings.stars?.[0] || '';
+      starSelect2.value = settings.stars?.[1] || '';
+      (settings.required || []).forEach(req => {
+        const input = Array.from(positionalList.querySelectorAll('input[type="number"]')).find(i => (i.dataset.name || '').toLowerCase() === req.name);
+        if (input) input.value = req.count;
+      });
     }
 
     function applyStepper(input) {
